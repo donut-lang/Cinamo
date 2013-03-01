@@ -6,7 +6,7 @@
 
 import sys
 import os
-from external.WafHelper.common import enum
+import external.WafHelper.Util as Util
 
 APPNAME = 'Tarte'
 VERSION = '1.0.0'
@@ -16,13 +16,13 @@ blddir = 'build'
 
 TARTE_DIR=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'src')
 TARTE_INC=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'include')
-TARTE_SRC=enum('src')
+TARTE_SRC=Util.enum('src')
 
 TINYXML2_INC=TINYXML2_DIR=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'external', 'tinyxml2')
 TINYXML2_SRC=[os.path.join('.', 'external','tinyxml2','tinyxml2.cpp')]
 
 TEST_DIR=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'test')
-TEST_SRC=enum('test')
+TEST_SRC=Util.enum('test')
 
 def options(opt):
 	opt.add_option('--coverage', action='store_true', default=False, help='Enabling coverage measuring.')
@@ -85,7 +85,7 @@ def build(bld):
 		env = bld.all_envs["coverage"] if ("coverage" in bld.all_envs) else bld.env,
 		use=['GTEST', 'ICU', 'PPROF','BOOST'],
 		includes=[TARTE_INC, TINYXML2_INC])
-	bld.install_files("${PREFIX}", enum('include',[],['.h']), relative_trick=True)
+	bld.install_files("${PREFIX}", Util.enum('include',[],['.h']), relative_trick=True)
 	bld.install_files("${PREFIX}/include", ['external/tinyxml2/tinyxml2.h'], relative_trick=False)
 	bld.install_files("${PREFIX}/lib", 'libtarte.a')
 
