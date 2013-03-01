@@ -6,30 +6,13 @@
 
 import sys
 import os
+from external.WafHelper.common import enum
 
 APPNAME = 'Tarte'
 VERSION = '1.0.0'
 
 srcdir = '.'
 blddir = 'build'
-
-def enum(dirname, exclude=[], exts=['.cpp','.c']):
-	dirname = os.path.join(*(dirname.split('/')))
-	f = []
-	for root,dirs,files in os.walk(dirname):
-		matched = False
-		for e in exclude:
-			if root.startswith(e):
-				matched = True
-				break
-		if matched:
-			continue
-		for fitem in files:
-			fabs = os.path.join(root, fitem)
-			_, ext = os.path.splitext(fabs)
-			if ext in exts:
-				f.append(os.path.relpath(fabs))
-	return f
 
 TARTE_DIR=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'src')
 TARTE_INC=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'include')
@@ -105,15 +88,6 @@ def build(bld):
 	bld.install_files("${PREFIX}", enum('include',[],['.h']), relative_trick=True)
 	bld.install_files("${PREFIX}/include", ['external/tinyxml2/tinyxml2.h'], relative_trick=False)
 	bld.install_files("${PREFIX}/lib", 'libtarte.a')
-
-# from http://docs.waf.googlecode.com/git/book_16/single.html#_custom_build_outputs
-from waflib.Build import BuildContext, CleanContext, InstallContext, UninstallContext
-for x in 'debug release'.split():
-	for y in (BuildContext, CleanContext, InstallContext, UninstallContext):
-		name = y.__name__.replace('Context','').lower()
-		class tmp(y):
-			cmd = name + '_' + x
-			variant = x
 
 def shutdown(ctx):
 	pass
