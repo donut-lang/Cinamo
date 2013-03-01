@@ -1,0 +1,12 @@
+prefix=@PREFIX@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: tarte
+Version: @VER@
+Description: the C++ Library
+URL: http://donut-lang.org/
+Libs: -L${libdir} -ltarte
+Cflags: -I${includedir}
+Requires: icu-uc icu-i18n
