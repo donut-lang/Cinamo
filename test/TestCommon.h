@@ -30,7 +30,7 @@
 
 using namespace tarte;
 
-#define MATERIAL_DIR "__testfiles__"
+#define MATERIAL_DIR "__miscellaneous__/testfiles"
 
 #define NULL_STREAM (*((std::ostream*)0))
 static Logger log_trace(std::cout, Logger::TRACE_);
