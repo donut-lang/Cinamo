@@ -17,7 +17,7 @@
  */
 
 #include <tarte/Platform.h>
-#if CHISA_WINDOWS
+#if TARTE_WINDOWS
 #include <tarte/internal/Win32.h>
 #include <tarte/Logger.h>
 #include <tarte/Exception.h>

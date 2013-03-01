@@ -31,7 +31,7 @@
 #include <tarte/Platform.h>
 #include <tarte/String.h>
 
-#if CHISA_WINDOWS
+#if TARTE_WINDOWS
 #define _LONG_LONG_INT_FORMAT_ "I64"
 #else
 #define _LONG_LONG_INT_FORMAT_ "ll"

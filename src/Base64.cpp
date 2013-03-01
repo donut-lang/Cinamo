@@ -20,7 +20,7 @@
 #include <tarte/Base64.h>
 #include <tarte/Exception.h>
 
-#if CHISA_WINDOWS
+#if TARTE_WINDOWS
 #define _LONG_LONG_INT_FORMAT_ "I64"
 #elseBase64
 #define _LONG_LONG_INT_FORMAT_ "ll"

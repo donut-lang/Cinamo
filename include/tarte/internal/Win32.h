@@ -19,7 +19,7 @@
 #pragma once
 
 #include "../Platform.h"
-#if CHISA_WINDOWS
+#if TARTE_WINDOWS
 #include <Windows.h>
 #include <string>
 

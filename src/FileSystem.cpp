@@ -18,7 +18,7 @@
 
 #include <tarte/FileSystem.h>
 #include <tarte/Exception.h>
-#if CHISA_WINDOWS
+#if TARTE_WINDOWS
 #include <tarte/internal/Win32.h>
 #else
 #include <dirent.h>
@@ -57,7 +57,7 @@ std::string readAsString(std::string const& fname)
 	return readAsString(stream);
 }
 
-#if CHISA_WINDOWS
+#if TARTE_WINDOWS
 static void enumFilesImpl(std::wstring const& dir, std::vector<std::string>& list, bool recursive)
 {
 	using namespace internal;
