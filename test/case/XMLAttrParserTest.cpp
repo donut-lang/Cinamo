@@ -180,7 +180,7 @@ TEST(XMLAttrParser, BoolFoundCapitalTest)
 	<?xml version="1.0" encoding="UTF-8"?><doc val="True" />
 	)delimiter");
 	PARSE(bool, true, false);
-	ASSERT_FALSE(v);
+	ASSERT_TRUE(v);
 }
 
 TEST(XMLAttrParser, BoolFoundYesTest)
@@ -189,7 +189,7 @@ TEST(XMLAttrParser, BoolFoundYesTest)
 	<?xml version="1.0" encoding="UTF-8"?><doc val="yes" />
 	)delimiter");
 	PARSE(bool, true, false);
-	ASSERT_FALSE(v);
+	ASSERT_TRUE(v);
 }
 
 TEST(XMLAttrParser, BoolFoundFalseTest)
@@ -210,16 +210,16 @@ TEST(XMLAttrParser, BoolFoundNoTest)
 	ASSERT_FALSE(v);
 }
 
-TEST(XMLAttrParser, BoolNumTrueTest)
+TEST(XMLAttrParser, BoolNumNotZeroTest)
 {
 	auto doc = parse(R"delimiter(
 	<?xml version="1.0" encoding="UTF-8"?><doc val="5" />
 	)delimiter");
 	PARSE(bool, true, false);
-	ASSERT_TRUE(v);
+	ASSERT_FALSE(v);
 }
 
-TEST(XMLAttrParser, BoolNumFalseTest)
+TEST(XMLAttrParser, BoolNumZeroTest)
 {
 	auto doc = parse(R"delimiter(
 	<?xml version="1.0" encoding="UTF-8"?><doc val="0" />
