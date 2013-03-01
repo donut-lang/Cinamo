@@ -18,43 +18,36 @@
 
 #include <string>
 #include <tarte/XMLAttrParser.h>
+#include <tarte/String.h>
 
 namespace tarte {
 namespace xml {
 
-template <> void parseAttr<int>(std::string const& name, int& v, int const& def, tinyxml2::XMLElement* elm)
-{
-	if(elm->QueryIntAttribute(name.c_str(), &v) != tinyxml2::XML_SUCCESS){
-		v = def;
-	}
+#define PARSE_AS(type)\
+template <> void parseAttr<type>(std::string const& name, type& v, type const& def, tinyxml2::XMLElement* elm)\
+{\
+	bool res=false;\
+	if(const char* attr = elm->Attribute(name.c_str())){\
+		v = parseAs<type>(attr, &res);\
+		if(res) {\
+			return;\
+		}\
+	}\
+	v = def;\
 }
 
-template <> void parseAttr<float>(std::string const& name, float& v, float const& def, tinyxml2::XMLElement* elm)
-{
-	if(elm->QueryFloatAttribute(name.c_str(), &v) != tinyxml2::XML_SUCCESS){
-		v = def;
-	}
-}
+PARSE_AS(int);
+PARSE_AS(unsigned int);
+PARSE_AS(float);
+PARSE_AS(bool);
+
+#undef PARSE_AS
 
 template <> void parseAttr<std::string>(std::string const& name, std::string& v, std::string const& def, tinyxml2::XMLElement* elm)
 {
 	if(const char* attr = elm->Attribute(name.c_str())){
 		v = attr;
 	}else{
-		v = def;
-	}
-}
-
-template <> void parseAttr<unsigned int>(std::string const& name, unsigned int& v, const unsigned int& def, tinyxml2::XMLElement* elm)
-{
-	if(elm->QueryUnsignedAttribute(name.c_str(), &v) != tinyxml2::XML_SUCCESS){
-		v = def;
-	}
-}
-
-template <> void parseAttr<bool>(std::string const& name, bool& v, bool const& def, tinyxml2::XMLElement* elm)
-{
-	if(elm->QueryBoolAttribute(name.c_str(), &v) != tinyxml2::XML_SUCCESS){
 		v = def;
 	}
 }
