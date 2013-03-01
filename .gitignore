@@ -20,6 +20,7 @@
 .lock*
 .waf*/
 waf*/
+!external/
 
 #build dir
 build/
