@@ -13,9 +13,6 @@
 #include "Common.h"
 
 namespace tarte {
-/**
- * FIXME: さきゅばすから取ってきたそのまんま
- */
 
 /**
  * ロガー。
