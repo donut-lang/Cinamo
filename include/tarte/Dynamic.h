@@ -9,6 +9,7 @@
 
 #include <string>
 #include <typeinfo>
+#include <type_traits>
 #include "Common.h"
 
 namespace tarte {
