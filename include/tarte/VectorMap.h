@@ -108,5 +108,3 @@ public:
 };
 
 }
-
-#undef DEF_OVERLOD

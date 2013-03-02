@@ -6,7 +6,8 @@
 
 import sys
 import os
-import external.WafHelper.Util as Util
+sys.path.append('external/WafHelper')
+import Util
 
 APPNAME = 'Tarte'
 VERSION = '1.0.0'
