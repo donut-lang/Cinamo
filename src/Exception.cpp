@@ -11,11 +11,21 @@
 namespace tarte {
 
 Exception::Exception(const char* file, const size_t line) throw()
+:loc_()
+,msg_()
+,file_()
+,what_()
+,line_(-1)
 {
 	init(file, line, "");
 }
 
 Exception::Exception(const char* file, const size_t line, std::string const& fmt, ...) noexcept
+:loc_()
+,msg_()
+,file_()
+,what_()
+,line_(-1)
 {
 	va_list lst;
 	va_start(lst, fmt);
@@ -24,6 +34,11 @@ Exception::Exception(const char* file, const size_t line, std::string const& fmt
 }
 
 Exception::Exception(const char* file, const size_t line, std::string const& fmt, va_list lst) noexcept
+:loc_()
+,msg_()
+,file_()
+,what_()
+,line_(-1)
 {
 	init(file, line, fmt, lst);
 }
@@ -39,37 +54,39 @@ void Exception::init(const char* file, const size_t line, std::string const& fmt
 void Exception::init(const char* file, const size_t line, std::string const& fmt, va_list lst) noexcept
 {
 	try{
-		this->_line = line;
-		this->_file = std::string(file);
-		this->_loc = format("(in %s:%d): ", file, line);
-		this->_msg = formatv(fmt, lst);
-		this->_what = _loc+_msg;
+		this->line_ = line;
+		this->file_ = std::string(file);
+		this->loc_ = format("(in %s:%d): ", file, line);
+		this->msg_ = formatv(fmt, lst);
+		this->what_ = loc_+msg_;
 	}catch(...){
-		this->_line = 0;
-		this->_file = __FILE__;
-		this->_loc = "line ? in " __FILE__ ": ";
-		this->_msg = "[BUG] Failed to format string!!";
-		this->_what = _loc+_msg;
+		try {
+			this->line_ = 0;
+			this->file_ = __FILE__;
+			this->loc_ = "line ? in " __FILE__ ": ";
+			this->msg_ = "[BUG] Failed to format string!!";
+			this->what_ = loc_+msg_;
+		}catch(...){}
 	}
 }
 
 const char* Exception::what() const noexcept (true)
 {
-	return _what.c_str();
+	return this->what_.c_str();
 }
 
 std::string Exception::msg() const noexcept
 {
-	return _msg;
+	return this->msg_;
 }
 size_t Exception::line() const noexcept
 {
-	return _line;
+	return this->line_;
 }
 
 std::string Exception::file() const noexcept
 {
-	return _file;
+	return this->file_;
 }
 
 }
