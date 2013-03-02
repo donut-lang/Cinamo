@@ -12,33 +12,31 @@
 
 namespace tarte {
 
-template <typename T, typename U>
+template <typename T, typename U, typename Order=std::less<T> >
 struct PairCompare : public std::binary_function<std::pair<T,U>,std::pair<T,U>,bool>{
 	bool operator()(T const& a, std::pair<T,U> const& b){
-		return std::less<T>()(a, b.first);
+		return Order()(a, b.first);
 	}
 	bool operator()(std::pair<T,U> const& a, std::pair<T,U> const& b){
-		return std::less<T>()(a.first, b.first);
+		return Order()(a.first, b.first);
 	}
 	bool operator()(std::pair<T,U> const& a, T const& b){
-		return std::less<T>()(a.first, b);
+		return Order()(a.first, b);
 	}
 };
 
-template <typename T, typename U>
+template <typename T, typename U, typename Eq=std::equal_to<T> >
 struct PairEq : public std::unary_function<std::pair<T,U>,bool>{
 private:
 	T const& t_;
 public:
 	PairEq(T const& t):t_(t){}
 	bool operator()(T const& a){
-		return a == t_;
+		return Eq()(a,t_);
 	}
 	bool operator()(std::pair<T,U> const& a){
-		return a.first == t_;
+		return Eq()(a.first,t_);
 	}
 };
 
 }
-
-#undef DEF_OVERLOD
