@@ -59,8 +59,17 @@ std::string toString(type const& val, int radix) {\
 		return format(fmtstr16, val);\
 	default:\
 		TARTE_EXCEPTION(Exception, "[BUG] Unknwon radix: %d", radix);\
+		return "dummy for ignore warning.";\
 	}\
 }
+
+#if ((CHAR_MIN) == 0) //CHARが符号付きかどうかは環境依存です。
+TOSTR_DEF(char, "0%o", "%u", "0x%x");
+#else
+TOSTR_DEF(char, "0%o", "%d", "0x%x");
+#endif
+TOSTR_DEF(unsigned char, "0%o", "%u", "0x%x");
+TOSTR_DEF(signed char, "0%o", "%d", "0x%x");
 
 TOSTR_DEF(int, "0%o", "%d", "0x%x");
 TOSTR_DEF(unsigned int, "0%o", "%u", "0x%x");
@@ -74,6 +83,7 @@ TOSTR_DEF(unsigned long int, "0%" _LONG_LONG_INT_FORMAT_ "o", "%" _LONG_LONG_INT
 #else
 #error "Unknwon data type."
 #endif
+
 TOSTR_DEF(long long int, "0%" _LONG_LONG_INT_FORMAT_ "o", "%" _LONG_LONG_INT_FORMAT_ "d", "0x%" _LONG_LONG_INT_FORMAT_ "x");
 TOSTR_DEF(unsigned long long int, "0%" _LONG_LONG_INT_FORMAT_ "o", "%" _LONG_LONG_INT_FORMAT_ "u", "0x%" _LONG_LONG_INT_FORMAT_ "x");
 
