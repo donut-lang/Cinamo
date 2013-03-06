@@ -219,64 +219,45 @@ TEST(StringUtilTest, EndsWithTest)
 
 TEST(StringUtilTest, SplitTest)
 {
-	std::vector<std::string> arg;
 	std::string front;
 	std::string back;
-	split("you is a big fool man", " ", arg);
-	ASSERT_EQ(6U, arg.size());
-	front = arg.front();
-	back = arg.back();
-	ASSERT_STREQ(front.c_str(), "you");
-	ASSERT_STREQ(back.c_str(), "man");
-	arg.clear();
+	{
+		std::vector<std::string> arg = split("you is a big fool man", " ");
+		ASSERT_EQ(6U, arg.size());
+		front = arg.front();
+		back = arg.back();
+		ASSERT_STREQ(front.c_str(), "you");
+		ASSERT_STREQ(back.c_str(), "man");
+	}
 
-	split("you  is a big fool man", " ", arg);
-	ASSERT_EQ(6U, arg.size());
-	front = arg.front();
-	back = arg.back();
-	ASSERT_STREQ(front.c_str(), "you");
-	ASSERT_STREQ(back.c_str(), "man");
-	arg.clear();
+	{
+		std::vector<std::string> arg = split("you  is a big fool man", " ");
+		ASSERT_EQ(6U, arg.size());
+		std::string const& front = arg.front();
+		std::string const& back = arg.back();
+		ASSERT_STREQ(front.c_str(), "you");
+		ASSERT_STREQ(back.c_str(), "man");
+	}
 
-	split("you is a big fool man", " is ", arg);
-	ASSERT_EQ(2U, arg.size());
-	arg.clear();
+	ASSERT_EQ(2U, split("you is a big fool man", " is ").size());
 
-	splitSpace("you　is a　big fool man", arg);
-	ASSERT_EQ(6U, arg.size());
-	arg.clear();
+	ASSERT_EQ(6U, splitSpace("you　is a　big fool man").size());
 
-	splitLine("you\r\nis\ra\nbig \r\n\r\n fo\nol man", arg);
-	ASSERT_EQ(6U, arg.size());
-	arg.clear();
+	ASSERT_EQ(6U, splitLine("you\r\nis\ra\nbig \r\n\r\n fo\nol man").size());
 
-	splitLine("", arg);
-	ASSERT_EQ(0U, arg.size());
-	arg.clear();
+	ASSERT_EQ(0U, splitLine("").size());
 
-	splitLine("\r\n", arg);
-	ASSERT_EQ(0U, arg.size());
-	arg.clear();
+	ASSERT_EQ(0U, splitLine("\r\n").size());
 
-	splitLine("\r", arg);
-	ASSERT_EQ(0U, arg.size());
-	arg.clear();
+	ASSERT_EQ(0U, splitLine("\r").size());
 
-	splitSpace(" ", arg);
-	ASSERT_EQ(0U, arg.size());
-	arg.clear();
+	ASSERT_EQ(0U, splitSpace(" ").size());
 
-	splitSpace("", arg);
-	ASSERT_EQ(0U, arg.size());
-	arg.clear();
+	ASSERT_EQ(0U, splitSpace("").size());
 
-	split("", "", arg);
-	ASSERT_EQ(0U, arg.size());
-	arg.clear();
+	ASSERT_EQ(0U, split("", "").size());
 
-	split("", "a", arg);
-	ASSERT_EQ(0U, arg.size());
-	arg.clear();
+	ASSERT_EQ(0U, split("", "a").size());
 }
 
 }

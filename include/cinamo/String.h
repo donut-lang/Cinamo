@@ -56,15 +56,12 @@ template <typename T> T parseAs(std::string const& str, int radix, T const& defa
 template <typename T> T parseAs(std::string const& str, T const& default_);
 
 std::string decodePercent(std::string const& str);
-void split(std::string const& str, std::string const& sep, std::vector<std::string>& list);
-void split(std::string const& str, const std::string* sep, size_t n, std::vector<std::string>& list);
-template <size_t N>
-void inline split(std::string const& str, const std::string (&sep)[N], std::vector<std::string>& list)
-{
-	split(str, sep, N, list);
-}
-void splitSpace(std::string const& str, std::vector<std::string>& list);
-void splitLine(std::string const& str, std::vector<std::string>& list);
+
+std::vector<std::string> split(std::string const& str, std::string const& sep);
+template <size_t N> inline std::vector<std::string> split(std::string const& str, const std::string (&sep)[N]);
+std::vector<std::string> splitSpace(std::string const& str);
+std::vector<std::string> splitLine(std::string const& str);
+
 bool startsWith(std::string const& target, std::string const& prefix);
 bool endsWith(std::string const& target, std::string const& suffix);
 

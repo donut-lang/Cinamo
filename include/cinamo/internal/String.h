@@ -31,4 +31,14 @@ T parseAs(std::string const& str, T const& default_)
 	}
 }
 
+namespace internal {
+std::vector<std::string> split(std::string const& str, const std::string* sep, size_t n);
+}
+
+template <size_t N>
+std::vector<std::string> inline split(std::string const& str, const std::string (&sep)[N])
+{
+	return internal::split(str, sep, N);
+}
+
 }
