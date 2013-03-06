@@ -7,45 +7,79 @@
 
 #include <cstring>
 #include <cstdlib>
+#include <cctype>
 #include <cinamo/Exception.h>
 #include <cinamo/Url.h>
+#include <cinamo/String.h>
 
 namespace cinamo {
 namespace url {
+/**
+ * Based upon
+ * Uniform Resource Identifier (URI): Generic Syntax
+ * 2.1. Percent-Encoding:
+ * http://tools.ietf.org/html/rfc3986#section-2.1
+ */
 
 std::string decodePercent(std::string const& str)
 {
-	char* from(new char[str.length()+1]);
-	char* to(new char[str.length()+1]);
-	std::memcpy(from, str.c_str(), str.length());
-	from[str.length()] = '\0';
-	size_t i=0,j=0;
-	for(;i<str.length();++i, ++j){
-		if(from[i] == '%'){
-			char code[3];
-			code[0] = from[i+1];
-			code[1] = from[i+2];
-			code[2] = '\0';
-			i+=2;
-			char* failed = 0;
-			to[j] = static_cast<char>(std::strtol(code, &failed, 16) & 0xff);
-			if(failed != &code[2]){
-				CINAMO_EXCEPTION(Exception, "Failed to decode percent: %s", str.c_str());
+	std::string to;
+	std::string code;
+	code.resize(2);
+	const int max=str.length();
+	for(std::string::const_iterator it = str.begin(); it != str.end(); ++it){
+		switch( *it ) {
+		case '%': {
+			if( std::distance(str.begin(), it)+3 <= max ){
+				code[0] = *(++it);
+				code[1] = *(++it);
+				char* failed = nullptr;
+				const char c = static_cast<char>(std::strtol(code.c_str(), &failed, 16) & 0xff);
+				if( (*failed) != '\0' ){
+					CINAMO_EXCEPTION(Exception, "Failed to decode percent: %s", str.c_str());
+				}
+				to.push_back(c);
 			}
-		}else if(from[i]=='+'){
-			to[j] = ' ';
-		}else{
-			to[j] = from[i];
+			break;
+		}
+		default:
+			to.push_back(*it);
+			break;
 		}
 	}
-	to[j]='\0';
+	return to;
+}
 
-	std::string res(to);
+inline static bool isUnreserved( char const c )
+{
+	return std::isalnum(c) || c == '-' || c=='.' || c == '_' || c == '~';
+}
 
-	delete [] from;
-	delete [] to;
+inline static bool isGenDelim( char const c )
+{
+	return c == ':' || c == '/' || c == '?' || c == '#' || c == '[' || c == ']' || c == '@';
+}
 
-	return res;
+inline static bool isSubDelim( char const c )
+{
+	return c == '!' || c == '$' || c == '&' || c == '\'' || c == '(' || c == ')' || c == '*' || c == '+' || c == ',' || c == ';' || c == '=';
+}
+
+std::string encodePercent(std::string const& str)
+{
+	std::string ret;
+	ret.reserve(str.size()*2);
+
+	for(char const& c : str){
+		if( !isUnreserved(c) && !isGenDelim(c) && !isSubDelim(c) ) {
+			ret.push_back('%');
+			ret.append( format("%02X", static_cast<unsigned char>(c)) );
+		}else{
+			ret.push_back(c);
+		}
+	}
+
+	return ret;
 }
 
 }}
