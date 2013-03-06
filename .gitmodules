@@ -3,4 +3,4 @@
 	url = git://github.com/leethomason/tinyxml2.git
 [submodule "external/WafHelper"]
 	path = external/WafHelper
-	url = git@github.com:donut-lang/WafHelper.git
+	url = git://github.com/donut-lang/WafHelper.git
