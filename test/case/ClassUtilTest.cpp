@@ -1,14 +1,14 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
 #include "../TestCommon.h"
-#include <tarte/ClassUtil.h>
+#include <cinamo/ClassUtil.h>
 
-namespace tarte {
+namespace cinamo {
 
 class Sample {
 	DEFINE_MEMBER(public, public, int, val)

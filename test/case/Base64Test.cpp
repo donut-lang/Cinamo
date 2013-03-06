@@ -1,17 +1,17 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
 #include "../TestCommon.h"
-#include <tarte/Base64.h>
+#include <cinamo/Base64.h>
 
 #include <cfloat>
 #include <cmath>
 
-namespace tarte {
+namespace cinamo {
 
 TEST(StringUtilTest, Base64EecodeTest)
 {

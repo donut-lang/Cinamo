@@ -1,15 +1,15 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
 #include <string>
-#include <tarte/XMLAttrParser.h>
-#include <tarte/String.h>
+#include <cinamo/XMLAttrParser.h>
+#include <cinamo/String.h>
 
-namespace tarte {
+namespace cinamo {
 namespace xml {
 
 #define PARSE_AS(type)\

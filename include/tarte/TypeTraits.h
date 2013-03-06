@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -9,7 +9,7 @@
 #include "Common.h"
 #include <functional>
 
-namespace tarte {
+namespace cinamo {
 
 namespace internal {
 	template <typename Func>

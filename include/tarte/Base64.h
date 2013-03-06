@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -11,7 +11,7 @@
 
 #pragma once
 
-namespace tarte {
+namespace cinamo {
 namespace base64 {
 
 std::string encode( std::vector<char> const& data );

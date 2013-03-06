@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -10,7 +10,7 @@
 #include "Common.h"
 #include "XVal.h"
 
-namespace tarte {
+namespace cinamo {
 
 class XArchiver {
 	DISABLE_COPY_AND_ASSIGN(XArchiver);
@@ -49,7 +49,7 @@ public:
 	}
 	template <typename T> inline XArchiverIn& operator>>(T& t){
 		if( !this->array() ){
-			TARTE_EXCEPTION(Exception, "[BUG] Please load xvalue first.");
+			CINAMO_EXCEPTION(Exception, "[BUG] Please load xvalue first.");
 		}
 		this->operator &(t);
 		this->array(Handler<XArray>());
@@ -64,7 +64,7 @@ public:
 public:
 	inline XArchiverOut& operator>>(XValue& val){
 		if( !this->array() ){
-			TARTE_EXCEPTION(Exception, "[BUG] Please serialize objects first.");
+			CINAMO_EXCEPTION(Exception, "[BUG] Please serialize objects first.");
 		}
 		val = this->array();
 		this->array(Handler<XArray>());

@@ -1,16 +1,16 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
 #include "../TestCommon.h"
-#include <tarte/VectorMap.h>
+#include <cinamo/VectorMap.h>
 
 #include <cmath>
 
-namespace tarte {
+namespace cinamo {
 
 typedef VectorMap<int, int> Vec;
 typedef VectorMap<int, int>::Pair Pair;

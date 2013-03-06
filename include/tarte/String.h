@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -11,7 +11,7 @@
 #include "Common.h"
 
 #pragma once
-namespace tarte {
+namespace cinamo {
 
 std::string format(std::string const& fmt, ...);
 std::string formatv(std::string const& fmt, va_list args);

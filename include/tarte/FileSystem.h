@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -13,7 +13,7 @@
 #include "Platform.h"
 #include "internal/FileSystem.h"
 
-namespace tarte {
+namespace cinamo {
 namespace file {
 
 template <typename T, typename... Args>

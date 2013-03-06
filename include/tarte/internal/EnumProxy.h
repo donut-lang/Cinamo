@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -8,7 +8,7 @@
 #pragma once
 #include "../ClassUtil.h"
 
-namespace tarte {
+namespace cinamo {
 
 template <typename T>
 class EnumProxy {

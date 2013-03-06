@@ -1,11 +1,11 @@
 #! /bin/sh
 # -*- coding: utf-8 -*-
-# Tarte
+# Cinamo
 #
 # Copyright 2012-2013, PSI
 
 DIRNAME=$(cd $(dirname $0);pwd)
-TEST_FILE="tarte_test"
+TEST_FILE="cinamo_test"
 
 function run() {
 	PROG=$1/$TEST_FILE

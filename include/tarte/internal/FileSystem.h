@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -11,7 +11,7 @@
 #include <string>
 #include <set>
 
-namespace tarte {
+namespace cinamo {
 namespace file {
 
 namespace internal {
@@ -19,12 +19,12 @@ namespace internal {
 template <class String>
 struct FileConstants ;
 
-#if TARTE_WINDOWS
-#define TARTE_FILE_SEP "\\"
-#define TARTE_FILE_SEPW L"\\"
+#if CINAMO_WINDOWS
+#define CINAMO_FILE_SEP "\\"
+#define CINAMO_FILE_SEPW L"\\"
 #else
-#define TARTE_FILE_SEP "/"
-#define TARTE_FILE_SEPW L"/"
+#define CINAMO_FILE_SEP "/"
+#define CINAMO_FILE_SEPW L"/"
 #endif
 
 #define STRING_INNER \
@@ -32,7 +32,7 @@ typedef char* char_type;\
 typedef const char* const_char_type;\
 typedef std::string string_type;\
 typedef const std::string const_string_type;\
-static constexpr const_char_type Sep = TARTE_FILE_SEP;\
+static constexpr const_char_type Sep = CINAMO_FILE_SEP;\
 static constexpr const_char_type CurrentDir = ".";\
 static constexpr const_char_type ParentDir = "..";
 
@@ -41,7 +41,7 @@ typedef wchar_t* char_type;\
 typedef const wchar_t* const_char_type;\
 typedef std::wstring string_type;\
 typedef const std::wstring const_string_type;\
-static constexpr const_char_type Sep = TARTE_FILE_SEPW;\
+static constexpr const_char_type Sep = CINAMO_FILE_SEPW;\
 static constexpr const_char_type CurrentDir = L".";\
 static constexpr const_char_type ParentDir = L"..";
 
@@ -62,8 +62,8 @@ template<std::size_t N> struct FileConstants<wchar_t [N]> { WSTRING_INNER };
 
 #undef STRING_INNER
 #undef WSTRING_INNER
-#undef TARTE_FILE_SEP
-#undef TARTE_FILE_SEPW
+#undef CINAMO_FILE_SEP
+#undef CINAMO_FILE_SEPW
 
 }
 

@@ -3,10 +3,10 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
-Name: tarte
+Name: cinamo
 Version: @VER@
 Description: the C++ Library
 URL: http://donut-lang.org/
-Libs: -L${libdir} -ltarte
+Libs: -L${libdir} -lcinamo
 Cflags: -I${includedir}
 Requires: icu-uc icu-i18n

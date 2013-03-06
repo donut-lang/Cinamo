@@ -1,15 +1,15 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
 #include "../TestCommon.h"
-#include <tarte/XArchiver.h>
+#include <cinamo/XArchiver.h>
 #include <math.h>
 
-namespace tarte {
+namespace cinamo {
 namespace {
 
 struct BasicTest{

@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -8,11 +8,11 @@
 #pragma once
 
 #include "../Platform.h"
-#if TARTE_WINDOWS
+#if CINAMO_WINDOWS
 #include <Windows.h>
 #include <string>
 
-namespace tarte {
+namespace cinamo {
 namespace internal {
 namespace win32 {
 

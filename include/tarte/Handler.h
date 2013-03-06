@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -12,7 +12,7 @@
 #include "Thread.h"
 #include "Exception.h"
 
-namespace tarte {
+namespace cinamo {
 
 /**********************************************************************************************************************
  * Handler
@@ -108,7 +108,7 @@ public:
 	{
 		T* spr = dynamic_cast<T*>(this->sprite);
 		if( unlikely(!spr) ){
-			TARTE_EXCEPTION(Exception, "[BUG] Sprite::Handler / failed to cast %s to %s", typeid(this->sprite).name(), typeid(spr).name());
+			CINAMO_EXCEPTION(Exception, "[BUG] Sprite::Handler / failed to cast %s to %s", typeid(this->sprite).name(), typeid(spr).name());
 		}
 		return Handler<T>::__internal__fromRawPointerWithoutCheck(spr);
 	}
@@ -385,7 +385,7 @@ protected:
 		HandlerBody<Derived, atomic>* const self = const_cast<HandlerBody<Derived, atomic>*>(this);
 		if( unlikely((self->refcount_++) != 0 && check) ){
 			int const val = --self->refcount_;
-			TARTE_EXCEPTION(Exception, "[BUG] Handler created, but refcount = %d, not zero.", val);
+			CINAMO_EXCEPTION(Exception, "[BUG] Handler created, but refcount = %d, not zero.", val);
 		}
 	}
 	inline void decref() const{
@@ -393,7 +393,7 @@ protected:
 		--self->refcount_;
 		if(unlikely(self->refcount_ < 0)){
 			int const val = self->refcount_;
-			TARTE_EXCEPTION(Exception, "[BUG] Handler refcount = %d < 0", val);
+			CINAMO_EXCEPTION(Exception, "[BUG] Handler refcount = %d < 0", val);
 		}else if(self->refcount_ == 0 && !self->deleted){
 			self->deleted = true;
 			if(self->weakEntity_){

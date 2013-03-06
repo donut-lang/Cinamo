@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -8,7 +8,7 @@
 #pragma once
 #include "../String.h"
 
-namespace tarte {
+namespace cinamo {
 
 template <typename T> XArchiver& XArchiver::operator &(T& val) {
 	if(decode_now_){
@@ -51,7 +51,7 @@ struct XSerializer<std::pair<T,U> > {
 	static void deserialize(std::pair<T,U>& p, XValue const& xval){
 		Handler<XArray> array(xval.as<XArray>());
 		if(array->size() != 2) {
-			TARTE_EXCEPTION(Exception, "Pair requested, but actual array size is %d", array->size());
+			CINAMO_EXCEPTION(Exception, "Pair requested, but actual array size is %d", array->size());
 		}
 		XSerializer<T>::deserialize(p.first, array->get<XValue>(0));
 		XSerializer<U>::deserialize(p.second, array->get<XValue>(1));
@@ -80,7 +80,7 @@ struct XSerializer<T[N]> {
 	static void deserialize(T (&val)[N], XValue const& xval){
 		Handler<XArray> array(xval.as<XArray>());
 		if(array->size() != N) {
-			TARTE_EXCEPTION(Exception, "Array size does not match!: requested:%d != actual:%d", N, array->size());
+			CINAMO_EXCEPTION(Exception, "Array size does not match!: requested:%d != actual:%d", N, array->size());
 		}
 		int cnt=0;
 		for( XValue& v : *(array) ) {
@@ -97,7 +97,7 @@ struct XSerializer<char[N]> {
 	static void deserialize(char (&val)[N], XValue const& xval){
 		std::vector<char> c ( xval.as<XBinary>() );
 		if(c.size() != N) {
-			TARTE_EXCEPTION(Exception, "Binary size does not match!: requested:%d != actual:%d", N, c.size());
+			CINAMO_EXCEPTION(Exception, "Binary size does not match!: requested:%d != actual:%d", N, c.size());
 		}
 		std::copy(c.begin(), c.end(), val);
 	}
@@ -111,7 +111,7 @@ struct XSerializer<unsigned char[N]> {
 	static void deserialize(unsigned char (&val)[N], XValue const& xval){
 		std::vector<char> c ( xval.as<XBinary>() );
 		if(c.size() != N) {
-			TARTE_EXCEPTION(Exception, "Binary size does not match!: requested:%d != actual:%d", N, c.size());
+			CINAMO_EXCEPTION(Exception, "Binary size does not match!: requested:%d != actual:%d", N, c.size());
 		}
 		std::copy(c.begin(), c.end(), val);
 	}

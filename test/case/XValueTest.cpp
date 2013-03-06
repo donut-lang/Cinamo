@@ -1,17 +1,17 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
 #include <cmath>
 #include <cstdint>
-#include <tarte/XVal.h>
-#include <tarte/TypeTraits.h>
+#include <cinamo/XVal.h>
+#include <cinamo/TypeTraits.h>
 #include "../TestCommon.h"
 
-namespace tarte {
+namespace cinamo {
 
 TEST(XValueTest, SizeTest)
 {

@@ -1,14 +1,14 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
-#include <tarte/String.h>
-#include <tarte/Exception.h>
+#include <cinamo/String.h>
+#include <cinamo/Exception.h>
 
-namespace tarte {
+namespace cinamo {
 
 Exception::Exception(const char* file, const size_t line) throw()
 :loc_()

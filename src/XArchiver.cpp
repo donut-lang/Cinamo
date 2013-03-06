@@ -1,14 +1,14 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
-#include <tarte/XArchiver.h>
-#include <tarte/String.h>
+#include <cinamo/XArchiver.h>
+#include <cinamo/String.h>
 
-namespace tarte {
+namespace cinamo {
 
 XArchiver::XArchiver(bool decode_now)
 :decode_now_(decode_now)
@@ -51,11 +51,11 @@ XArchiver& XArchiver::binary(char* const bin, std::size_t const& len)
 {
 	if(decode_now_){
 		if(!bin){
-			TARTE_EXCEPTION(Exception, "[BUG] Oops. Binary Area is not allocated.");
+			CINAMO_EXCEPTION(Exception, "[BUG] Oops. Binary Area is not allocated.");
 		}
 		XBinary const& b(array_->get<XBinary>(this->array_index_++));
 		if(len != b.size()){
-			TARTE_EXCEPTION(Exception, "[BUG] Binary size does not match. requested: %d archived: %d", len, b.size());
+			CINAMO_EXCEPTION(Exception, "[BUG] Binary size does not match. requested: %d archived: %d", len, b.size());
 		}
 		std::copy(b.begin(), b.end(), bin);
 	}else{

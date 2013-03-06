@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -9,7 +9,7 @@
 #include "Common.h"
 #include "Platform.h"
 
-#if TARTE_WINDOWS || TARTE_ANDROID
+#if CINAMO_WINDOWS || CINAMO_ANDROID
 #include <boost/thread.hpp>
 #include <boost/interprocess/detail/atomic.hpp>
 #include <boost/atomic.hpp>

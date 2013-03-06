@@ -1,21 +1,21 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
 #include <sstream>
-#include <tarte/Base64.h>
-#include <tarte/Exception.h>
+#include <cinamo/Base64.h>
+#include <cinamo/Exception.h>
 
-#if TARTE_WINDOWS
+#if CINAMO_WINDOWS
 #define _LONG_LONG_INT_FORMAT_ "I64"
 #elseBase64
 #define _LONG_LONG_INT_FORMAT_ "ll"
 #endif
 
-namespace tarte {
+namespace cinamo {
 namespace base64 {
 
 static const char BASE64CHR[65]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

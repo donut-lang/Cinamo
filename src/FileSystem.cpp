@@ -1,14 +1,14 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
-#include <tarte/FileSystem.h>
-#include <tarte/Exception.h>
-#if TARTE_WINDOWS
-#include <tarte/internal/Win32.h>
+#include <cinamo/FileSystem.h>
+#include <cinamo/Exception.h>
+#if CINAMO_WINDOWS
+#include <cinamo/internal/Win32.h>
 #else
 #include <dirent.h>
 #include <sys/types.h>
@@ -18,7 +18,7 @@
 #include <sstream>
 #include <fstream>
 
-namespace tarte {
+namespace cinamo {
 namespace file {
 namespace internal {
 
@@ -46,11 +46,11 @@ std::string readAsString(std::string const& fname)
 	return readAsString(stream);
 }
 
-#if TARTE_WINDOWS
+#if CINAMO_WINDOWS
 static void enumFilesImpl(std::wstring const& dir, std::vector<std::string>& list, bool recursive)
 {
 	using namespace internal;
-	using namespace ::tarte::internal::win32;
+	using namespace ::cinamo::internal::win32;
 	typedef FileConstants<std::wstring> ftype;
 	WIN32_FIND_DATAW findFileData;
 	HANDLE h = FindFirstFileW(join(dir,L"*.*").c_str(), &findFileData);
@@ -73,7 +73,7 @@ static void enumFilesImpl(std::wstring const& dir, std::vector<std::string>& lis
 }
 std::vector<std::string> enumFiles(std::string const& dir, bool recursive)
 {
-	using namespace ::tarte::internal::win32;
+	using namespace ::cinamo::internal::win32;
 	std::vector<std::string> list;
 	enumFilesImpl(toUTF16(dir), list, recursive);
 	return list;
@@ -85,13 +85,13 @@ static void enumFilesImpl(std::string const& dir, std::vector<std::string>& list
 	struct dirent* de;
 	DIR* d = opendir(dir.c_str());
 	if( !d ){
-		TARTE_EXCEPTION(Exception, "[BUG] Failed to open dir: %s", dir.c_str());
+		CINAMO_EXCEPTION(Exception, "[BUG] Failed to open dir: %s", dir.c_str());
 	}
 	while((de = readdir(d)) != nullptr){
 		std::string name = join(dir, de->d_name);
 		struct stat64 st;
 		if(lstat64(name.c_str(), &st) != 0){
-			TARTE_EXCEPTION(Exception, "Failed to lstat64.");
+			CINAMO_EXCEPTION(Exception, "Failed to lstat64.");
 		}
 		if(S_IFDIR & st.st_mode){
 			static const std::string CurrentDirStr(ftype::CurrentDir);

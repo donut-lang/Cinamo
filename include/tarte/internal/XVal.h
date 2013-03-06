@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -13,7 +13,7 @@
 #include "VectorProxy.h"
 #include "../Exception.h"
 
-namespace tarte {
+namespace cinamo {
 
 class XArray;
 class XObject;
@@ -112,11 +112,11 @@ template <> struct _TypeAdapter< std::vector<signed char> > {
 
 template <typename T> typename _TypeAdapter<T>::return_type XArray::get( std::size_t const& idx ) {
 	if( idx >= list_.size() ){
-		TARTE_EXCEPTION(Exception, "idx: %d >= size: %d ", idx, list_.size());
+		CINAMO_EXCEPTION(Exception, "idx: %d >= size: %d ", idx, list_.size());
 	}
 	XValue& val = list_[idx];
 	if( !val.is<T>() ) {
-		TARTE_EXCEPTION(Exception, "Array: \"%d\" type mismatch required: %s actual: %s.", idx, XValue(typename _TypeAdapter<T>::init_type()).typeString().c_str(), val.typeString().c_str());
+		CINAMO_EXCEPTION(Exception, "Array: \"%d\" type mismatch required: %s actual: %s.", idx, XValue(typename _TypeAdapter<T>::init_type()).typeString().c_str(), val.typeString().c_str());
 	}
 	return val.as<T>();
 }
@@ -136,7 +136,7 @@ template <typename T> bool XArray::has( std::size_t const& idx ) const {
 }
 template <typename T> typename _TypeAdapter<T>::return_type XArray::set( std::size_t const& idx, T const& obj ) {
 	if( idx >= list_.size() ){
-		TARTE_EXCEPTION(Exception, "idx: %d >= size: %d ", idx, list_.size());
+		CINAMO_EXCEPTION(Exception, "idx: %d >= size: %d ", idx, list_.size());
 	}
 	XValue& val = list_[idx];
 	val = XValue(obj);
@@ -152,10 +152,10 @@ template<typename T> typename _TypeAdapter<T>::return_type XObject::get( std::st
 	std::vector<std::pair<std::string, XValue> >::iterator const it = std::lower_bound( this->map_.begin(), this->map_.end(), name, Comparator() );
 	std::pair<std::string, XValue>& p = *it;
 	if( it == this->map_.end() || p.first != name){
-		TARTE_EXCEPTION(Exception, "Object: \"%s\" not found.", name.c_str());
+		CINAMO_EXCEPTION(Exception, "Object: \"%s\" not found.", name.c_str());
 	}
 	if( !p.second.is<T>() ) {
-		TARTE_EXCEPTION(Exception, "Object: \"%s\" type mismatch required: %s actual: %s.", name.c_str(), XValue(typename _TypeAdapter<T>::init_type()).typeString().c_str(), it->second.typeString().c_str());
+		CINAMO_EXCEPTION(Exception, "Object: \"%s\" type mismatch required: %s actual: %s.", name.c_str(), XValue(typename _TypeAdapter<T>::init_type()).typeString().c_str(), it->second.typeString().c_str());
 	}
 	return p.second.as<T>();
 }
@@ -170,7 +170,7 @@ template<> inline XValue& XObject::get<XValue>( std::string const& name ) {
 	std::vector<std::pair<std::string, XValue> >::iterator const it = std::lower_bound( this->map_.begin(), this->map_.end(), name, Comparator() );
 	std::pair<std::string, XValue>& p = *it;
 	if( it == this->map_.end() || p.first != name){
-		TARTE_EXCEPTION(Exception, "Object: \"%s\" not found.", name.c_str());
+		CINAMO_EXCEPTION(Exception, "Object: \"%s\" not found.", name.c_str());
 	}
 	return p.second;
 }
@@ -210,14 +210,14 @@ template<typename T> typename _TypeAdapter<T>::return_type XObject::set(std::str
 		template <> inline typename _TypeAdapter<XValue::TYPE>::return_type XValue::asImpl<XValue::TYPE>() {\
 			if(this->type_ != XValue::Type::TYPE##T) {\
 				typedef typename _TypeAdapter<XValue::TYPE>::init_type Type;\
-				TARTE_EXCEPTION(Exception, "Type mismatched! required: %s actual: %s.", XValue((Type())).typeString().c_str(), this->typeString().c_str());\
+				CINAMO_EXCEPTION(Exception, "Type mismatched! required: %s actual: %s.", XValue((Type())).typeString().c_str(), this->typeString().c_str());\
 			}\
 			return VAL;\
 		};\
 		template <> inline typename _TypeAdapter<XValue::TYPE>::return_const_type XValue::asImpl<XValue::TYPE>() const {\
 			if(this->type_ != XValue::Type::TYPE##T) {\
 				typedef typename _TypeAdapter<XValue::TYPE>::init_type Type;\
-				TARTE_EXCEPTION(Exception, "Type mismatched! required: %s actual: %s.", XValue((Type())).typeString().c_str(), this->typeString().c_str());\
+				CINAMO_EXCEPTION(Exception, "Type mismatched! required: %s actual: %s.", XValue((Type())).typeString().c_str(), this->typeString().c_str());\
 			}\
 			return VAL;\
 		};\

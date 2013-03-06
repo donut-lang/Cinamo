@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -13,7 +13,7 @@
 #define DEF_OVERLOD(Klass)\
 template <> void parseAttr(std::string const& name, Klass& ptr, Klass const& def, tinyxml2::XMLElement* elm)
 
-namespace tarte {
+namespace cinamo {
 namespace xml {
 
 template <typename T> void parseAttr(std::string const& name, T& ptr, const T& def, tinyxml2::XMLElement* elm);

@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -8,11 +8,11 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include <tarte/Logger.h>
-#include <tarte/Exception.h>
-#include <tarte/String.h>
+#include <cinamo/Logger.h>
+#include <cinamo/Exception.h>
+#include <cinamo/String.h>
 
-namespace tarte {
+namespace cinamo {
 
 Logger::Logger(std::ostream& stream, enum Level level) noexcept
 :_stream(stream), level(level)

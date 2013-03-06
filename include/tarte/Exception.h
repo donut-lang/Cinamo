@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -12,7 +12,7 @@
 #include "Common.h"
 #include "ClassUtil.h"
 
-namespace tarte {
+namespace cinamo {
 
 class Exception : public std::exception {
 private:
@@ -35,6 +35,6 @@ public:
 	size_t line() const noexcept;
 };
 
-#define TARTE_EXCEPTION(Klass, ...) throw ::tarte::Klass(__FILE__, __LINE__, __VA_ARGS__);
+#define CINAMO_EXCEPTION(Klass, ...) throw ::cinamo::Klass(__FILE__, __LINE__, __VA_ARGS__);
 
 }

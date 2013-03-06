@@ -1,15 +1,15 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
-#include <tarte/Dynamic.h>
+#include <cinamo/Dynamic.h>
 
 #include <cxxabi.h>
 
-namespace tarte {
+namespace cinamo {
 
 
 std::string demangle(std::type_info const& info)

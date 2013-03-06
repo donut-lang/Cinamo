@@ -1,21 +1,21 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
-#include <tarte/XVal.h>
-#include <tarte/String.h>
-#include <tarte/Base64.h>
+#include <cinamo/XVal.h>
+#include <cinamo/String.h>
+#include <cinamo/Base64.h>
 #include <tinyxml2.h>
 
-namespace tarte {
+namespace cinamo {
 
 XArray::XArray( tinyxml2::XMLElement* elm )
 {
 	if(std::string("xarray") != elm->Name()){
-		TARTE_EXCEPTION(Exception, "Element is not xarray. type: %s value: %s", elm->Name(), elm->GetText());
+		CINAMO_EXCEPTION(Exception, "Element is not xarray. type: %s value: %s", elm->Name(), elm->GetText());
 	}
 	for( tinyxml2::XMLElement* e = elm->FirstChildElement(); e; e = e->NextSiblingElement() ){
 		append( XValue::fromXML(e) );
@@ -39,12 +39,12 @@ XObject::XObject( tinyxml2::XMLElement* elm )
 void XObject::accumlate( tinyxml2::XMLElement* elm )
 {
 	if(std::string("xobject") != elm->Name()){
-		TARTE_EXCEPTION(Exception, "Element is not xobject. type: %s value: %s", elm->Name(), elm->GetText());
+		CINAMO_EXCEPTION(Exception, "Element is not xobject. type: %s value: %s", elm->Name(), elm->GetText());
 	}
 	for( tinyxml2::XMLElement* e = elm->FirstChildElement(); e; e = e->NextSiblingElement() ){
 		const char* const name = e->Attribute("name");
 		if(!name){
-			TARTE_EXCEPTION(Exception, "Object element name not specified. type: %s value: %s", e->Name(), e->GetText());
+			CINAMO_EXCEPTION(Exception, "Object element name not specified. type: %s value: %s", e->Name(), e->GetText());
 		}
 		set(name, XValue::fromXML(e));
 	}
@@ -82,7 +82,7 @@ XValue XValue::fromXML( tinyxml2::XMLElement* elm ) {
 	}else if(name=="xfloat") {
 		return XValue::fromString<Float>( elm->GetText() );
 	}else{
-		TARTE_EXCEPTION(Exception, "[BUG] Unknwon type!: %s", name.c_str());
+		CINAMO_EXCEPTION(Exception, "[BUG] Unknwon type!: %s", name.c_str());
 	}
 }
 
@@ -126,7 +126,7 @@ tinyxml2::XMLElement* XValue::toXML( tinyxml2::XMLDocument* doc )
 		return elm;
 	}
 	default:
-		TARTE_EXCEPTION(Exception, "[BUG] Unknwon type!: %d", type_);
+		CINAMO_EXCEPTION(Exception, "[BUG] Unknwon type!: %d", type_);
 	}
 }
 
@@ -151,7 +151,7 @@ std::string XValue::typeString() const noexcept {
 	case Type::FloatT:
 		return "XFloat";
 	default:
-		TARTE_EXCEPTION(Exception, "[BUG] Unknwon type!: %d", type_);
+		CINAMO_EXCEPTION(Exception, "[BUG] Unknwon type!: %d", type_);
 	}
 }
 
@@ -269,7 +269,7 @@ template <> XValue XValue::fromString<XValue::UInt>(std::string const& str)
 	bool success = false;
 	XValue::UInt val = parseAs<XValue::UInt>(str, 0, &success);
 	if(!success){
-		TARTE_EXCEPTION(Exception, "Failed to convert %s to UInt.", str.c_str());
+		CINAMO_EXCEPTION(Exception, "Failed to convert %s to UInt.", str.c_str());
 	}
 	return XValue((UInt)val);
 }
@@ -278,7 +278,7 @@ template <> XValue XValue::fromString<XValue::SInt>(std::string const& str)
 	bool success = false;
 	XValue::SInt val = parseAs<XValue::SInt>(str, 0, &success);
 	if(!success){
-		TARTE_EXCEPTION(Exception, "Failed to convert %s to SInt.", str.c_str());
+		CINAMO_EXCEPTION(Exception, "Failed to convert %s to SInt.", str.c_str());
 	}
 	return XValue((SInt)val);
 }
@@ -287,7 +287,7 @@ template <> XValue XValue::fromString<XValue::Float>(std::string const& str)
 	bool success = false;
 	XValue::Float val = parseAs<XValue::Float>(str, &success);
 	if(!success){
-		TARTE_EXCEPTION(Exception, "Failed to convert %s to Double.", str.c_str());
+		CINAMO_EXCEPTION(Exception, "Failed to convert %s to Double.", str.c_str());
 	}
 	return XValue((Float)val);
 }
@@ -296,7 +296,7 @@ template <> XValue XValue::fromString<XValue::Bool>(std::string const& str)
 	bool success = false;
 	XValue::Bool val = parseAs<bool>(str, &success);
 	if(!success){
-		TARTE_EXCEPTION(Exception, "Failed to convert %s to bool", str.c_str());
+		CINAMO_EXCEPTION(Exception, "Failed to convert %s to bool", str.c_str());
 	}
 	return XValue((Bool)val);
 }

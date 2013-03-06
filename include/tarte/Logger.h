@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -12,7 +12,7 @@
 #include <string>
 #include "Common.h"
 
-namespace tarte {
+namespace cinamo {
 
 /**
  * ロガー。

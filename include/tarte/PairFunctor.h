@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -10,7 +10,7 @@
 #include <functional>
 #include "Common.h"
 
-namespace tarte {
+namespace cinamo {
 
 template <typename T, typename U, typename Order=std::less<T> >
 struct PairCompare : public std::binary_function<std::pair<T,U>,std::pair<T,U>,bool>{

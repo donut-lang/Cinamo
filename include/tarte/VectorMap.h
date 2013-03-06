@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -11,7 +11,7 @@
 #include "Common.h"
 #include "PairFunctor.h"
 
-namespace tarte {
+namespace cinamo {
 
 template <typename T, typename U>
 class VectorMap {

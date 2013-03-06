@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -16,17 +16,17 @@
 #include <unicode/regex.h>
 #include <unicode/brkiter.h>
 
-#include <tarte/Exception.h>
-#include <tarte/Platform.h>
-#include <tarte/String.h>
+#include <cinamo/Exception.h>
+#include <cinamo/Platform.h>
+#include <cinamo/String.h>
 
-#if TARTE_WINDOWS
+#if CINAMO_WINDOWS
 #define _LONG_LONG_INT_FORMAT_ "I64"
 #else
 #define _LONG_LONG_INT_FORMAT_ "ll"
 #endif
 
-namespace tarte {
+namespace cinamo {
 
 std::string format(std::string const& fmt, ...)
 {
@@ -41,7 +41,7 @@ std::string formatv(std::string const& fmt, va_list args)
 	char buff[8192];
 	size_t len = vsnprintf(buff, 8192, fmt.c_str(), args);
 	if(len < 0){
-		TARTE_EXCEPTION(Exception, "Format string too long!!");
+		CINAMO_EXCEPTION(Exception, "Format string too long!!");
 	}
 	return buff;
 }
@@ -58,7 +58,7 @@ std::string toString(type const& val, int radix) {\
 	case 16:\
 		return format(fmtstr16, val);\
 	default:\
-		TARTE_EXCEPTION(Exception, "[BUG] Unknwon radix: %d", radix);\
+		CINAMO_EXCEPTION(Exception, "[BUG] Unknwon radix: %d", radix);\
 		return "dummy for ignore warning.";\
 	}\
 }
@@ -182,7 +182,7 @@ TYPE parseAs<TYPE>(std::string const& str, int radix, bool* succeed) {\
 		if(succeed != nullptr){\
 			*succeed = false;\
 		}else{\
-			TARTE_EXCEPTION(Exception, "Invalid number: %s", str.c_str());\
+			CINAMO_EXCEPTION(Exception, "Invalid number: %s", str.c_str());\
 		}\
 	} else {\
 		if(succeed) *succeed = true;\
@@ -221,7 +221,7 @@ PARSE_STRTO(unsigned long long int, strtoull);
 			if(succeed != nullptr){\
 				*succeed = false;\
 			}else{\
-				TARTE_EXCEPTION(Exception, "Invalid number: %s", str.c_str());\
+				CINAMO_EXCEPTION(Exception, "Invalid number: %s", str.c_str());\
 			}\
 		} else {\
 			if(succeed) *succeed = true;\
@@ -252,7 +252,7 @@ bool parseAs<bool>(std::string const& str, bool* succeed)
 	} else if(succeed){
 		*succeed = false;
 	} else {
-		TARTE_EXCEPTION(Exception, "Invalid boolean: %s", str.c_str());
+		CINAMO_EXCEPTION(Exception, "Invalid boolean: %s", str.c_str());
 	}
 	return false;
 }
@@ -285,7 +285,7 @@ std::string decodePercent(std::string const& str)
 			char* failed = 0;
 			to[j] = static_cast<char>(std::strtol(code, &failed, 16) & 0xff);
 			if(failed != &code[2]){
-				TARTE_EXCEPTION(Exception, "Failed to decode percent: %s", str.c_str());
+				CINAMO_EXCEPTION(Exception, "Failed to decode percent: %s", str.c_str());
 			}
 		}else if(from[i]=='+'){
 			to[j] = ' ';

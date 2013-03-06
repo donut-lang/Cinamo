@@ -1,14 +1,14 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
 #include "../TestCommon.h"
-#include <tarte/Dynamic.h>
+#include <cinamo/Dynamic.h>
 
-namespace tarte {
+namespace cinamo {
 
 TEST(DemangleTest, Literal)
 {
@@ -55,17 +55,17 @@ TEST(DemangleTest, Class)
 {
 	__DemangleTest__SampleVirtual s;
 	__DemangleTest__SampleVirtual* sp = &s;
-	ASSERT_EQ("tarte::__DemangleTest__SampleVirtual", demangle(s));
-	ASSERT_EQ("tarte::__DemangleTest__SampleVirtual", demangle(&s));
-	ASSERT_EQ("tarte::__DemangleTest__SampleVirtual", demangle(sp));
-	ASSERT_EQ("tarte::__DemangleTest__SampleVirtual", demangle(&sp));
+	ASSERT_EQ("cinamo::__DemangleTest__SampleVirtual", demangle(s));
+	ASSERT_EQ("cinamo::__DemangleTest__SampleVirtual", demangle(&s));
+	ASSERT_EQ("cinamo::__DemangleTest__SampleVirtual", demangle(sp));
+	ASSERT_EQ("cinamo::__DemangleTest__SampleVirtual", demangle(&sp));
 
 	__DemangleTest__Sample ss;
 	__DemangleTest__Sample* ssp = &ss;
-	ASSERT_EQ("tarte::__DemangleTest__Sample", demangle(ss));
-	ASSERT_EQ("tarte::__DemangleTest__Sample", demangle(&ss));
-	ASSERT_EQ("tarte::__DemangleTest__Sample", demangle(ssp));
-	ASSERT_EQ("tarte::__DemangleTest__Sample", demangle(&ssp));
+	ASSERT_EQ("cinamo::__DemangleTest__Sample", demangle(ss));
+	ASSERT_EQ("cinamo::__DemangleTest__Sample", demangle(&ss));
+	ASSERT_EQ("cinamo::__DemangleTest__Sample", demangle(ssp));
+	ASSERT_EQ("cinamo::__DemangleTest__Sample", demangle(&ssp));
 }
 
 template <typename T>
@@ -75,19 +75,19 @@ class __DemangleTest__TemplateKlass {
 TEST(DemangleTest, TemplateClass)
 {
 	__DemangleTest__TemplateKlass<__DemangleTest__SampleVirtual> s;
-	ASSERT_EQ("tarte::__DemangleTest__TemplateKlass<tarte::__DemangleTest__SampleVirtual>", demangle(s));
+	ASSERT_EQ("cinamo::__DemangleTest__TemplateKlass<cinamo::__DemangleTest__SampleVirtual>", demangle(s));
 
 	__DemangleTest__TemplateKlass<__DemangleTest__Sample> ss;
-	ASSERT_EQ("tarte::__DemangleTest__TemplateKlass<tarte::__DemangleTest__Sample>", demangle(ss));
+	ASSERT_EQ("cinamo::__DemangleTest__TemplateKlass<cinamo::__DemangleTest__Sample>", demangle(ss));
 }
 
 TEST(DemangleTest, RecusriveTemplateClass)
 {
-	tarte::__DemangleTest__TemplateKlass<__DemangleTest__TemplateKlass<__DemangleTest__SampleVirtual>> s;
-	ASSERT_EQ("tarte::__DemangleTest__TemplateKlass<tarte::__DemangleTest__TemplateKlass<tarte::__DemangleTest__SampleVirtual> >", demangle(s));
+	cinamo::__DemangleTest__TemplateKlass<__DemangleTest__TemplateKlass<__DemangleTest__SampleVirtual>> s;
+	ASSERT_EQ("cinamo::__DemangleTest__TemplateKlass<cinamo::__DemangleTest__TemplateKlass<cinamo::__DemangleTest__SampleVirtual> >", demangle(s));
 
-	tarte::__DemangleTest__TemplateKlass<__DemangleTest__TemplateKlass<__DemangleTest__Sample>> ss;
-	ASSERT_EQ("tarte::__DemangleTest__TemplateKlass<tarte::__DemangleTest__TemplateKlass<tarte::__DemangleTest__Sample> >", demangle(ss));
+	cinamo::__DemangleTest__TemplateKlass<__DemangleTest__TemplateKlass<__DemangleTest__Sample>> ss;
+	ASSERT_EQ("cinamo::__DemangleTest__TemplateKlass<cinamo::__DemangleTest__TemplateKlass<cinamo::__DemangleTest__Sample> >", demangle(ss));
 }
 
 TEST(DemangleTest, DerivedVirtualKlassTest)
@@ -95,9 +95,9 @@ TEST(DemangleTest, DerivedVirtualKlassTest)
 	__DemangleTest__SampleVirtualDerived s;
 	__DemangleTest__SampleVirtual* p = &s;
 	ASSERT_EQ(demangle(typeid(s)), demangle(typeid(*p)));
-	ASSERT_EQ("tarte::__DemangleTest__SampleVirtualDerived", demangle(typeid(*p)));
-	ASSERT_EQ("tarte::__DemangleTest__SampleVirtualDerived", demangle(p));
-	ASSERT_EQ("tarte::__DemangleTest__SampleVirtualDerived", demangle(&p));
+	ASSERT_EQ("cinamo::__DemangleTest__SampleVirtualDerived", demangle(typeid(*p)));
+	ASSERT_EQ("cinamo::__DemangleTest__SampleVirtualDerived", demangle(p));
+	ASSERT_EQ("cinamo::__DemangleTest__SampleVirtualDerived", demangle(&p));
 }
 
 TEST(DemangleTest, DerivedKlassTest)
@@ -106,9 +106,9 @@ TEST(DemangleTest, DerivedKlassTest)
 	__DemangleTest__SampleDerived s;
 	__DemangleTest__Sample* p = &s;
 	ASSERT_NE(demangle(typeid(s)), demangle(typeid(*p)));
-	ASSERT_EQ("tarte::__DemangleTest__Sample", demangle(typeid(*p)));
-	ASSERT_EQ("tarte::__DemangleTest__Sample", demangle(p));
-	ASSERT_EQ("tarte::__DemangleTest__Sample", demangle(&p));
+	ASSERT_EQ("cinamo::__DemangleTest__Sample", demangle(typeid(*p)));
+	ASSERT_EQ("cinamo::__DemangleTest__Sample", demangle(p));
+	ASSERT_EQ("cinamo::__DemangleTest__Sample", demangle(&p));
 }
 
 namespace {
@@ -118,7 +118,7 @@ class AnomTest {
 TEST(DemangleTest, AnomNameSpace)
 {
 	AnomTest s;
-	ASSERT_EQ("tarte::(anonymous namespace)::AnomTest", demangle(s));
+	ASSERT_EQ("cinamo::(anonymous namespace)::AnomTest", demangle(s));
 }
 }
 

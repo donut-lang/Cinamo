@@ -1,17 +1,17 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
 
 #include "../TestCommon.h"
-#include <tarte/XMLAttrParser.h>
+#include <cinamo/XMLAttrParser.h>
 
 #include <typeinfo>
 #include <cmath>
 
-namespace tarte {
+namespace cinamo {
 
 TEST(XMLAttrParser, StringNotFoundTest)
 {

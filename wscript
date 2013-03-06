@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Tarte
+# Cinamo
 #
 # Copyright 2012-2013, PSI
 
@@ -9,15 +9,15 @@ import os
 sys.path.append('external/WafHelper')
 import Util
 
-APPNAME = 'Tarte'
+APPNAME = 'Cinamo'
 VERSION = '1.0.0'
 
 srcdir = '.'
 blddir = 'build'
 
-TARTE_DIR=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'src')
-TARTE_INC=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'include')
-TARTE_SRC=Util.enum('src')
+CINAMO_DIR=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'src')
+CINAMO_INC=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'include')
+CINAMO_SRC=Util.enum('src')
 
 TINYXML2_INC=TINYXML2_DIR=os.path.join(os.path.abspath(os.path.dirname(srcdir)), 'external', 'tinyxml2')
 TINYXML2_SRC=[os.path.join('.', 'external','tinyxml2','tinyxml2.cpp')]
@@ -68,27 +68,27 @@ def build(bld):
 	bld(
 		is_install=True,
 		features = 'cxx cxxstlib',
-		source = TARTE_SRC+TINYXML2_SRC,
-		target = 'tarte',
+		source = CINAMO_SRC+TINYXML2_SRC,
+		target = 'cinamo',
 		use=['ICU', 'BOOST'],
-		includes=[TARTE_INC, TINYXML2_INC])
+		includes=[CINAMO_INC, TINYXML2_INC])
 	bld(
 		features = "subst",
-		source= "pkgconfig/tarte.pc.in",
-		target= "tarte.pc",
+		source= "pkgconfig/cinamo.pc.in",
+		target= "cinamo.pc",
 		install_path='${PREFIX}/lib/pkgconfig/',
 		PREFIX = bld.env['PREFIX'],
 		VER=VERSION)
 	bld(
 		features = 'cxx cprogram',
-		source = TEST_SRC+TINYXML2_SRC+TARTE_SRC,
-		target = 'tarte_test',
+		source = TEST_SRC+TINYXML2_SRC+CINAMO_SRC,
+		target = 'cinamo_test',
 		env = bld.all_envs["coverage"] if ("coverage" in bld.all_envs) else bld.env,
 		use=['GTEST', 'ICU', 'PPROF','BOOST'],
-		includes=[TARTE_INC, TINYXML2_INC])
+		includes=[CINAMO_INC, TINYXML2_INC])
 	bld.install_files("${PREFIX}", Util.enum('include',[],['.h']), relative_trick=True)
 	bld.install_files("${PREFIX}/include", ['external/tinyxml2/tinyxml2.h'], relative_trick=False)
-	bld.install_files("${PREFIX}/lib", 'libtarte.a')
+	bld.install_files("${PREFIX}/lib", 'libcinamo.a')
 
 def shutdown(ctx):
 	pass

@@ -1,6 +1,6 @@
 /* coding: utf-8 */
 /**
- * Tarte
+ * Cinamo
  *
  * Copyright 2012-2013, PSI
  */
@@ -21,7 +21,7 @@ class XMLDocument;
 class XMLElement;
 }
 
-namespace tarte {
+namespace cinamo {
 
 class XArray;
 class XObject;
