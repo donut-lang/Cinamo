@@ -15,14 +15,8 @@ namespace xml {
 #define PARSE_AS(type)\
 template <> void parseAttr<type>(std::string const& name, type& v, type const& def, tinyxml2::XMLElement* elm)\
 {\
-	bool res=false;\
-	if(const char* attr = elm->Attribute(name.c_str())){\
-		v = parseAs<type>(attr, &res);\
-		if(res) {\
-			return;\
-		}\
-	}\
-	v = def;\
+	const char* attr = elm->Attribute(name.c_str());\
+	v = attr ? parseAs<type>(attr, def) : def;\
 }
 
 PARSE_AS(int);

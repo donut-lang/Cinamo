@@ -266,37 +266,33 @@ template<> XValue& XObject::set<XValue>(std::string const& name, XValue const& o
 }
 template <> XValue XValue::fromString<XValue::UInt>(std::string const& str)
 {
-	bool success = false;
-	XValue::UInt val = parseAs<XValue::UInt>(str, 0, &success);
-	if(!success){
+	XValue::UInt val;
+	if( !tryParseAs(str, val) ) {
 		CINAMO_EXCEPTION(Exception, "Failed to convert %s to UInt.", str.c_str());
 	}
 	return XValue((UInt)val);
 }
 template <> XValue XValue::fromString<XValue::SInt>(std::string const& str)
 {
-	bool success = false;
-	XValue::SInt val = parseAs<XValue::SInt>(str, 0, &success);
-	if(!success){
-		CINAMO_EXCEPTION(Exception, "Failed to convert %s to SInt.", str.c_str());
+	XValue::SInt val;
+	if( !tryParseAs(str, val) ) {
+		CINAMO_EXCEPTION(Exception, "Failed to convert %s to UInt.", str.c_str());
 	}
 	return XValue((SInt)val);
 }
 template <> XValue XValue::fromString<XValue::Float>(std::string const& str)
 {
-	bool success = false;
-	XValue::Float val = parseAs<XValue::Float>(str, &success);
-	if(!success){
-		CINAMO_EXCEPTION(Exception, "Failed to convert %s to Double.", str.c_str());
+	XValue::Float val;
+	if( !tryParseAs(str, val) ) {
+		CINAMO_EXCEPTION(Exception, "Failed to convert %s to UInt.", str.c_str());
 	}
 	return XValue((Float)val);
 }
 template <> XValue XValue::fromString<XValue::Bool>(std::string const& str)
 {
-	bool success = false;
-	XValue::Bool val = parseAs<bool>(str, &success);
-	if(!success){
-		CINAMO_EXCEPTION(Exception, "Failed to convert %s to bool", str.c_str());
+	XValue::Bool val;
+	if( !tryParseAs(str, val) ) {
+		CINAMO_EXCEPTION(Exception, "Failed to convert %s to UInt.", str.c_str());
 	}
 	return XValue((Bool)val);
 }

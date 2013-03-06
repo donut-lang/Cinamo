@@ -50,10 +50,10 @@ std::string randomString(std::size_t len);
 
 std::vector<std::string> breakChar(std::string const& str_);
 
-template <typename T>
-T parseAs(std::string const& str, int radix, bool* succeed=nullptr);
-template <typename T>
-T parseAs(std::string const& str, bool* succeed=nullptr);
+template <typename T> bool tryParseAs(std::string const& str, int radix, T& result);
+template <typename T> bool tryParseAs(std::string const& str, T& result);
+template <typename T> T parseAs(std::string const& str, int radix, T const& default_);
+template <typename T> T parseAs(std::string const& str, T const& default_);
 
 std::string decodePercent(std::string const& str);
 void split(std::string const& str, std::string const& sep, std::vector<std::string>& list);
@@ -69,3 +69,5 @@ bool startsWith(std::string const& target, std::string const& prefix);
 bool endsWith(std::string const& target, std::string const& suffix);
 
 }
+
+#include "internal/String.h"

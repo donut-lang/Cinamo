@@ -108,50 +108,81 @@ TEST(StringUtilTest, Join)
 	ASSERT_EQ("あvいvうv", join(chars, "v"));
 }
 
+#define PARSE_TEST(str, val, type) \
+{\
+	type r;\
+	ASSERT_TRUE(tryParseAs(str, r));\
+	ASSERT_EQ(val, r);\
+	ASSERT_EQ(val, parseAs<type>(str, -1));\
+	ASSERT_EQ(val, parseAs("", r));\
+}
+
+#define PARSE_TEST_R(str, val, type, radix) \
+{\
+	type r;\
+	ASSERT_TRUE(tryParseAs(str, radix, r));\
+	ASSERT_EQ(val, r);\
+	ASSERT_EQ(val, parseAs<type>(str, radix, -1));\
+	ASSERT_EQ(val, parseAs<type>("", radix, r));\
+}
 TEST(StringUtilTest, ParseIntTest)
 {
-	ASSERT_EQ(10, parseAs<int>("10"));
-	ASSERT_EQ(10, parseAs<int>("10",0));
-	ASSERT_EQ(16, parseAs<int>("0x10"));
-	ASSERT_EQ(8, parseAs<int>("010"));
-	ASSERT_EQ(10, parseAs<int>("10",10));
-	ASSERT_EQ(8, parseAs<int>("10",8));
-	ASSERT_EQ(16, parseAs<int>("10",16));
-}
+	PARSE_TEST("10", 10, int);
+	PARSE_TEST_R("10", 10, int, 0);
+	PARSE_TEST("0x10", 16, int);
+	PARSE_TEST_R("0x10", 16, int, 0);
+	PARSE_TEST("010", 8, int);
+	PARSE_TEST_R("010", 8, int, 0);
 
+	PARSE_TEST_R("10", 10, int, 10);
+	PARSE_TEST_R("10", 8, int, 8);
+	PARSE_TEST_R("10", 16, int, 16);
+}
+#undef PARSE_TEST_R
+
+#define PARSE_TEST_F(str, val, type) \
+{\
+	type r;\
+	ASSERT_TRUE(tryParseAs(str, r));\
+	ASSERT_FLOAT_EQ(val, r);\
+	ASSERT_FLOAT_EQ(val, parseAs<type>(str, r));\
+	ASSERT_FLOAT_EQ(val, parseAs<type>("", r));\
+}
 TEST(StringUtilTest, ParseFloatTest)
 {
-	ASSERT_FLOAT_EQ(10.0f, parseAs<float>("10"));
-	ASSERT_FLOAT_EQ(10.12f, parseAs<float>("10.12"));
+	PARSE_TEST_F("10", 10.0f, float);
+	PARSE_TEST_F("10", 10.0, double);
+	PARSE_TEST_F("10.12", 10.12f, float);
+	PARSE_TEST_F("10.12", 10.12, double);
 }
-
 TEST(StringUtilTest, ParseFloatMaximumTest)
 {
 	// マクロを展開すると、どうしてもドーナッツのリテラルと整合性が取れるかがわからないので、手打ち。悲しい。
-	ASSERT_FLOAT_EQ(3.402823466e+38, parseAs<float>("3.402823466e+38"));
-	ASSERT_FLOAT_EQ(1.17549e-38, parseAs<float>("1.17549e-38"));
-	ASSERT_FLOAT_EQ(33554431, parseAs<float>("33554431"));
+	PARSE_TEST_F("3.402823466e+38", 3.402823466e+38, float);
+	PARSE_TEST_F("1.17549e-38", 1.17549e-38, float);
+	PARSE_TEST_F("33554431", 33554431, float);
 
-	ASSERT_FLOAT_EQ(1.7976931348623158e+308, parseAs<double>("1.7976931348623158e+308"));
-	ASSERT_FLOAT_EQ(2.2250738585072014e-308, parseAs<double>("2.2250738585072014e-308"));
-	ASSERT_FLOAT_EQ(18014398509481983.0, parseAs<double>("18014398509481983.0"));
+	PARSE_TEST_F("1.7976931348623158e+308", 1.7976931348623158e+308, double);
+	PARSE_TEST_F("2.2250738585072014e-308", 2.2250738585072014e-308, double);
+	PARSE_TEST_F("18014398509481983.0", 18014398509481983.0, double);
 
-	ASSERT_FLOAT_EQ(1.18973e+4932L, parseAs<long double>("1.18973e+4932"));
-	ASSERT_FLOAT_EQ(3.3621e-4932L, parseAs<long double>("3.3621e-4932"));
-	ASSERT_FLOAT_EQ(10384593717069655257060992658440191.0L, parseAs<long double>("10384593717069655257060992658440191.0"));
+	PARSE_TEST_F("1.18973e+4932", 1.18973e+4932L, long double);
+	PARSE_TEST_F("3.3621e-4932", 3.3621e-4932L, long double);
+	PARSE_TEST_F("10384593717069655257060992658440191.0", 10384593717069655257060992658440191.0, long double);
 }
+#undef PARSE_TEST_F
 
 TEST(StringUtilTest, ParseBoolTest)
 {
-	ASSERT_TRUE(parseAs<bool>("true"));
-	ASSERT_TRUE(parseAs<bool>("True"));
-	ASSERT_TRUE(parseAs<bool>("yes"));
-	ASSERT_TRUE(parseAs<bool>("Yes"));
+	ASSERT_TRUE(parseAs<bool>("true", false));
+	ASSERT_TRUE(parseAs<bool>("True", false));
+	ASSERT_TRUE(parseAs<bool>("yes", false));
+	ASSERT_TRUE(parseAs<bool>("Yes", false));
 
-	ASSERT_FALSE(parseAs<bool>("false"));
-	ASSERT_FALSE(parseAs<bool>("False"));
-	ASSERT_FALSE(parseAs<bool>("no"));
-	ASSERT_FALSE(parseAs<bool>("No"));
+	ASSERT_FALSE(parseAs<bool>("false", true));
+	ASSERT_FALSE(parseAs<bool>("False", true));
+	ASSERT_FALSE(parseAs<bool>("no", true));
+	ASSERT_FALSE(parseAs<bool>("No", true));
 }
 
 
