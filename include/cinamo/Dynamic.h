@@ -14,6 +14,9 @@
 
 namespace cinamo {
 
+/**
+ * typeinfoからクラス名のdemangleしたものを返す。
+ */
 std::string demangle(std::type_info const& info);
 
 template <typename T>

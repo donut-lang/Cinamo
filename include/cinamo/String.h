@@ -59,7 +59,7 @@ std::string decodePercent(std::string const& str);
 void split(std::string const& str, std::string const& sep, std::vector<std::string>& list);
 void split(std::string const& str, const std::string* sep, size_t n, std::vector<std::string>& list);
 template <size_t N>
-void split(std::string const& str, const std::string (&sep)[N], std::vector<std::string>& list)
+void inline split(std::string const& str, const std::string (&sep)[N], std::vector<std::string>& list)
 {
 	split(str, sep, N, list);
 }

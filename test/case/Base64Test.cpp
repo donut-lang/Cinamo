@@ -74,9 +74,9 @@ TEST(StringUtilTest, Base64DecodeTest)
 		ASSERT_EQ("dABzdAB0FQD/Kg==", base64::encode(d));
 		ASSERT_EQ(d, base64::decode(base64::encode(d)));
 	}
-	ASSERT_EQ("test", base64::decodeAsString("dGVzdA=="));
+	ASSERT_EQ("test", base64::decode<std::string>("dGVzdA=="));
 
-	ASSERT_EQ("あいうえお", base64::decodeAsString("44GC44GE44GG44GI44GK"));
+	ASSERT_EQ("あいうえお", base64::decode<std::string>("44GC44GE44GG44GI44GK"));
 }
 
 TEST(StringUtilTest, Base64Test)
