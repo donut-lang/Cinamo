@@ -12,7 +12,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="Tarte" buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.mingw.base.557373588" name="Win" parent="org.eclipse.cdt.build.core.emptycfg">
+				<configuration artifactName="Cinamo" buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.mingw.base.557373588" name="Win" parent="org.eclipse.cdt.build.core.emptycfg">
 					<folderInfo id="cdt.managedbuild.toolchain.gnu.mingw.base.557373588.1986545449" name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.base.1737439387" name="cdt.managedbuild.toolchain.gnu.mingw.base" resourceTypeBasedDiscovery="true" superClass="cdt.managedbuild.toolchain.gnu.mingw.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.PE" id="cdt.managedbuild.target.gnu.platform.mingw.base.1656324218" name="Debug Platform" osList="win32" superClass="cdt.managedbuild.target.gnu.platform.mingw.base"/>
@@ -45,12 +45,12 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="Tarte.null.1751358265" name="Tarte"/>
+		<project id="Cinamo.null.1751358265" name="Cinamo"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Default">
-			<resource resourceType="PROJECT" workspacePath="/Tarte"/>
+			<resource resourceType="PROJECT" workspacePath="/Cinamo"/>
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
