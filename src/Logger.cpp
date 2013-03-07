@@ -14,16 +14,22 @@
 
 namespace cinamo {
 
+struct null_stream_sink_t : std::streambuf {
+	int overflow(int c){return c;}
+};
+static null_stream_sink_t null_stream_sink;
+std::ostream null_stream(&null_stream_sink);
+
 Logger::Logger(std::ostream& stream, enum Level level) noexcept
 :_stream(stream), level(level)
 {
 }
 
-void Logger::msg(enum Level level, std::string const& tag, std::string const& fmt, std::va_list args)
+bool Logger::msg(enum Level level, std::string const& tag, std::string const& fmt, std::va_list args)
 {
 	std::stringstream ss;
 	if(level < this->level){
-		return;
+		return false;
 	}
 	switch(level){
 	case TRACE_:
@@ -51,53 +57,59 @@ void Logger::msg(enum Level level, std::string const& tag, std::string const& fm
 	ss << formatv(fmt, args) << std::endl;
 	_stream << ss.str();
 	_stream.flags();
+	return true;
 }
 
-void Logger::t(std::string const& tag, std::string const& fmt, ...)
+bool Logger::t(std::string const& tag, std::string const& fmt, ...)
 {
 	std::va_list lst;
 	va_start(lst, fmt);
-	msg(TRACE_, tag, fmt, lst);
+	bool const res = msg(TRACE_, tag, fmt, lst);
 	va_end(lst);
-
+	return res;
 }
 
-void Logger::v(std::string const& tag, std::string const& fmt, ...)
+bool Logger::v(std::string const& tag, std::string const& fmt, ...)
 {
 	std::va_list lst;
 	va_start(lst, fmt);
-	msg(VERBOSE_, tag, fmt, lst);
+	bool const res = msg(VERBOSE_, tag, fmt, lst);
 	va_end(lst);
+	return res;
 }
 
-void Logger::d(std::string const& tag, std::string const& fmt, ...)
+bool Logger::d(std::string const& tag, std::string const& fmt, ...)
 {
 	std::va_list lst;
 	va_start(lst, fmt);
-	msg(DEBUG_, tag, fmt, lst);
+	bool const res = msg(DEBUG_, tag, fmt, lst);
 	va_end(lst);
+	return res;
 }
 
-void Logger::i(std::string const& tag, std::string const& fmt, ...)
+bool Logger::i(std::string const& tag, std::string const& fmt, ...)
 {
 	std::va_list lst;
 	va_start(lst, fmt);
-	msg(INFO_, tag, fmt, lst);
+	bool const res = msg(INFO_, tag, fmt, lst);
 	va_end(lst);
+	return res;
 }
-void Logger::w(std::string const& tag, std::string const& fmt, ...)
+bool Logger::w(std::string const& tag, std::string const& fmt, ...)
 {
 	std::va_list lst;
 	va_start(lst, fmt);
-	msg(WARN_, tag, fmt, lst);
+	bool const res = msg(WARN_, tag, fmt, lst);
 	va_end(lst);
+	return res;
 }
-void Logger::e(std::string const& tag, std::string const& fmt, ...)
+bool Logger::e(std::string const& tag, std::string const& fmt, ...)
 {
 	std::va_list lst;
 	va_start(lst, fmt);
-	msg(ERROR_, tag, fmt, lst);
+	bool const res = msg(ERROR_, tag, fmt, lst);
 	va_end(lst);
+	return res;
 }
 
 }

@@ -21,7 +21,7 @@ using namespace cinamo;
 
 #define MATERIAL_DIR "__miscellaneous__/testfiles"
 
-#define NULL_STREAM (*((std::ostream*)0))
+#define NULL_STREAM cinamo::null_stream
 static Logger log_trace(std::cout, Logger::TRACE_);
 static Logger log_err(std::cout, Logger::ERROR_);
 

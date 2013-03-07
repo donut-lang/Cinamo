@@ -14,6 +14,8 @@
 
 namespace cinamo {
 
+extern std::ostream null_stream;
+
 /**
  * ロガー。
  *
@@ -21,6 +23,7 @@ namespace cinamo {
  * ログレベル管理やプリティプリントなどの
  * ユーティリティを付加したクラス。
  */
+
 class Logger {
 public:
 	enum Level{
@@ -34,7 +37,7 @@ public:
 private:
 	std::ostream& _stream;
 	enum Level level;
-	void msg(enum Level level, std::string const& tag, std::string const& fmt, std::va_list args);
+	bool msg(enum Level level, std::string const& tag, std::string const& fmt, std::va_list args);
 public:
 	Logger(std::ostream& stream, enum Level level) noexcept;
 	~Logger() noexcept = default;
@@ -42,15 +45,15 @@ public:
 	std::ostream& stream() const noexcept{ return _stream; };
 public:
 	bool inline t() const noexcept { return this->level <= TRACE_; };
-	void t(std::string const& tag, std::string const& fmt, ...);
+	bool t(std::string const& tag, std::string const& fmt, ...);
 	bool inline v() const noexcept { return this->level <= VERBOSE_; };
-	void v(std::string const& tag, std::string const& fmt, ...);
+	bool v(std::string const& tag, std::string const& fmt, ...);
 	bool inline d() const noexcept { return this->level <= DEBUG_; };
-	void d(std::string const& tag, std::string const& fmt, ...);
+	bool d(std::string const& tag, std::string const& fmt, ...);
 	bool inline i() const noexcept { return this->level <= INFO_; };
-	void i(std::string const& tag, std::string const& fmt, ...);
-	void w(std::string const& tag, std::string const& fmt, ...);
-	void e(std::string const& tag, std::string const& fmt, ...);
+	bool i(std::string const& tag, std::string const& fmt, ...);
+	bool w(std::string const& tag, std::string const& fmt, ...);
+	bool e(std::string const& tag, std::string const& fmt, ...);
 };
 
 }
