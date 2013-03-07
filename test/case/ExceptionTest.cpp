@@ -11,7 +11,24 @@
 
 namespace cinamo {
 
-TEST(ExceptionTest, ValueTest)
+TEST(ExceptionTest, GetSetTest)
+{
+	{
+		cinamo::Exception e("a", 0);
+		ASSERT_EQ( e.line(), 0);
+		ASSERT_EQ( e.file(), "a" );
+		ASSERT_EQ( e.msg(), "");
+		ASSERT_GT( std::string(e.what()).length(), 0 );
+	}
+	{
+		cinamo::Exception e("a", 0, "%d", 10);
+		ASSERT_EQ( e.line(), 0);
+		ASSERT_EQ( e.file(), "a" );
+		ASSERT_EQ( e.msg(), "10");
+		ASSERT_GT( std::string(e.what()).length(), 0 );
+	}
+}
+TEST(ExceptionTest, ThrowTest)
 {
 	try {
 		CINAMO_EXCEPTION(Exception, "%d", 1)
