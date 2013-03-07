@@ -9,12 +9,6 @@
 #include <cinamo/Base64.h>
 #include <cinamo/Exception.h>
 
-#if CINAMO_WINDOWS
-#define _LONG_LONG_INT_FORMAT_ "I64"
-#elseBase64
-#define _LONG_LONG_INT_FORMAT_ "ll"
-#endif
-
 namespace cinamo {
 namespace base64 {
 

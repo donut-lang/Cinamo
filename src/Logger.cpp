@@ -53,10 +53,6 @@ void Logger::msg(enum Level level, std::string const& tag, std::string const& fm
 	_stream.flags();
 }
 
-bool Logger::t() const noexcept
-{
-	return this->level <= TRACE_;
-}
 void Logger::t(std::string const& tag, std::string const& fmt, ...)
 {
 	std::va_list lst;
@@ -64,10 +60,6 @@ void Logger::t(std::string const& tag, std::string const& fmt, ...)
 	msg(TRACE_, tag, fmt, lst);
 	va_end(lst);
 
-}
-bool Logger::v() const noexcept
-{
-	return this->level <= VERBOSE_;
 }
 
 void Logger::v(std::string const& tag, std::string const& fmt, ...)
@@ -77,10 +69,7 @@ void Logger::v(std::string const& tag, std::string const& fmt, ...)
 	msg(VERBOSE_, tag, fmt, lst);
 	va_end(lst);
 }
-bool Logger::d() const noexcept
-{
-	return this->level <= DEBUG_;
-}
+
 void Logger::d(std::string const& tag, std::string const& fmt, ...)
 {
 	std::va_list lst;
@@ -88,10 +77,7 @@ void Logger::d(std::string const& tag, std::string const& fmt, ...)
 	msg(DEBUG_, tag, fmt, lst);
 	va_end(lst);
 }
-bool Logger::i() const noexcept
-{
-	return this->level <= INFO_;
-}
+
 void Logger::i(std::string const& tag, std::string const& fmt, ...)
 {
 	std::va_list lst;

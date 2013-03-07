@@ -41,13 +41,13 @@ public:
 public:
 	std::ostream& stream() const noexcept{ return _stream; };
 public:
-	bool t() const noexcept;
+	bool inline t() const noexcept { return this->level <= TRACE_; };
 	void t(std::string const& tag, std::string const& fmt, ...);
-	bool v() const noexcept;
+	bool inline v() const noexcept { return this->level <= VERBOSE_; };
 	void v(std::string const& tag, std::string const& fmt, ...);
-	bool d() const noexcept;
+	bool inline d() const noexcept { return this->level <= DEBUG_; };
 	void d(std::string const& tag, std::string const& fmt, ...);
-	bool i() const noexcept;
+	bool inline i() const noexcept { return this->level <= INFO_; };
 	void i(std::string const& tag, std::string const& fmt, ...);
 	void w(std::string const& tag, std::string const& fmt, ...);
 	void e(std::string const& tag, std::string const& fmt, ...);
