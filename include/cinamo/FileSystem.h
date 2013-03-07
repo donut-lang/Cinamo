@@ -17,7 +17,7 @@ namespace cinamo {
 namespace file {
 
 template <typename T, typename... Args>
-constexpr typename internal::FileConstants<T>::string_type join(const T& a, Args const&... left)
+typename internal::FileConstants<T>::string_type join(const T& a, Args const&... left)
 {
 	return typename internal::FileConstants<T>::string_type(a)+internal::FileConstants<T>::Sep+join(left...);
 }

@@ -15,19 +15,25 @@ namespace cinamo {
 namespace base64 {
 
 /**
+ * 任意のバイナリデータをbase64にエンコードする。
+ */
+std::string encode( const char* data, const std::size_t length);
+
+/**
  * vectorのデータをbase64にエンコードする。
  */
-std::string encode( std::vector<char> const& data );
+std::string inline encode( std::vector<char> const& data )
+{
+	return encode( data.data(), data.size() );
+}
 
 /**
  * stringをバイナリデータと見立ててbase64にエンコードする
  */
-std::string encode( std::string const& data );
-
-/**
- * 任意のバイナリデータをbase64にエンコードする。
- */
-std::string encode( const char* data, const std::size_t length);
+std::string inline encode( std::string const& data )
+{
+	return encode( data.c_str(), data.size() );
+}
 
 /**
  * base64データを元のバイナリデータに戻す。

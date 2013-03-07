@@ -64,16 +64,6 @@ std::string encode( const char* data, const std::size_t length)
 	return ss.str();
 }
 
-std::string encode( std::string const& data )
-{
-	return encode( data.c_str(), data.size() );
-}
-
-std::string encode( std::vector<char> const& data )
-{
-	return encode( data.data(), data.size() );
-}
-
 std::vector<char> decode(std::string const& str)
 {
 	std::vector<char> dat;
