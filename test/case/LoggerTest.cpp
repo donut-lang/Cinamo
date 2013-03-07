@@ -10,7 +10,7 @@
 
 namespace cinamo {
 
-TEST(StringUtilTest, LoggerFlagTest)
+TEST(LoggerTest, LoggerFlagTest)
 {
 	Logger ll(std::cout, Logger::DEBUG_);
 	ASSERT_FALSE(ll.t());
