@@ -119,8 +119,7 @@ def build(bld):
 		source = TEST_SRC+TINYXML2_SRC,
 		target = 'cinamo_test',
 		env = bld.all_envs["coverage"] if ("coverage" in bld.all_envs) else bld.env,
-		use=['GTEST', 'ICU', 'PPROF','BOOST'],
-		uselib_local=['cinamo'],
+		use=['GTEST', 'ICU', 'PPROF','BOOST', 'cinamo'],
 		includes=[CINAMO_INC, TINYXML2_INC])
 	bld.install_files("${PREFIX}", Util.enum('include',[],['.h']), relative_trick=True)
 	bld.install_files("${PREFIX}/include", ['external/tinyxml2/tinyxml2.h'], relative_trick=False)
