@@ -64,10 +64,9 @@ def configureLibrary(conf):
 		have_boost = 'LIB_BOOST' in conf.env and 'LIBPATH_BOOST' in conf.env
 	conf.define(conf.have_define('boost'), 1 if (have_boost) else 0)
 	#
-	conf.write_config_header(os.path.join(conf.variant, 'config.h'))
 	bld_path = conf.path.get_bld().abspath()
+	conf.write_config_header(os.path.join(conf.variant, 'config.h'))
 	conf.env.append_value('CXXFLAGS', ['-I'+os.path.join(bld_path, conf.variant)])
-	print(conf.env)
 
 def build(bld):
 	if not bld.variant:
@@ -97,6 +96,7 @@ def build(bld):
 		includes=[CINAMO_INC, TINYXML2_INC])
 	bld.install_files("${PREFIX}", Util.enum('include',[],['.h']), relative_trick=True)
 	bld.install_files("${PREFIX}/include", ['external/tinyxml2/tinyxml2.h'], relative_trick=False)
+	bld.install_files("${PREFIX}/include/cinamo", [os.path.join(bld.path.get_bld().path_from(bld.path.find_node('.')), 'config.h')], relative_trick=False)
 	bld.install_files("${PREFIX}/lib", 'libcinamo.a')
 
 def shutdown(ctx):
