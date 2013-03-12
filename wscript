@@ -61,9 +61,13 @@ def configureLibrary(conf):
 		#boost
 		conf.env.append_value('CXXFLAGS', ['-DBOOST_THREAD_USE_LIB=1'])
 		conf.check_boost(lib='system thread chrono', mandatory=False)
-	conf.define(conf.have_define('boost'), 1 if ('LIB_BOOST' in conf.env && 'LIBPATH_BOOST' in conf.env) else 0)
+		have_boost = 'LIB_BOOST' in conf.env and 'LIBPATH_BOOST' in conf.env
+	conf.define(conf.have_define('boost'), 1 if (have_boost) else 0)
 	#
 	conf.write_config_header(os.path.join(conf.variant, 'config.h'))
+	bld_path = conf.path.get_bld().abspath()
+	conf.env.append_value('CXXFLAGS', ['-I'+os.path.join(bld_path, conf.variant)])
+	print(conf.env)
 
 def build(bld):
 	if not bld.variant:
