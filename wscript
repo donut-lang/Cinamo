@@ -70,7 +70,8 @@ def configureLibrary(conf):
 		conf.fatal('Your platform: {} is not supported yet.'.format(sys.platform))
 	conf.define(conf.have_define('boost'), 1 if (have_boost) else 0)
 	
-	if conf.options.force_mt and (not conf.env['HAVE_THREAD']):
+	print(repr(conf.options))
+	if conf.options.get('force_mt', False) and (not conf.env['HAVE_THREAD']):
 		conf.fatal('Thread feature is not enabled.')
 	#
 	bld_path = conf.path.get_bld().abspath()
