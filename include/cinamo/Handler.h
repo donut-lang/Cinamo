@@ -352,11 +352,13 @@ struct _HandlerBodyTypes{
 	typedef bool DelFlagType;
 };
 
+#if CINAMO_HAVE_THREAD
 template <>
 struct _HandlerBodyTypes<true>{
 	typedef std::atomic<int> RefCounterType;
 	typedef bool DelFlagType;
 };
+#endif
 
 template <class Derived, bool atomic=false>
 class HandlerBody {
