@@ -30,7 +30,7 @@ def options(opt):
 	opt.add_option('--debug', action='store_true', default=False, help='debug build')
 	opt.add_option('--force-mt', dest='force_mt', action='store_true', default=False, help='enforce multi-thread feature to be enabled.')
 	opt.load('compiler_c compiler_cxx')
-	opt.load('boost', tooldir='./external/waflib')
+	opt.load('boost', tooldir='./external/WafHelper')
 
 def configure(conf):
 	# release
@@ -116,10 +116,11 @@ def build(bld):
 			VER=VERSION)
 	bld(
 		features = 'cxx cprogram',
-		source = TEST_SRC+TINYXML2_SRC+CINAMO_SRC,
+		source = TEST_SRC+TINYXML2_SRC,
 		target = 'cinamo_test',
 		env = bld.all_envs["coverage"] if ("coverage" in bld.all_envs) else bld.env,
 		use=['GTEST', 'ICU', 'PPROF','BOOST'],
+		uselib_local=['cinamo'],
 		includes=[CINAMO_INC, TINYXML2_INC])
 	bld.install_files("${PREFIX}", Util.enum('include',[],['.h']), relative_trick=True)
 	bld.install_files("${PREFIX}/include", ['external/tinyxml2/tinyxml2.h'], relative_trick=False)
