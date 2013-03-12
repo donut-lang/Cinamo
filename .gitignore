@@ -22,6 +22,9 @@
 waf*/
 !external/
 
+#python cache
+__pycache__
+
 #build dir
 build/
 cov/
