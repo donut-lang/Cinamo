@@ -88,13 +88,14 @@ def build(bld):
 		use=['ICU', 'BOOST'],
 		includes=[CINAMO_INC, TINYXML2_INC])
 	boost_libpath=' '.join( [ '-L'+x for x in bld.env['LIBPATH_BOOST'] ])
-	boost_libs=' '.join( [ '-l'+x for x in bld.env['LIB_BOOST'] ])
-	boost_inc=' '.join( [ '-I'+x for x in bld.env['INCLUDES_BOOST'] ])
+	boost_libs = ' '.join( [ '-l'+x for x in bld.env['LIB_BOOST'] ])
+	boost_inc = '' if len(bld.env['INCLUDES_BOOST']) == 0 else "-I{}".format(bld.env['INCLUDES_BOOST'])
 	bld(
 		features = "subst",
 		source= "pkgconfig/cinamo.pc.in",
 		target= "cinamo.pc",
 		install_path='${PREFIX}/lib/pkgconfig/',
+		NAME='cinamo',
 		BOOST_LIBPATH = boost_libpath,
 		BOOST_LIBS = boost_libs,
 		BOOST_INC = boost_inc,
@@ -104,9 +105,10 @@ def build(bld):
 	if ('HAVE_THREAD' in bld.env) and bld.env['HAVE_THREAD']:
 		bld(
 			features = "subst",
-			source= "pkgconfig/cinamo-mt.pc.in",
+			source= "pkgconfig/cinamo.pc.in",
 			target= "cinamo-mt.pc",
 			install_path='${PREFIX}/lib/pkgconfig/',
+			NAME='cinamo-mt',
 			BOOST_LIBPATH = boost_libpath,
 			BOOST_LIBS = boost_libs,
 			BOOST_INC = boost_inc,
