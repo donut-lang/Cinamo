@@ -3,7 +3,7 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
-Name: cinamo
+Name: cinamo-mt
 Version: @VER@
 Description: the C++ Library
 URL: http://donut-lang.org/

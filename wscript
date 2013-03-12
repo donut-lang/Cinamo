@@ -28,6 +28,7 @@ TEST_SRC=Util.enum('test')
 def options(opt):
 	opt.add_option('--coverage', action='store_true', default=False, help='Enabling coverage measuring.')
 	opt.add_option('--debug', action='store_true', default=False, help='debug build')
+	opt.add_option('--force-mt', dest='force_mt', action='store_true', default=False, help='enforce multi-thread feature to be enabled.')
 	opt.load('compiler_c compiler_cxx')
 	opt.load('boost', tooldir='./external/waflib')
 
@@ -62,7 +63,15 @@ def configureLibrary(conf):
 		conf.env.append_value('CXXFLAGS', ['-DBOOST_THREAD_USE_LIB=1'])
 		conf.check_boost(lib='system thread chrono', mandatory=False)
 		have_boost = 'LIB_BOOST' in conf.env and 'LIBPATH_BOOST' in conf.env
+		conf.env['HAVE_THREAD']=have_boost
+	elif sys.platform in ['linux2', 'linux']:
+		conf.env['HAVE_THREAD']=True
+	else:
+		conf.fatal('Your platform: {} is not supported yet.'.format(sys.platform))
 	conf.define(conf.have_define('boost'), 1 if (have_boost) else 0)
+	
+	if conf.options.force_mt and (not conf.env['HAVE_THREAD']):
+		conf.fatal('Thread feature is not enabled.')
 	#
 	bld_path = conf.path.get_bld().abspath()
 	conf.write_config_header(os.path.join(conf.variant, 'config.h'))
@@ -78,15 +87,31 @@ def build(bld):
 		target = 'cinamo',
 		use=['ICU', 'BOOST'],
 		includes=[CINAMO_INC, TINYXML2_INC])
+	boost_libpath=' '.join( [ '-L'+x for x in bld.env['LIBPATH_BOOST'] ])
+	boost_libs=' '.join( [ '-l'+x for x in bld.env['LIB_BOOST'] ])
+	boost_inc=' '.join( [ '-I'+x for x in bld.env['INCLUDES_BOOST'] ])
 	bld(
 		features = "subst",
 		source= "pkgconfig/cinamo.pc.in",
 		target= "cinamo.pc",
 		install_path='${PREFIX}/lib/pkgconfig/',
-		BOOST_LIBPATH = ' '.join( [ '-L'+x for x in bld.env['LIBPATH_BOOST'] ]),
-		BOOST_LIBS = ' '.join( [ '-l'+x for x in bld.env['LIB_BOOST'] ]),
+		BOOST_LIBPATH = boost_libpath,
+		BOOST_LIBS = boost_libs,
+		BOOST_INC = boost_inc,
 		PREFIX = bld.env['PREFIX'],
 		VER=VERSION)
+	# マルチスレッド版のインストール
+	if ('HAVE_THREAD' in bld.env) and bld.env['HAVE_THREAD']:
+		bld(
+			features = "subst",
+			source= "pkgconfig/cinamo-mt.pc.in",
+			target= "cinamo-mt.pc",
+			install_path='${PREFIX}/lib/pkgconfig/',
+			BOOST_LIBPATH = boost_libpath,
+			BOOST_LIBS = boost_libs,
+			BOOST_INC = boost_inc,
+			PREFIX = bld.env['PREFIX'],
+			VER=VERSION)
 	bld(
 		features = 'cxx cprogram',
 		source = TEST_SRC+TINYXML2_SRC+CINAMO_SRC,
