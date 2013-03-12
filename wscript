@@ -55,10 +55,15 @@ def configureLibrary(conf):
 	if not conf.check(features='cxx cxxprogram', lib=['tcmalloc','profiler'], cflags=['-Wall'], uselib_store='PPROF', mandatory=False):
 		conf.to_log("Google perftools not found, so performance will not measureable.")
 
+	# check boost
+	have_boost=False
 	if sys.platform == 'win32':
 		#boost
 		conf.env.append_value('CXXFLAGS', ['-DBOOST_THREAD_USE_LIB=1'])
 		conf.check_boost(lib='system thread chrono', mandatory=False)
+	conf.define(conf.have_define('boost'), 1 if ('LIB_BOOST' in conf.env && 'LIBPATH_BOOST' in conf.env) else 0)
+	#
+	conf.write_config_header(os.path.join(conf.variant, 'config.h'))
 
 def build(bld):
 	if not bld.variant:
