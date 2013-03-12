@@ -7,6 +7,6 @@ Name: cinamo
 Version: @VER@
 Description: the C++ Library
 URL: http://donut-lang.org/
-Libs: -L${libdir} -lcinamo
+Libs: -L${libdir} @BOOST_LIBPATH@ @BOOST_LIBS@ -lcinamo
 Cflags: -I${includedir}
 Requires: icu-uc icu-i18n

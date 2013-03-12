@@ -29,7 +29,7 @@ def options(opt):
 	opt.add_option('--coverage', action='store_true', default=False, help='Enabling coverage measuring.')
 	opt.add_option('--debug', action='store_true', default=False, help='debug build')
 	opt.load('compiler_c compiler_cxx')
-	opt.load('boost')
+	opt.load('boost', tooldir='./external/waflib')
 
 def configure(conf):
 	# release
@@ -51,16 +51,14 @@ def configure(conf):
 def configureLibrary(conf):
 	conf.load('compiler_c compiler_cxx')
 	conf.check_cfg(package='icu-uc icu-i18n', uselib_store='ICU', mandatory=True, args='--cflags --libs')
-	conf.check(features='cxx cxxprogram', lib=['gtest', 'gtest_main', 'pthread'], cflags=['-Wall'], uselib_store='GTEST')
-	try:
-		conf.check(features='cxx cxxprogram', lib=['tcmalloc','profiler'], cflags=['-Wall'], uselib_store='PPROF')
-	except conf.errors.ConfigurationError:
+	conf.check(features='cxx cxxprogram', lib=['gtest', 'gtest_main', 'pthread'], cflags=['-Wall'], uselib_store='GTEST', mandatory=True)
+	if not conf.check(features='cxx cxxprogram', lib=['tcmalloc','profiler'], cflags=['-Wall'], uselib_store='PPROF', mandatory=False):
 		conf.to_log("Google perftools not found, so performance will not measureable.")
+
 	if sys.platform == 'win32':
 		#boost
 		conf.env.append_value('CXXFLAGS', ['-DBOOST_THREAD_USE_LIB=1'])
-		conf.load('boost')
-		conf.check_boost(lib='system thread chrono')
+		conf.check_boost(lib='system thread chrono', mandatory=False)
 
 def build(bld):
 	if not bld.variant:
@@ -77,6 +75,8 @@ def build(bld):
 		source= "pkgconfig/cinamo.pc.in",
 		target= "cinamo.pc",
 		install_path='${PREFIX}/lib/pkgconfig/',
+		BOOST_LIBPATH = ' '.join( [ '-L'+x for x in bld.env['LIBPATH_BOOST'] ]),
+		BOOST_LIBS = ' '.join( [ '-l'+x for x in bld.env['LIB_BOOST'] ]),
 		PREFIX = bld.env['PREFIX'],
 		VER=VERSION)
 	bld(
