@@ -30,7 +30,7 @@ def options(opt):
 	opt.add_option('--debug', action='store_true', default=False, help='debug build')
 	opt.add_option('--force-mt', dest='force_mt', action='store_true', default=False, help='enforce multi-thread feature to be enabled.')
 	opt.load('compiler_c compiler_cxx')
-	opt.load('boost', tooldir='./external/WafHelper')
+	opt.load('boost')
 
 def configure(conf):
 	# release
