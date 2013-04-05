@@ -37,7 +37,6 @@ public:
 private:
 	std::ostream& _stream;
 	enum Level level;
-	bool msg(enum Level level, std::string const& tag, std::string const& fmt, std::va_list args);
 public:
 	Logger(std::ostream& stream, enum Level level) noexcept;
 	~Logger() noexcept = default;
@@ -54,6 +53,7 @@ public:
 	bool i(std::string const& tag, std::string const& fmt, ...);
 	bool w(std::string const& tag, std::string const& fmt, ...);
 	bool e(std::string const& tag, std::string const& fmt, ...);
+	bool msg(enum Level level, std::string const& tag, std::string const& fmt, std::va_list args);
 };
 
 }
