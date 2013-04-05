@@ -3,6 +3,7 @@
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.toolchain.gnu.mingw.base.557373588">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.mingw.base.557373588" moduleId="org.eclipse.cdt.core.settings" name="Win">
+				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -29,6 +30,7 @@
 								<option id="gnu.cpp.compiler.option.include.paths.860868646" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/build/debug&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/external/tinyxml2&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1299723523" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__GXX_EXPERIMENTAL_CXX0X__=1"/>
@@ -69,9 +71,9 @@
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.exe.debug.1723386407" name="Linux" parent="cdt.managedbuild.config.gnu.exe.debug">
 					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.1723386407." name="/" resourcePath="">
-						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.1130638141" name="Linux GCC" resourceTypeBasedDiscovery="true" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.1130638141" name="Linux GCC" nonInternalBuilderId="cdt.managedbuild.target.gnu.builder.exe.debug" resourceTypeBasedDiscovery="true" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
 							<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug.1805204271" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
-							<builder buildPath="${workspace_loc:/Cinamo/Linux}" id="cdt.managedbuild.target.gnu.builder.exe.debug.1315152936" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.debug"/>
+							<builder arguments="bld.sh" command="sh" id="cdt.managedbuild.target.gnu.builder.exe.debug.1262126300" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.exe.debug"/>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1006083895" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.121071542" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug">
 								<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.1694720590" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
@@ -79,6 +81,7 @@
 								<option id="gnu.cpp.compiler.option.include.paths.2129300066" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/build/debug&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/external/tinyxml2&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1450892606" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__GXX_EXPERIMENTAL_CXX0X__=1"/>
@@ -159,10 +162,10 @@
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.1723386407;cdt.managedbuild.config.gnu.exe.debug.1723386407.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.121071542;cdt.managedbuild.tool.gnu.cpp.compiler.input.204545280">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.mingw.base.557373588">
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.mingw.base.557373588;cdt.managedbuild.toolchain.gnu.mingw.base.557373588.1986545449;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.541739697;cdt.managedbuild.tool.gnu.cpp.compiler.input.1244089243">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.mingw.base.557373588;cdt.managedbuild.toolchain.gnu.mingw.base.557373588.1986545449;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.541739697;cdt.managedbuild.tool.gnu.cpp.compiler.input.1244089243">
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.mingw.base.557373588">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
