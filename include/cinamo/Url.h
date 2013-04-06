@@ -15,4 +15,7 @@ namespace url {
 std::string decodePercent(std::string const& str);
 std::string encodePercent(std::string const& str);
 
+std::string decodeForm(std::string const& str);
+std::string encodeForm(std::string const& str);
+
 }}

@@ -50,6 +50,43 @@ std::string decodePercent(std::string const& str)
 	return to;
 }
 
+/**
+ * application/x-www-form-urlencoded
+ * http://tools.ietf.org/html/rfc1866#section-8.2.1
+ */
+std::string decodeForm(std::string const& str)
+{
+	std::string to;
+	std::string code;
+	code.resize(2);
+	const int max=str.length();
+	for(std::string::const_iterator it = str.begin(); it != str.end(); ++it){
+		switch( *it ) {
+		case '%': {
+			if( std::distance(str.begin(), it)+3 <= max ){
+				code[0] = *(++it);
+				code[1] = *(++it);
+				char* failed = nullptr;
+				const char c = static_cast<char>(std::strtol(code.c_str(), &failed, 16) & 0xff);
+				if( (*failed) != '\0' ){
+					CINAMO_EXCEPTION(Exception, "Failed to decode percent: %s", str.c_str());
+				}
+				to.push_back(c);
+			}
+			break;
+		}
+		case '+': {
+			to.push_back(' ');
+			break;
+		}
+		default:
+			to.push_back(*it);
+			break;
+		}
+	}
+	return to;
+}
+
 inline static bool isUnreserved( char const c )
 {
 	return std::isalnum(c) || c == '-' || c=='.' || c == '_' || c == '~';
@@ -72,6 +109,25 @@ std::string encodePercent(std::string const& str)
 
 	for(char const& c : str){
 		if( !isUnreserved(c) && !isGenDelim(c) && !isSubDelim(c) ) {
+			ret.push_back('%');
+			ret.append( format("%02X", static_cast<unsigned char>(c)) );
+		}else{
+			ret.push_back(c);
+		}
+	}
+
+	return ret;
+}
+
+std::string encodeForm(std::string const& str)
+{
+	std::string ret;
+	ret.reserve(str.size()*2);
+
+	for(char const& c : str){
+		if( c == ' ' ) {
+			ret.push_back('+');
+		}if( !isUnreserved(c) && !isGenDelim(c) && !isSubDelim(c) ) {
 			ret.push_back('%');
 			ret.append( format("%02X", static_cast<unsigned char>(c)) );
 		}else{
