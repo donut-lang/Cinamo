@@ -43,7 +43,7 @@ TEST(UrlTest, FormDecodeTest)
 
 TEST(UrlTest, FormEncodeTest)
 {
-	ASSERT_EQ(AFTER, decodeForm(BEFORE));
+	ASSERT_EQ(AFTER, encodeForm(BEFORE));
 }
 
 }}
