@@ -127,7 +127,7 @@ std::string encodeForm(std::string const& str)
 	for(char const& c : str){
 		if( c == ' ' ) {
 			ret.push_back('+');
-		}if( !isUnreserved(c) && !isGenDelim(c) && !isSubDelim(c) ) {
+		}if( !isUnreserved(c) ) {
 			ret.push_back('%');
 			ret.append( format("%02X", static_cast<unsigned char>(c)) );
 		}else{
