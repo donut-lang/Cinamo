@@ -28,24 +28,24 @@ public:
 	}
 private:
 	template <typename R, size_t n_, typename F, typename... Args>
-	static constexpr R call_(typename std::enable_if<(n_ == 0)>::type*,std::array<A, len> const& spirit, F f, Args... args)
+	constexpr R call_(typename std::enable_if<(n_ == 0)>::type*,F f, Args... args)
 	{
 		return f(args...);
 	}
 	template <typename R, size_t n_, typename F, typename... Args>
-	static constexpr R call_(typename std::enable_if<(n_ > 0)>::type*, std::array<A, len> const& spirit, F f, Args... args)
+	constexpr R call_(typename std::enable_if<(n_ > 0)>::type*, F f, Args... args)
 	{
-		return call_<R,n_-1,F>(nullptr, spirit, f, spirit[n_-1], args...);
+		return call_<R,n_-1,F>(nullptr, f, spirit[n_-1], args...);
 	}
 	template <typename R, typename... Args>
-	static constexpr R call_proxy(std::array<A, len> const& spirit, std::function<R(Args...)> f)
+	constexpr R call_proxy(std::function<R(Args...)> f)
 	{
-		return call_<R, len>(nullptr, spirit, f);
+		return call_<R, len>(nullptr, f);
 	}
 public:
 	template <typename F>
-	constexpr auto call(F f) -> decltype(call_proxy(spirit, makeFunctor(f))) const{
-		return call_proxy(spirit, makeFunctor(f));
+	constexpr auto call(F f) -> decltype(this->call_proxy(makeFunctor(f))) const{
+		return this->call_proxy(makeFunctor(f));
 	}
 };
 
