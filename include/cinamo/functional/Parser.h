@@ -298,13 +298,23 @@ class ParserCombinator {
 	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > makeResult(int sym, std::pair<Range, Context> const& p) const{
 		return ::cinamo::Right<error_msg_type, std::tuple<int, Range, Context> >(std::tuple<int, Range, Context>(sym, p.first, p.second));
 	}
+
+	template <typename T>
+	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > tryPEnd( Either<error_msg_type, std::pair<Range, Context> > const& result ) const{
+		return result.isRight ? makeResult(T::sym, result.answer()) : ::cinamo::Left<error_msg_type, std::tuple<int, Range, Context> >("parse failed");
+	}
 	template <typename T>
 	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > tryP(Context const& ctx) const{
-		return (T::parser(ctx)).isRight ? makeResult(T::sym, T::parser(ctx).answer()) : ::cinamo::Left<error_msg_type, std::tuple<int, Range, Context> >("parse failed");
+		return tryPEnd<T>(T::parser(ctx));
+	}
+
+	template <typename T, typename R, typename... Left>
+	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > tryPLoop(Context const& ctx, Either<error_msg_type, std::pair<Range, Context> > const& result) const{
+		return result.isRight ? makeResult(T::sym, result.answer()) : tryP<R, Left...>(ctx);
 	}
 	template <typename T, typename R, typename... Left>
 	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > tryP(Context const& ctx) const{
-		return (T::parser(ctx)).isRight ? makeResult(T::sym, T::parser(ctx).answer()) : tryP<R, Left...>(ctx);
+		return tryPLoop<Args...>(ctx, T::parser(ctx));
 	}
 public:
 	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > parseOne(Context const& ctx) const{
