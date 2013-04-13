@@ -38,7 +38,8 @@ TEST(ParserTest, CombinatorTest)
 	> parser;
 
 	constexpr auto ans = parser.parse("test").answer();
-	static_assert(ans.first.begin == 0, "Failed to parse");
-	static_assert(ans.first.end == 4, "Failed to parse");
+	static_assert(std::get<0>(ans) == 1, "Failed to parse");
+	static_assert(std::get<1>(ans).begin == 0, "Failed to parse");
+	static_assert(std::get<1>(ans).end == 4, "Failed to parse");
 }
 }
