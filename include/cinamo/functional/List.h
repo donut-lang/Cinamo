@@ -71,6 +71,22 @@ public:
 	constexpr List<A, len+1> cons(A item) const{
 		return call_for_struct<typename _cons_first::return_type>(_cons_first(*this, item));
 	}
+private:
+	template <size_t nlen, size_t idx>
+	constexpr List<A, len+nlen> appendI(typename std::enable_if<(idx > 0)>::type*, List<A, len> const& orig, List<A, len+nlen-idx> const& append) const
+	{
+		return appendI<nlen, idx-1>(nullptr, orig, append.cons(orig[idx-1]));
+	}
+	template <size_t nlen, size_t idx>
+	constexpr List<A, len+nlen> appendI(typename std::enable_if<(idx == 0)>::type*, List<A, len> const& orig, List<A, len+nlen> const& append) const
+	{
+		return append;
+	}
+public:
+	template <size_t nlen>
+	constexpr List<A, len+nlen> append(List<A, nlen> const& append) const{
+		return appendI<len, len>(nullptr, *this, append);
+	}
 public:
 	constexpr A const& operator[](size_t n) const{
 		return spirit[n];

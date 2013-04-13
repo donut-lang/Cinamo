@@ -36,4 +36,16 @@ TEST(ConstexprList, ConsTest){
 	ASSERT_EQ(3, lst2[3]);
 }
 
+TEST(ConstexprList, AppendTest){
+	auto lst1 = toList( 1, 2, 3);
+	auto lst2 = toList(-1,-2,-3);
+	auto lst = lst1.append(lst2);
+
+	ASSERT_EQ(lst[0], 1);
+	ASSERT_EQ(lst[1], 2);
+	ASSERT_EQ(lst[2], 3);
+	ASSERT_EQ(lst[3], -1);
+	ASSERT_EQ(lst[4], -2);
+	ASSERT_EQ(lst[5], -3);
+}
 }
