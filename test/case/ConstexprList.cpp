@@ -48,4 +48,13 @@ TEST(ConstexprList, AppendTest){
 	ASSERT_EQ(lst[4], -2);
 	ASSERT_EQ(lst[5], -3);
 }
+
+TEST(ConstexprList, SubListTest){
+	constexpr auto lst1 = toList( 1, 2, 3, 4, 5, 6);
+	constexpr auto lst = lst1.sub<1, 2>();
+
+	ASSERT_EQ(lst[0], 2);
+	ASSERT_EQ(lst[1], 3);
+}
+
 }
