@@ -285,6 +285,28 @@ public:
 };
 
 
-}
+template <int sym_, typename PARSER>
+class Entry {
+public:
+	static const constexpr int sym = sym_;
+	static const constexpr PARSER parser = PARSER();
+};
 
-}
+template <typename... Args>
+class ParserCombinator {
+	template <typename T>
+	constexpr Either<error_msg_type, std::pair<Range, Context> > tryP(Context const& ctx){
+		return (T::parser(ctx)).isRight ? (T::parser(ctx)) : Left("parse failed");
+	}
+	template <typename T, typename R, typename... Left>
+	constexpr Either<error_msg_type, std::pair<Range, Context> > tryP(Context const& ctx){
+		return (T::parser(ctx)).isRight ? (T::parser(ctx)) : tryP<R, Left...>(ctx);
+	}
+public:
+	constexpr Either<error_msg_type, std::pair<Range, Context> > parse(Context const& ctx){
+		return tryP<Args...>(ctx);
+	}
+};
+
+
+}}

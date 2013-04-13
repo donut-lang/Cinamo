@@ -29,4 +29,16 @@ TEST(ParserTest, SelectCombineTest)
 	static_assert(ans.first.end == 6, "Failed to parse");
 }
 
+TEST(ParserTest, CombinatorTest)
+{
+	using namespace cinamo::parser;
+	constexpr ParserCombinator<
+		Entry<0, number>,
+		Entry<1, loop<alphabet> >
+	> parser;
+
+	constexpr auto ans = parser.parse("test").answer();
+	static_assert(ans.first.begin == 0, "Failed to parse");
+	static_assert(ans.first.end == 4, "Failed to parse");
+}
 }
