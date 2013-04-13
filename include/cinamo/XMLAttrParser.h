@@ -21,6 +21,8 @@ DEF_OVERLOD(std::string);
 DEF_OVERLOD(float);
 DEF_OVERLOD(int);
 DEF_OVERLOD(unsigned int);
+DEF_OVERLOD(unsigned long long);
+DEF_OVERLOD(long long);
 DEF_OVERLOD(bool);
 
 }}

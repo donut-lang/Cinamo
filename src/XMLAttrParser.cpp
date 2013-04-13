@@ -21,6 +21,8 @@ template <> void parseAttr<type>(std::string const& name, type& v, type const& d
 
 PARSE_AS(int);
 PARSE_AS(unsigned int);
+PARSE_AS(unsigned long long);
+PARSE_AS(long long);
 PARSE_AS(float);
 PARSE_AS(bool);
 
