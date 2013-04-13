@@ -119,6 +119,13 @@ std::string encodePercent(std::string const& str)
 	return ret;
 }
 
+static bool shouldNotBeEncoded(char c){
+	// http://tools.ietf.org/html/rfc1738
+	// Thus, only alphanumerics, the special characters "$-_.+!*'(),", and
+	// reserved characters used for their reserved purposes may be used
+	// unencoded within a URL.
+	return std::isalnum(c) ||' $' == c || '-'==c || '_' == c || '.' == c || '+' == c || '!' == c || '*' == c || '\''== c || '(' == c || ')' == c || ',' == c;
+}
 std::string encodeForm(std::string const& str)
 {
 	std::string ret;
@@ -127,11 +134,11 @@ std::string encodeForm(std::string const& str)
 	for(char const& c : str){
 		if( c == ' ' ) {
 			ret.push_back('+');
-		}if( !isUnreserved(c) ) {
+		}else if( shouldNotBeEncoded(c) ) {
+			ret.push_back(c);
+		}else{
 			ret.push_back('%');
 			ret.append( format("%02X", static_cast<unsigned char>(c)) );
-		}else{
-			ret.push_back(c);
 		}
 	}
 

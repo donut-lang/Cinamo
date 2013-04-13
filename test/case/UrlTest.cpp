@@ -43,7 +43,7 @@ TEST(UrlTest, FormDecodeTest)
 
 TEST(UrlTest, FormEncodeTest)
 {
-	ASSERT_EQ(AFTER, encodeForm(BEFORE));
+	ASSERT_EQ("http%3A%2F%2Fsmile-psu61.nicovideo.jp%2Fsmile%3Fm%3D14097905.36147", encodeForm("http://smile-psu61.nicovideo.jp/smile?m=14097905.36147"));
 }
 
 }}
