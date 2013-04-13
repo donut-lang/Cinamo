@@ -8,6 +8,7 @@
 
 #include "Either.h"
 #include "Maybe.h"
+#include "List.h"
 #include <utility>
 namespace cinamo {
 namespace parser {
@@ -298,17 +299,39 @@ class ParserCombinator {
 		return ::cinamo::Right<error_msg_type, std::tuple<int, Range, Context> >(std::tuple<int, Range, Context>(sym, p.first, p.second));
 	}
 	template <typename T>
-	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > tryP(Context const& ctx){
+	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > tryP(Context const& ctx) const{
 		return (T::parser(ctx)).isRight ? makeResult(T::sym, T::parser(ctx).answer()) : ::cinamo::Left<error_msg_type, std::tuple<int, Range, Context> >("parse failed");
 	}
 	template <typename T, typename R, typename... Left>
-	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > tryP(Context const& ctx){
+	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > tryP(Context const& ctx) const{
 		return (T::parser(ctx)).isRight ? makeResult(T::sym, T::parser(ctx).answer()) : tryP<R, Left...>(ctx);
 	}
 public:
-	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > parse(Context const& ctx){
+	constexpr Either<error_msg_type, std::tuple<int, Range, Context> > parseOne(Context const& ctx) const{
 		return tryP<Args...>(ctx);
 	}
+private:
+//	template <typename... Left>
+//	constexpr auto parseIC(Either<error_msg_type, std::tuple<int, Range, Context> > const& result, Left... args)
+//	-> decltype(result.isLeft ? toList(args...) : parseI(std::get<2>(result.answer()), std::pair<int, Range>(std::get<0>(result.answer()), std::get<1>(result.answer())), args...))
+//	{
+//		return
+//				result.isLeft ?
+//						List<std::pair<int, Range>, sizeof...(Left)>(args...) :
+//						parseI<std::pair<int, Range>, Left...>(std::get<2>(result.answer()), std::pair<int, Range>(std::get<0>(result.answer()), std::get<1>(result.answer())), args...);
+//	}
+//	template <typename... Left>
+//	constexpr auto parseI(Context const& ctx, Left... args)
+//	-> decltype(parseIC<Left...>(parseOne(ctx), args...)){
+//		return parseIC<Left...>(parseOne(ctx), args...);
+//	}
+//public:
+//	template <size_t N>
+//	constexpr auto parse(const char (&str)[N])
+//	-> decltype(parseI<>(Context(str)))
+//	{
+//		return parseI<>(Context(str));
+//	}
 };
 
 

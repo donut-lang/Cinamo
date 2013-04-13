@@ -37,7 +37,7 @@ TEST(ParserTest, CombinatorTest)
 		Entry<1, loop<alphabet> >
 	> parser;
 
-	constexpr auto ans = parser.parse("test").answer();
+	constexpr auto ans = parser.parseOne("test").answer();
 	static_assert(std::get<0>(ans) == 1, "Failed to parse");
 	static_assert(std::get<1>(ans).begin == 0, "Failed to parse");
 	static_assert(std::get<1>(ans).end == 4, "Failed to parse");
