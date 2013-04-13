@@ -28,24 +28,52 @@ public:
 	}
 private:
 	template <typename R, size_t n_, typename F, typename... Args>
-	constexpr R call_(typename std::enable_if<(n_ == 0)>::type*,F f, Args... args)
+	constexpr R call_(typename std::enable_if<(n_ == 0)>::type*,F f, Args... args) const
 	{
 		return f(args...);
 	}
 	template <typename R, size_t n_, typename F, typename... Args>
-	constexpr R call_(typename std::enable_if<(n_ > 0)>::type*, F f, Args... args)
+	constexpr R call_(typename std::enable_if<(n_ > 0)>::type*, F f, Args... args) const
 	{
 		return call_<R,n_-1,F>(nullptr, f, spirit[n_-1], args...);
 	}
-	template <typename R, typename... Args>
-	constexpr R call_proxy(std::function<R(Args...)> f)
+	template <typename R, typename F, typename... Args>
+	constexpr R call_proxy(F f) const
 	{
 		return call_<R, len>(nullptr, f);
 	}
+private:
+	template <typename R, typename... Args>
+	static R resolve(std::function<R(Args...)>);
 public:
+	template <typename R, typename F>
+	constexpr R call_for_struct(F f) const
+	{
+		return this->call_proxy<R>(f);
+	}
 	template <typename F>
-	constexpr auto call(F f) -> decltype(this->call_proxy(makeFunctor(f))) const{
-		return this->call_proxy(makeFunctor(f));
+	constexpr auto call(F f) -> decltype(resolve(makeFunctor(f))) const
+	{
+		return this->call_proxy<decltype(resolve(makeFunctor(f)))>(f);
+	}
+private:
+	struct _cons_first{
+		typedef List<A, len+1> return_type;
+		List<A, len> const& self_;
+		A const it_;
+		constexpr _cons_first(List<A, len> const& self, A it):self_(self), it_(it){}
+		template <typename... Args>
+		List<A, len+1> operator()(Args... args) const{
+			return List<A, len+1>(it_, args...);
+		}
+	};
+public:
+	constexpr List<A, len+1> cons(A item) const{
+		return call_for_struct<typename _cons_first::return_type>(_cons_first(*this, item));
+	}
+public:
+	constexpr A const& operator[](size_t n) const{
+		return spirit[n];
 	}
 };
 
