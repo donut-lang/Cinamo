@@ -8,6 +8,7 @@
 
 #include <string>
 #include <functional>
+#include <cstddef>
 #include "../String.h"
 #include "../Dynamic.h"
 
@@ -42,7 +43,7 @@ private:
 	constexpr Maybe(A const& val):isNothing(false),isJust(true),val_(val) {}
 	template <typename A_> friend constexpr Maybe<A_> Just(A_ const& x);
 	template <typename A_>  friend constexpr Maybe<A_> Nothing();
-	std::string toStringImpl(decltype(cinamo::toString(val_))* v = nullptr) const{
+	auto toStringImpl() -> decltype(cinamo::toString(val_),std::string()) const{
 		return isNothing?
 				cinamo::format("<Maybe[%s]: Nothing>", cinamo::demangle<A>().c_str()) :
 				cinamo::format("<Maybe[%s]: Just %s>", cinamo::demangle<A>().c_str(), cinamo::toString(val_).c_str());
