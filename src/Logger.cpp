@@ -56,12 +56,13 @@ bool Logger::msg(enum Level level, std::string const& tag, std::string const& fm
 		throw Exception(__FILE__, __LINE__, "[BUG][FIXME] Invalid log level!!");
 	}
 	ss << "[" << std::setw(16) << tag << "] ";
-	ss << formatv(fmt, args) << std::endl;
 #if CINAMO_WINDOWS
-	_stream << ::cinamo::internal::win32::toSystem(ss.str());
+	ss << ::cinamo::internal::win32::toSystem(formatv(fmt, args)) << std::endl;
+	//ss << formatv(fmt, args) << std::endl;
 #else
-	_stream << ss.str();
+	ss << formatv(fmt, args) << std::endl;
 #endif
+	_stream << ss.str();
 	_stream.flags();
 	return true;
 }
