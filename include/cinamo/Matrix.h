@@ -19,6 +19,7 @@ private:
 private:
 	Mat(std::array<double, N*M>&& val):val_(val){};
 public:
+	Mat():val_(){};
 	Mat(Mat<N,M> const& o):val_(o.val_){};
 	Mat(Mat<N,M>&& o):val_(std::move(o.val_)){};
 
@@ -39,12 +40,25 @@ public:
 	~Mat() = default;
 public:
 	double const& operator()(size_t i, size_t j) const{
-		assert(i*M+j >= 0 && i*M+j < N*M);
+		assert(i >= 0 && i< N);
+		assert(j >= 0 && j< M);
 		return val_[i*M+j];
 	}
 	double& operator()(size_t i, size_t j){
-		assert(i*M+j >= 0 && i*M+j < N*M);
+		assert(i >= 0 && i< N);
+		assert(j >= 0 && j< M);
 		return val_[i*M+j];
+	}
+	Mat<N,M>& operator *=(double const& o) {
+		for(double &d : val_){
+			d *= o;
+		}
+		return *this;
+	}
+	Mat<N,M> operator *(double const& o) const{
+		Mat<N,M> self(*this);
+		self *= o;
+		return self;
 	}
 	// 同じ次元の正方行列
 	template <size_t N_, size_t M_>
@@ -73,20 +87,20 @@ public:
 	}
 	// そうでない
 	template <size_t L>
-	auto operator *(Mat<L,M> const& o) const
-	-> typename std::enable_if<N!=M, Mat<L,N> >::type
+	auto operator *(Mat<M, L> const& o) const
+	-> typename std::enable_if<N!=M || L!=M, Mat<N,L> >::type
 	{
-		std::array<double, N*M> val;
+		Mat<N,L> val;
 		for(size_t i=0;i<N;++i) {
 			for(size_t j=0;j<L;++j) {
 				double sum = 0;
 				for(size_t k=0;k<M;++k){
 					sum += ((*this)(i, k))*o(k,j);
 				}
-				(*val)[i*L+j]=sum;
+				val(i,j)=sum;
 			}
 		}
-		return Mat(std::move(val));
+		return val;
 	}
 	Mat<N,M>& operator +=(Mat<N,M> const& o)
 	{
