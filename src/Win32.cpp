@@ -15,6 +15,21 @@ namespace cinamo {
 namespace internal {
 namespace win32 {
 
+std::string toSystem(std::string const& str)
+{
+	std::wstring const utf16(toUTF16(str));
+	int size = WideCharToMultiByte(CP_THREAD_ACP, 0, utf16.c_str(), utf16.length(), nullptr, 0, nullptr, nullptr);
+	char* buf = new char[size+1];
+	if(size != WideCharToMultiByte(CP_THREAD_ACP, 0, utf16.c_str(), utf16.length(), buf, size+1, nullptr, nullptr)){
+		CINAMO_EXCEPTION(Exception, "Failed to convert UTF16 to System code page!");
+	}
+	buf[size]=0;
+	std::string ret(buf);
+	delete [] buf;
+	return ret;
+
+}
+
 std::wstring toUTF16(std::string const& str)
 {
 	int size = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.length(), nullptr, 0);

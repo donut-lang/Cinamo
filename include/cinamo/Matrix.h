@@ -46,8 +46,10 @@ public:
 		assert(i*M+j >= 0 && i*M+j < N*M);
 		return val_[i*M+j];
 	}
-	auto operator *=(Mat<N,N> const& o)
-	-> typename std::enable_if<N==M, Mat<N,N>& >::type
+	// “¯‚¶ŸŒ³‚Ì³•ûs—ñ
+	template <size_t N_, size_t M_>
+	auto operator *=(Mat<N_,M_> const& o)
+	-> typename std::enable_if<N_==N&&M_==M&&N==M, Mat<N,M>& >::type
 	{
 		for(size_t i=0;i<N;++i) {
 			for(size_t j=0;j<N;++j) {
@@ -60,13 +62,16 @@ public:
 		}
 		return *this;
 	}
-	auto operator *(Mat<N,N> const& o) const
-	-> typename std::enable_if<N==M, Mat<N,N> >::type
+	// “¯‚¶ŸŒ³‚Ì³•ûs—ñ
+	template <size_t N_, size_t M_>
+	auto operator *(Mat<N_,M_> const& o) const
+	-> typename std::enable_if<N_==N&&M_==M&&N==M, Mat<N,M> >::type
 	{
-		Mat <N,N> self(*this);
+		Mat <N,M> self(*this);
 		self*=o;
 		return std::move(self);
 	}
+	// ‚»‚¤‚Å‚È‚¢
 	template <size_t L>
 	auto operator *(Mat<L,M> const& o) const
 	-> typename std::enable_if<N!=M, Mat<L,N> >::type

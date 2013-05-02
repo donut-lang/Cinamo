@@ -12,6 +12,8 @@
 #include <cinamo/Exception.h>
 #include <cinamo/String.h>
 
+#include <cinamo/internal/Win32.h>
+
 namespace cinamo {
 
 struct null_stream_sink_t : std::streambuf {
@@ -55,7 +57,11 @@ bool Logger::msg(enum Level level, std::string const& tag, std::string const& fm
 	}
 	ss << "[" << std::setw(16) << tag << "] ";
 	ss << formatv(fmt, args) << std::endl;
+#if CINAMO_WINDOWS
+	_stream << ::cinamo::internal::win32::toSystem(ss.str());
+#else
 	_stream << ss.str();
+#endif
 	_stream.flags();
 	return true;
 }

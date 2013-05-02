@@ -18,6 +18,7 @@ namespace win32 {
 
 std::wstring toUTF16(std::string const& str);
 std::string toUTF8(std::wstring const& str);
+std::string toSystem(std::string const& str);
 
 }}}
 
