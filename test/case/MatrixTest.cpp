@@ -21,6 +21,13 @@ TEST(MatrixTest, InitializeTest)
 			7.0,8.0,9.0};
 	ASSERT_FLOAT_EQ( 1.0, mat(0,0) );
 	ASSERT_FLOAT_EQ( 6.0, mat(1,2) );
+
+	Mat<3,3> const m;
+	for(int i=0;i<3;++i){
+		for(int j=0;j<3;++j){
+			ASSERT_FLOAT_EQ( 0, m(i,j) );
+		}
+	}
 }
 TEST(MatrixTest, MultSameSizeMatrixTest)
 {
@@ -45,6 +52,8 @@ TEST(MatrixTest, MultSameSizeMatrixTest)
 	ASSERT_FLOAT_EQ( 7.0, m2(2,0) );
 	ASSERT_FLOAT_EQ( 7.0, m2(2,1) );
 	ASSERT_FLOAT_EQ( 7.0, m2(2,2) );
+
+	ASSERT_FLOAT_EQ(0, m.det());
 }
 
 TEST(MatrixTest, MultDifferentSizeMatrixTest)
