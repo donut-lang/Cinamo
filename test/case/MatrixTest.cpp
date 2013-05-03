@@ -96,4 +96,19 @@ TEST(MatrixTest, MultScalarTest)
 	}
 }
 
+TEST(MatrixTest, DetTest)
+{
+	Mat<1> const mat1 = {1.0};
+	ASSERT_FLOAT_EQ(1, mat1.det());
+	Mat<2,2> const mat2 = {
+			1.0,2.0,
+			7.0,8.0,};
+	ASSERT_FLOAT_EQ(-6, mat2.det());
+	Mat<3,3> const mat3 = {
+			1.0,0.0,1.0,
+			3.0,2.0,4.0,
+			1.0,6.0,1.0};
+	ASSERT_FLOAT_EQ(-6, mat3.det());
+}
+
 }
