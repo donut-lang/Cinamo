@@ -5,7 +5,7 @@
 # Copyright 2012-2013, PSI
 
 DIRNAME=$(cd $(dirname $0);pwd)
-TEST_FILE="cinamo_test"
+TEST_FILE="cinamoTest"
 
 function run() {
 	PROG=$1/$TEST_FILE

@@ -9,6 +9,7 @@
 #include <type_traits>
 #include <cassert>
 #include <array>
+#include <cinamo/ClassUtil.h>
 
 namespace cinamo {
 
@@ -37,9 +38,9 @@ public:
 	}
 public:
 	template<typename ...E>
-	constexpr MatCommon(E&& ...e)
-	:val_{{std::forward<E>(e)...}}{
-		static_assert((sizeof...(E)) == N*M, "size not match");
+	constexpr MatCommon(double const& d, E const& ...e)
+	:val_{{d, e...}}{
+		static_assert((1+sizeof...(E) == N*M), "size not match");
 	}
 	~MatCommon() = default;
 public:
@@ -67,12 +68,12 @@ public:
 	// 同じ次元の正方行列
 	template <size_t N_, size_t M_, typename Self_>
 	auto operator *=(MatCommon<N_,M_, Self_> const& o)
-	-> typename std::enable_if<N_==N&&M_==M&&N==M&&std::is_same<Self,Self_>::value, Self& >::type
+	-> typename std::enable_if<M_==M && std::is_same<Self,Self_>::value, Self& >::type
 	{
 		for(size_t i=0;i<N;++i) {
-			for(size_t j=0;j<N;++j) {
+			for(size_t j=0;j<M_;++j) {
 				double sum = 0;
-				for(size_t k=0;k<N;++k){
+				for(size_t k=0;k<M;++k){
 					sum += ((*this)(i, k))*(o(k,j));
 				}
 				(*this)(i,j)=sum;
@@ -136,6 +137,10 @@ public:
 template <size_t N>
 class Mat<N,N,true> final : public MatCommon<N,N, Mat<N,N,true> >{
 public:
+	Mat(Mat<N,N,true> const& other) = default;
+	Mat(Mat<N,N,true>&& other) = default;
+	Mat<N,N,true>& operator=(Mat<N,N,true> const& other) = default;
+	Mat<N,N,true>& operator=(Mat<N,N,true>&& other) = default;
 	template<typename ...E>
 	constexpr Mat(E&& ...e)
 	:MatCommon<N,N, Mat<N,N,true> >(std::forward<E>(e)...){
@@ -147,15 +152,15 @@ public:
 };
 
 template<>
-double Mat<1,1,true>::det() const{
+inline double Mat<1,1,true>::det() const{
 	return (*this)(0,0);
 }
 template<>
-double Mat<2,2,true>::det() const{
+inline double Mat<2,2,true>::det() const{
 	return ((*this)(0,0)*(*this)(1,1))-((*this)(0,1)*(*this)(1,0));
 }
 template<>
-double Mat<3,3,true>::det() const{
+inline double Mat<3,3,true>::det() const{
 	//サラスの方法
 	return
 			 ((*this)(0,0)*(*this)(1,1)*(*this)(2,2))
@@ -169,6 +174,10 @@ double Mat<3,3,true>::det() const{
 template <size_t N, size_t M>
 class Mat<N,M,false> final : public MatCommon<N,M, Mat<N,M,false> >{
 public:
+	Mat(Mat<N,M,false> const& other) = default;
+	Mat(Mat<N,M,false>&& other) = default;
+	Mat<N,M,false>& operator=(Mat<N,M,false> const& other) = default;
+	Mat<N,M,false>& operator=(Mat<N,M,false>&& other) = default;
 	template<typename ...E>
 	constexpr Mat(E&& ...e)
 	:MatCommon<N,M, Mat<N,M,false> >(std::forward<E>(e)...){

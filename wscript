@@ -117,7 +117,7 @@ def build(bld):
 	bld(
 		features = 'cxx cprogram',
 		source = TEST_SRC+TINYXML2_SRC,
-		target = 'cinamo_test',
+		target = 'cinamoTest',
 		env = bld.all_envs["coverage"] if ("coverage" in bld.all_envs) else bld.env,
 		use=['GTEST', 'ICU', 'PPROF','BOOST', 'cinamo'],
 		includes=[CINAMO_INC, TINYXML2_INC])
