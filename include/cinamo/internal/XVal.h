@@ -190,8 +190,8 @@ template<typename T> typename _TypeAdapter<T>::return_type XObject::set(std::str
 	std::pair<std::string, XValue>& p = *it;
 	if( it == this->map_.end() || p.first != name) {
 		it = this->map_.insert(it, std::pair<std::string, XValue>(name, XValue(obj)));
-		XValue& b = ((std::pair<std::string, XValue>&)(*it)).second;
-		return b.as<T>();
+		XValue& b = it->second;
+		return it->second.as<T>();
 	}else{
 		p.second = XValue(obj);
 		return p.second.as<T>();

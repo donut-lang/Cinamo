@@ -31,28 +31,29 @@ public:
 	typedef A value_type;
 private:
 	A val_;
+	template <typename A_>
+	auto toStringImpl(A_ const& val) -> decltype( cinamo::toString(val) ) const {
+		return cinamo::format("<Maybe[%s]: Just %s>", cinamo::demangle<A>().c_str(), cinamo::toString(val).c_str());
+	}
+	template <typename A_>
+	auto toStringImpl(A_ const& val) -> decltype( std::string() ) const {
+		return cinamo::format("<Maybe[%s]: Just>", cinamo::demangle<A>().c_str(), cinamo::toString(val).c_str());
+	}
 public:
 	constexpr A value() const{
 		return isNothing ? (throw "Cannot get value from Nothing") : val_;
 	}
 	std::string toString() const{
-		return toStringImpl();
+		return isNothing?
+				cinamo::format("<Maybe[%s]: Nothing>", cinamo::demangle<A>().c_str()) :
+				toStringImpl<A>(this->val_);
 	}
 private:
 	constexpr Maybe():isNothing(true),isJust(false),val_() {}
 	constexpr Maybe(A const& val):isNothing(false),isJust(true),val_(val) {}
 	template <typename A_> friend constexpr Maybe<A_> Just(A_ const& x);
 	template <typename A_>  friend constexpr Maybe<A_> Nothing();
-	auto toStringImpl() -> decltype(cinamo::toString(val_),std::string()) const{
-		return isNothing?
-				cinamo::format("<Maybe[%s]: Nothing>", cinamo::demangle<A>().c_str()) :
-				cinamo::format("<Maybe[%s]: Just %s>", cinamo::demangle<A>().c_str(), cinamo::toString(val_).c_str());
-	}
-	std::string toStringImpl() const{
-		return isNothing?
-				cinamo::format("<Maybe[%s]: Nothing>", cinamo::demangle<A>().c_str()) :
-				cinamo::format("<Maybe[%s]: Just>", cinamo::demangle<A>().c_str(), cinamo::toString(val_).c_str());
-	}
+
 public:
 	~Maybe() = default;
 public:
