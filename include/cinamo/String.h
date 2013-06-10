@@ -58,6 +58,7 @@ template <typename T> T parseAs(std::string const& str, int radix, T const& defa
 template <typename T> T parseAs(std::string const& str, T const& default_);
 
 std::string trim(std::string const& str);
+std::string& trim(std::string& str);
 
 std::vector<std::string> split(std::string const& str, std::string const& sep);
 template <size_t N> inline std::vector<std::string> split(std::string const& str, const std::string (&sep)[N]);

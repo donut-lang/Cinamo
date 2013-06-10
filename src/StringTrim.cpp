@@ -13,11 +13,16 @@ namespace cinamo {
 
 std::string trim(std::string const& str_)
 {
+	std::string tmp(str_);
+	return trim(tmp);
+}
+std::string& trim(std::string& str_)
+{
 	UnicodeString str(UnicodeString::fromUTF8(str_));
 	str.trim();
-	std::string ret;
-	str.toUTF8String(ret);
-	return ret;
+	str_.clear();
+	str.toUTF8String(str_);
+	return str_;
 }
 
 
