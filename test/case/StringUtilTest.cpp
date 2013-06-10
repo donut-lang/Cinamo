@@ -211,6 +211,17 @@ TEST(StringUtilTest, EndsWithTest)
 	ASSERT_TRUE(endsWith("abcdef","abcdef"));
 }
 
+TEST(StringUtilTest, TrimTest)
+{
+	ASSERT_EQ("abcdef", trim("abcdef"));
+
+	ASSERT_EQ("abcdef", trim(" abcdef "));
+
+	ASSERT_EQ("abcdef", trim("      abcdef          "));
+
+	ASSERT_EQ("abcdef", trim(" 　abcdef 　"));
+}
+
 TEST(StringUtilTest, SplitTest)
 {
 	std::string front;
