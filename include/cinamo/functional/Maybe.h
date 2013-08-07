@@ -86,6 +86,16 @@ public:
 			return Just(f(a));
 		});
 	}
+	template <typename Other>
+	constexpr bool operator==(Maybe<Other> const& o){
+		return std::is_same<Other, A>::value
+				&& (this->isNothing == this->isNothing)
+				&& (this->isNothing || this->val_ == o.value());
+	}
+	template <typename Other>
+	constexpr bool operator!=(Maybe<Other> const& o){
+		return !this->operator ==(o);
+	}
 };
 
 template <typename A>

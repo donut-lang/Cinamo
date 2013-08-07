@@ -39,4 +39,14 @@ TEST(MaybeTest, JustTest)
 	ASSERT_EQ(11, f.value());
 }
 
+TEST(MaybeTest, Compare)
+{
+	ASSERT_EQ(Just(1), Just(1));
+	ASSERT_NE(Just(1), Just(2));
+	ASSERT_NE(Just<int>(1), Just<long>(1));
+
+	ASSERT_EQ(Nothing<int>(), Nothing<int>());
+	ASSERT_NE(Nothing<int>(), Nothing<unsigned int>());
+}
+
 }
