@@ -3,7 +3,30 @@
 	<configuration id="cdt.managedbuild.toolchain.gnu.mingw.base.557373588" name="Win">
 		<extension point="org.eclipse.cdt.core.LanguageSettingsProvider">
 			<provider-reference id="org.eclipse.cdt.managedbuilder.core.MBSLanguageSettingsProvider" ref="shared-provider"/>
-			<provider copy-of="extension" id="org.eclipse.cdt.ui.UserLanguageSettingsProvider"/>
+			<provider class="org.eclipse.cdt.core.language.settings.providers.LanguageSettingsGenericProvider" id="org.eclipse.cdt.ui.UserLanguageSettingsProvider" name="CDT User Setting Entries" prefer-non-shared="true" store-entries-with-project="true">
+				<language id="org.eclipse.cdt.core.g++">
+					<resource project-relative-path="">
+						<entry kind="includePath" name="/${ProjName}/${ProjDirPath}/include">
+							<flag value="BUILTIN|LOCAL|VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/${ProjDirPath}/external/tinyxml2">
+							<flag value="BUILTIN|LOCAL|VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="includePath" name="/${ProjName}/${ProjDirPath}/build/debug">
+							<flag value="BUILTIN|LOCAL|VALUE_WORKSPACE_PATH"/>
+						</entry>
+						<entry kind="macro" name="DEBUG" value="1">
+							<flag value="BUILTIN"/>
+						</entry>
+						<entry kind="macro" name="NDEBUG" value="1">
+							<flag value="BUILTIN"/>
+						</entry>
+						<entry kind="macro" name="__GXX_EXPERIMENTAL_CXX0X__" value="1">
+							<flag value="BUILTIN"/>
+						</entry>
+					</resource>
+				</language>
+			</provider>
 			<provider-reference id="org.eclipse.cdt.managedbuilder.core.GCCBuildCommandParser" ref="shared-provider"/>
 			<provider-reference id="org.eclipse.cdt.managedbuilder.core.GCCBuiltinSpecsDetector" ref="shared-provider"/>
 		</extension>
@@ -11,8 +34,8 @@
 	<configuration id="cdt.managedbuild.config.gnu.exe.debug.1723386407" name="Linux">
 		<extension point="org.eclipse.cdt.core.LanguageSettingsProvider">
 			<provider-reference id="org.eclipse.cdt.managedbuilder.core.MBSLanguageSettingsProvider" ref="shared-provider"/>
-			<provider copy-of="extension" id="org.eclipse.cdt.managedbuilder.core.GCCBuildCommandParser"/>
-			<provider copy-of="extension" id="org.eclipse.cdt.ui.UserLanguageSettingsProvider"/>
+			<provider class="org.eclipse.cdt.managedbuilder.language.settings.providers.GCCBuildCommandParser" id="org.eclipse.cdt.managedbuilder.core.GCCBuildCommandParser" keep-relative-paths="false" name="CDT GCC Build Output Parser" parameter="(gcc)|([gc]\+\+)|(clang)" prefer-non-shared="true" store-entries-with-project="true"/>
+			<provider class="org.eclipse.cdt.core.language.settings.providers.LanguageSettingsGenericProvider" id="org.eclipse.cdt.ui.UserLanguageSettingsProvider" name="CDT User Setting Entries" prefer-non-shared="true"/>
 			<provider class="org.eclipse.cdt.managedbuilder.language.settings.providers.GCCBuiltinSpecsDetector" console="false" env-hash="-471598850" id="org.eclipse.cdt.managedbuilder.core.GCCBuiltinSpecsDetector" keep-relative-paths="false" name="CDT GCC Builtin Compiler Settings" parameter="/usr/bin/${COMMAND} -E -P -v -dD ${INPUTS} -std=gnu++11">
 				<language-scope id="org.eclipse.cdt.core.gcc"/>
 				<language-scope id="org.eclipse.cdt.core.g++"/>
