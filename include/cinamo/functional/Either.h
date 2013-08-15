@@ -100,11 +100,17 @@ public:
 				cinamo::format("<Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
 	}
 public:
-	E error() const{
+	E const& error() const{
 		return isLeft ? error_ : throw cinamo::format("Cannot get error from <Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(answer_).c_str());
 	}
-	A answer() const{
+	A const& answer() const{
 		return isRight ? answer_ : throw cinamo::format("Cannot get answer from <Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
+	}
+	E const& left() const {
+		return this->error();
+	}
+	E const& right() const {
+		return this->error();
 	}
 public:
 	template <typename F>
@@ -122,8 +128,8 @@ public:
 		return isRight ? a : Left<E,A2>(error_);
 	}
 	template <typename F>
-	Either<E,A> fmap(F f){
-		return isLeft ? *this : Right(f(answer_));
+	auto fmap(F f) -> Either<E,decltype(f(answer_))>{
+		return isLeft ? Left<E,decltype(f(answer_))>(error_) : Right<E,decltype(f(answer_))>(f(answer_));
 	}
 	template <typename F> Either<E,A>& ifRight(F f) { if(isRight) f(answer_); return *this; }
 	template <typename F> Either<E,A>& ifLeft(F f) { if(isLeft) f(error_); return *this; }
@@ -180,11 +186,17 @@ public:
 				cinamo::format("<Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
 	}
 public:
-	constexpr E error() const{
+	constexpr E const& error() const{
 		return isLeft ? error_ : throw cinamo::format("Cannot get error from <Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(answer_).c_str());
 	}
-	constexpr A answer() const{
+	constexpr A const answer() const{
 		return isRight ? answer_ : throw cinamo::format("Cannot get answer from <Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
+	}
+	constexpr E const& left() const {
+		return this->error();
+	}
+	constexpr E const& right() const {
+		return this->error();
 	}
 public:
 	template <typename F>
@@ -202,8 +214,8 @@ public:
 		return isRight ? a : Left<E,A2>(error_);
 	}
 	template <typename F>
-	constexpr Either<E,A> fmap(F f){
-		return isLeft ? *this : Right(f(answer_));
+	constexpr auto fmap(F f) -> Either<E,decltype(f(answer_))>{
+		return isLeft ? Left<E,decltype(f(answer_))>(error_) : Right<E,decltype(f(answer_))>(f(answer_));
 	}
 	template <typename F> Either<E,A>& ifRight(F f) { if(isRight) f(answer_); return *this; }
 	template <typename F> Either<E,A>& ifLeft(F f) { if(isLeft) f(error_); return *this; }

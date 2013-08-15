@@ -32,10 +32,13 @@ public:
 				Right<std::string, std::vector<T> >(vec) :
 				Left<std::string, std::vector<T> >("failed to exec fread");
 	}
-	Either<std::string, Handler<File> > seek(off64_t off, int seek_op) {
+	Either<std::string, Handler<File> > seek(off64_t const& off, int seek_op) {
 		return fseeko64(f_, off, seek_op) == 0 ?
 				Right<std::string, Handler<File> >(this->self()):
 				Left<std::string, Handler<File> >("Failed to exec feeko64");
+	}
+	Either<std::string, Handler<File> > seekFromBegin(off64_t const& off) {
+		return this->seek(off, SEEK_SET);
 	}
 public:
 	static Either<std::string, Handler<File> > open(std::string const& fname, std::string const& mode){
@@ -43,6 +46,18 @@ public:
 		return f ?
 				Right<std::string, Handler<File> >(Handler<File>(new File(f))) :
 				Left<std::string, Handler<File> >("Failed to exec fopen");
+	}
+	static Either<std::string, Handler<File> > openInRB(std::string const& fname){
+		return open(fname, "rb");
+	}
+	static Either<std::string, Handler<File> > openInR(std::string const& fname){
+		return open(fname, "r");
+	}
+	static Either<std::string, Handler<File> > openInWB(std::string const& fname){
+		return open(fname, "wb");
+	}
+	static Either<std::string, Handler<File> > openInW(std::string const& fname){
+		return open(fname, "w");
 	}
 };
 }
