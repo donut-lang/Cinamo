@@ -8,42 +8,73 @@
 
 #include <utility>
 #include <type_traits>
+#include "Base.h"
 #include "Ident.h"
 #include "Maybe.h"
 
 namespace cinamo {
 
-template <typename E, typename A> class Either;
+namespace either_innenr{
+class LeftEnumT;
+class RightEnumT;
+class ConstexprLeftEnumT;
+class ConstexprRightEnumT;
+}
+template <typename E, typename A, typename U=void> class Either;
 template <typename E, typename A>
-constexpr Either<E,A> Left(E const& e) {
-	return Either<E,A>(e, std::true_type());
+Either<E,A> Left(E const& e) {
+	return Either<E,A>(e, static_cast<either_innenr::LeftEnumT*>(nullptr));
 }
 
 template <typename E, typename A>
-constexpr Either<E,A> Right(A const& a){
-	return Either<E,A>(a, std::false_type());
+Either<E,A> Right(A const& a){
+	return Either<E,A>(a, static_cast<either_innenr::RightEnumT*>(nullptr));
 }
 
-template <typename E, typename A>
+template <typename E, typename A, typename U>
 class Either {
 public:
 	bool const isLeft;
 	bool const isRight;
 private:
-	E const error_;
-	A const answer_;
-	constexpr Either(E const& e, std::true_type const&)
+	union {
+		E const error_;
+		A const answer_;
+	};
+public:
+	Either(E const& e, either_innenr::LeftEnumT*)
 	:isLeft(true)
 	,isRight(false)
 	,error_(e)
-	,answer_(){}
-	constexpr Either(A const& a, std::false_type const&)
+	{}
+	Either(A const& a, either_innenr::RightEnumT*)
 	:isLeft(false)
 	,isRight(true)
-	,error_()
-	,answer_(a){}
-	template <typename E_, typename A_> friend constexpr Either<E_,A_> Left(E_ const& x);
-	template <typename E_, typename A_> friend constexpr Either<E_,A_> Right(A_ const& x);
+	,answer_(a)
+	{}
+	Either(Either<E,A> const& e)
+	:isLeft(e.isLeft)
+	,isRight(e.isRight)
+	{
+		if( isLeft ) {
+			new (const_cast<E*>(static_cast<const E*>(&this->error_))) E( (e.error_) );
+		}
+		if( isRight ) {
+			new (const_cast<A*>(static_cast<const A*>(&this->answer_))) A( (e.answer_) );
+		}
+	}
+public:
+	~Either() {
+		if(isLeft) {
+			this->error_.~E();
+		}
+		if(isRight) {
+			this->answer_.~A();
+		}
+
+	}
+	template <typename E_, typename A_> friend Either<E_,A_> Left(E_ const& x);
+	template <typename E_, typename A_> friend Either<E_,A_> Right(A_ const& x);
 public:
 	typedef E error_type;
 	typedef A answer_type;
@@ -54,52 +85,38 @@ public:
 				cinamo::format("<Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
 	}
 public:
-	constexpr E error() const{
-		return isLeft ? error : throw cinamo::format("Cannot get error from <Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(answer_).c_str());
+	E error() const{
+		return isLeft ? error_ : throw cinamo::format("Cannot get error from <Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(answer_).c_str());
 	}
-	constexpr A answer() const{
+	A answer() const{
 		return isRight ? answer_ : throw cinamo::format("Cannot get answer from <Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
 	}
 public:
 	template <typename F>
-	constexpr auto operator >>=(F f)
+	auto operator >>=(F f)
 		-> Either<E, typename Ident<decltype(f(std::declval<A>()))>::type::answer_type> {
 		return isLeft ?
 			Left<E, typename  Ident<decltype(f(std::declval<A>()))>::type::answer_type>(error_) :
 			f(answer_);
 	}
-	constexpr Either<E,A> operator ||(Either<E,A> const& e) {
+	Either<E,A> operator ||(Either<E,A> const& e) {
 		return isRight ? *this : e;
 	}
 	template <typename A2>
-	constexpr auto operator >>(Either<E,A2> a) -> Either<E,A2> {
+	auto operator >>(Either<E,A2> a) -> Either<E,A2> {
 		return isRight ? a : Left<E,A2>(error_);
 	}
 	template <typename F>
-	constexpr Either<E,A> fmap(F f){
+	Either<E,A> fmap(F f){
 		return isLeft ? *this : Right(f(answer_));
 	}
-	template <typename F>
-	constexpr auto ifRight(F f, typename std::enable_if<std::is_same<typename Ident<decltype(f(answer_))>::type, void>::value>::type* = 0) -> void{
-		if(isRight) {
-			f(answer_);
-		}
-	}
-	template <typename F>
-	constexpr auto ifLeft(F f, typename std::enable_if<std::is_same<typename Ident<decltype(f(error_))>::type, void>::value>::type* = 0) -> void{
-		if(isLeft) {
-			f(error_);
-		}
-	}
-	template <typename F>
-	constexpr auto ifRight(F f, typename std::enable_if<!std::is_same<typename Ident<decltype(f(answer_))>::type, void>::value>::type* = 0) -> Maybe<decltype(f(answer_))>{
-		return isRight ? Just(f(answer_)) : Nothing<decltype(f(answer_))>();
-	}
-	template <typename F>
-	constexpr auto ifLeft(F f, typename std::enable_if<!std::is_same<typename Ident<decltype(f(error_))>::type, void>::value>::type* = 0) -> Maybe<decltype(f(error_))>{
-		return isLeft ? Just(f(error_)) : Nothing<decltype(f(error_))>();
-	}
-	template <typename E_,typename A_> friend class Either;
+	template <typename F> Either<E,A>& ifRight(F f) { if(isRight) f(answer_); return *this; }
+	template <typename F> Either<E,A>& ifLeft(F f) { if(isLeft) f(error_); return *this; }
+
+	template <typename F> Either<E,A> const& ifRight(F f) const { if(isRight) f(answer_); return *this; }
+	template <typename F> Either<E,A> const& ifLeft(F f) const { if(isLeft) f(error_); return *this; }
+
+	template <typename E_,typename A_,typename U_> friend class Either;
 	template <typename E_,typename A_>
 	constexpr bool operator ==(Either<E_,A_> const& o) const
 	{
@@ -112,7 +129,6 @@ public:
 	{
 		return !(this-> operator ==(o));
 	}
-	~Either() = default;
 };
 
 }
