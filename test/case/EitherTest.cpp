@@ -14,12 +14,12 @@
 
 namespace cinamo {
 
-TEST(EitherTest, BasicTest)
+TEST(EitherTest, ConstexprBasicTest)
 {
-//	constexpr Either<int, int> i = Right<int, int>(10);
-//	static_assert(i.isRight, "right is right");
-//	static_assert(!i.isLeft, "right is not left.");
-//	static_assert(i.answer() == 10, "does not have value.");
+	constexpr Either<int, int> i = Right<int, int>(10);
+	static_assert(i.isRight, "right is right");
+	static_assert(!i.isLeft, "right is not left.");
+	static_assert(i.answer() == 10, "does not have value.");
 }
 
 TEST(EitherTest, BindTest)
@@ -58,14 +58,14 @@ TEST(EitherTets, IfRightTest)
 		Either<int, int> i = Right<int, int>(10);
 
 		int v = 0;
-		i.ifRight([&](int i)->void{ v=1; });
+		ASSERT_EQ(i,i.ifRight([&](int i)->void{ v=1; }));
 		ASSERT_EQ(1, v);
 	}
 	{
 		Either<int, int> i = Left<int, int>(10);
 
 		int v = 0;
-		i.ifRight([&](int i)->void{ v=1; });
+		ASSERT_EQ(i, i.ifRight([&](int i)->void{ v=1; }));
 		ASSERT_EQ(0, v);
 	}
 }
