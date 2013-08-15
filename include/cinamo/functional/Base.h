@@ -9,10 +9,10 @@
 
 namespace cinamo {
 
-class Unit final{
+class final{
 	operator void(){
 	}
-} Unit;
+} constexpr Unit;
 typedef decltype(Unit) UniT;
 
 }
