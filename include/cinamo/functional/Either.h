@@ -70,10 +70,12 @@ public:
 	,isRight(e.isRight)
 	{
 		if( isLeft ) {
-			new (const_cast<E*>(static_cast<const E*>(&this->error_))) E( (e.error_) );
+			using RE = typename std::remove_cv<E>::type;
+			new (static_cast<void*>(const_cast<RE*>(static_cast<const RE*>(&this->error_)))) E( (e.error_) );
 		}
 		if( isRight ) {
-			new (const_cast<A*>(static_cast<const A*>(&this->answer_))) A( (e.answer_) );
+			using RA = typename std::remove_cv<A>::type;
+			new (static_cast<void*>(const_cast<RA*>(static_cast<const RA*>(&this->answer_)))) A( (e.answer_) );
 		}
 	}
 public:

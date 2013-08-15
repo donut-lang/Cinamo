@@ -14,6 +14,7 @@
 namespace cinamo {
 
 class A{
+public:
 	const int a;
 	A(int x):a(x){
 

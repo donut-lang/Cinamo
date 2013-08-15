@@ -6,6 +6,7 @@
  */
 
 #pragma once
+#include <memory>
 namespace cinamo {
 
 /**
