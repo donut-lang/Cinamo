@@ -10,6 +10,7 @@
 
 namespace cinamo {
 
+#if defined(HAVE_ICU) && HAVE_ICU
 
 std::string trim(std::string const& str_)
 {
@@ -25,5 +26,6 @@ std::string& trim(std::string& str_)
 	return str_;
 }
 
+#endif
 
 }
