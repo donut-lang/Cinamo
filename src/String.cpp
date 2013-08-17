@@ -12,10 +12,6 @@
 #include <algorithm>
 #include <sstream>
 
-#include <unicode/unistr.h>
-#include <unicode/regex.h>
-#include <unicode/brkiter.h>
-
 #include <cinamo/Exception.h>
 #include <cinamo/Platform.h>
 #include <cinamo/String.h>
@@ -135,30 +131,6 @@ std::string join(std::vector<std::string> const& lst, std::string const& sep)
 		isNotFirst = true;
 	}
 	return ss.str();
-}
-
-std::vector<std::string> breakChar(std::string const& str_)
-{
-	UErrorCode st = U_ZERO_ERROR;
-	BreakIterator* bi = BreakIterator::createCharacterInstance(Locale::getJapanese(), st);
-	std::vector<std::string> list;
-	UnicodeString str(UnicodeString::fromUTF8(str_));
-	bi->setText(str);
-	int32_t last = 0;
-	int32_t p = bi->first();
-	while (p != BreakIterator::DONE) {
-		if(p == last){
-			p = bi->next();
-			continue;
-		}
-		std::string s;
-		str.tempSubStringBetween(last, p).toUTF8String(s);
-		list.push_back(s);
-		last = p;
-		p = bi->next();
-	}
-	delete bi;
-	return list;
 }
 
 std::size_t matchString(std::string const& a, std::string const& b)
