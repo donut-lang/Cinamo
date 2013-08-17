@@ -51,7 +51,7 @@ PARSE_STRTO(unsigned long long int, strtoull);
 	template <> bool tryParseAs<TYPE>(std::string const& str, TYPE& result)\
 	{\
 		char* end;\
-		TYPE r = std::FUNC(str.c_str(), &end);\
+		TYPE r = FUNC(str.c_str(), &end);\
 		if(str.length() > 0 && (*end) == '\0'){\
 			result=r;\
 			return true;\
