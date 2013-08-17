@@ -124,7 +124,7 @@ static bool shouldNotBeEncoded(char c){
 	// Thus, only alphanumerics, the special characters "$-_.+!*'(),", and
 	// reserved characters used for their reserved purposes may be used
 	// unencoded within a URL.
-	return std::isalnum(c) ||' $' == c || '-'==c || '_' == c || '.' == c || '+' == c || '!' == c || '*' == c || '\''== c || '(' == c || ')' == c || ',' == c;
+	return std::isalnum(c) || '$' == c || '-'==c || '_' == c || '.' == c || '+' == c || '!' == c || '*' == c || '\''== c || '(' == c || ')' == c || ',' == c;
 }
 std::string encodeForm(std::string const& str)
 {
