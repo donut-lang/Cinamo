@@ -9,6 +9,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <cinamo/Platform.h>
 #include <cinamo/ClassUtil.h>
 
 namespace cinamo {
