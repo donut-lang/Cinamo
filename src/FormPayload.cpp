@@ -61,7 +61,7 @@ long long FormPayload::getLong(const std::string& key) const
 		CINAMO_EXCEPTION(Exception, "There is no item for key: %s", key.c_str());
 		return 0;
 	}else{
-		return std::strtoll(val->second.c_str(), 0, 10);
+		return strtoll(val->second.c_str(), 0, 10);
 	}
 }
 long long FormPayload::optLong(const std::string& key, long long def) const
@@ -80,7 +80,7 @@ long FormPayload::getLong(const std::string& key) const
 		CINAMO_EXCEPTION(Exception, "There is no item for key: %s", key.c_str());
 		return 0;
 	}else{
-		return std::strtol(val->second.c_str(), 0, 10);
+		return strtol(val->second.c_str(), 0, 10);
 	}
 }
 long FormPayload::optLong(const std::string& key, long def) const

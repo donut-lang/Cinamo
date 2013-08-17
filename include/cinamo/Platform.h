@@ -29,10 +29,10 @@
 
 #define CINAMO_LINUX (defined(__linux__) || defined(__linux) || defined(__gnu_linux__) || defined(linux))
 #define CINAMO_WINDOWS (defined(WIN32) || defined(WIN64) || defined(__WIN32__) || defined(__WIN64__))
-#define CINAMO_ANDROID (defined(ANDROID))
+#define CINAMO_ANDROID (defined(__ANDROID__))
 
 #define HAVE_LONG_DOUBLE (!CINAMO_ANDROID && defined(LDBL_MAX))
-#define HAVE_LONG_LONG (!CINAMO_ANDROID && defined(LLONG_MAX))
+#define HAVE_LONG_LONG (defined(LLONG_MAX))
 
 #if CINAMO_WINDOWS
 #define IS_BIG_ENDIAN 0

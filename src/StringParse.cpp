@@ -16,7 +16,7 @@ namespace cinamo {
 template <>\
 bool tryParseAs<TYPE>(std::string const& str, int radix, TYPE& result) {\
 	char* end;\
-	TYPE r = std::FUNC(str.c_str(), &end, radix);\
+	TYPE r = FUNC(str.c_str(), &end, radix);\
 	if(str.length() > 0 && (*end) == '\0'){\
 		result = r;\
 		return true;\
