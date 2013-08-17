@@ -15,7 +15,7 @@
 #define HAVE_ICU 0
 #endif
 
-#ifndef HAVE BOOST
+#ifndef HAVE_BOOST
 #define HAVE_BOOST 0
 #endif
 
