@@ -31,8 +31,22 @@
 #define CINAMO_WINDOWS (defined(WIN32) || defined(WIN64) || defined(__WIN32__) || defined(__WIN64__))
 #define CINAMO_ANDROID (defined(__ANDROID__))
 
-#define HAVE_LONG_DOUBLE (!CINAMO_ANDROID && defined(LDBL_MAX))
+#define HAVE_FLOAT (defined(FLT_MAX))
+#define HAVE_DOUBLE (defined(DBL_MAX))
+#define HAVE_LONG_DOUBLE (defined(LDBL_MAX))
+
+#define HAVE_CHAR (defined(CHAR_MAX))
+#define HAVE_UCHAR (defined(UCHAR_MAX))
+#define HAVE_SCHAR (defined(SCHAR_MAX))
+
+#define HAVE_SHORT (defined(SHRT_MAX))
+#define HAVE_USHORT (defined(USHRT_MAX))
+
+#define HAVE_LONG (defined(LONG_MAX))
+#define HAVE_ULONG (defined(ULONG_MAX))
+
 #define HAVE_LONG_LONG (defined(LLONG_MAX))
+#define HAVE_ULONG_LONG (defined(ULLONG_MAX))
 
 #if CINAMO_WINDOWS
 #define IS_BIG_ENDIAN 0
