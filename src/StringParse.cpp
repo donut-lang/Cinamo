@@ -42,8 +42,10 @@ PARSE_STRTO(unsigned int, strtoul);
 PARSE_STRTO(long int, strtol);
 PARSE_STRTO(long unsigned int, strtoul);
 
-#if HAVE_LONG_LONG
+#if HAVE_STRTOLL
 PARSE_STRTO(long long int, strtoll);
+#endif
+#if HAVE_STRTOULL
 PARSE_STRTO(unsigned long long int, strtoull);
 #endif
 

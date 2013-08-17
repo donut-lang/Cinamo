@@ -29,7 +29,7 @@ public:
 	bool has(const std::string& key) const;
 	std::string getString(const std::string& key) const;
 	std::string optString(const std::string& key, const std::string& def) const;
-#if HAVE_LONG_LONG
+#if HAVE_STRTOLL
 	long long getLong(const std::string& key) const;
 	long long optLong(const std::string& key, long long def) const;
 #else

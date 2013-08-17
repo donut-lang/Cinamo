@@ -34,6 +34,7 @@
 #define HAVE_FLOAT (defined(FLT_MAX))
 #define HAVE_DOUBLE (defined(DBL_MAX))
 #define HAVE_LONG_DOUBLE (defined(LDBL_MAX))
+#define HAVE_STRTOLD (!CINAMO_ANDROID && HAVE_LONG_DOUBLE)
 
 #define HAVE_CHAR (defined(CHAR_MAX))
 #define HAVE_UCHAR (defined(UCHAR_MAX))
@@ -45,8 +46,10 @@
 #define HAVE_LONG (defined(LONG_MAX))
 #define HAVE_ULONG (defined(ULONG_MAX))
 
-#define HAVE_LONG_LONG (defined(LLONG_MAX))
-#define HAVE_ULONG_LONG (defined(ULLONG_MAX))
+#define HAVE_LONGLONG (defined(LLONG_MAX))
+#define HAVE_ULONGLONG (defined(ULLONG_MAX))
+#define HAVE_STRTOLL (HAVE_LONGLONG)
+#define HAVE_STRTOULL (HAVE_ULONGLONG)
 
 #if CINAMO_WINDOWS
 #define IS_BIG_ENDIAN 0

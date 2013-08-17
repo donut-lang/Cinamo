@@ -53,7 +53,7 @@ std::string FormPayload::getString(const std::string& key) const
 	}
 }
 
-#if HAVE_LONG_LONG
+#if HAVE_STRTOLL
 long long FormPayload::getLong(const std::string& key) const
 {
 	std::map<std::string, std::string>::const_iterator val = map.find(key);
