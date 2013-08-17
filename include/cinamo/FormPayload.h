@@ -28,8 +28,13 @@ public:
 	bool has(const std::string& key) const;
 	std::string getString(const std::string& key) const;
 	std::string optString(const std::string& key, const std::string& def) const;
+#if HAVE_LONG_LONG
 	long long getLong(const std::string& key) const;
 	long long optLong(const std::string& key, long long def) const;
+#else
+	long getLong(const std::string& key) const;
+	long optLong(const std::string& key, long def) const;
+#endif
 	bool getBool(const std::string& key) const;
 	bool optBool(const std::string& key, bool def) const;
 	Iterator begin() const;

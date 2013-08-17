@@ -47,25 +47,58 @@ std::string FormPayload::getString(const std::string& key) const
 	std::map<std::string, std::string>::const_iterator val = map.find(key);
 	if(val == map.end()){
 		CINAMO_EXCEPTION(Exception, "There is no item for key: %s", key.c_str());
+		return std::string();
 	}else{
 		return val->second;
 	}
 }
 
+#if HAVE_LONG_LONG
 long long FormPayload::getLong(const std::string& key) const
 {
 	std::map<std::string, std::string>::const_iterator val = map.find(key);
 	if(val == map.end()){
 		CINAMO_EXCEPTION(Exception, "There is no item for key: %s", key.c_str());
+		return 0;
 	}else{
 		return std::strtoll(val->second.c_str(), 0, 10);
 	}
 }
+long long FormPayload::optLong(const std::string& key, long long def) const
+{
+	if(this->has(key)){
+		return getLong(key);
+	}else{
+		return def;
+	}
+}
+#else
+long FormPayload::getLong(const std::string& key) const
+{
+	std::map<std::string, std::string>::const_iterator val = map.find(key);
+	if(val == map.end()){
+		CINAMO_EXCEPTION(Exception, "There is no item for key: %s", key.c_str());
+		return 0;
+	}else{
+		return std::strtol(val->second.c_str(), 0, 10);
+	}
+}
+long FormPayload::optLong(const std::string& key, long def) const
+{
+	if(this->has(key)){
+		return getLong(key);
+	}else{
+		return def;
+	}
+}
+#endif
+
 bool FormPayload::getBool(const std::string& key) const
 {
 	std::map<std::string, std::string>::const_iterator val = map.find(key);
 	if(val == map.end()){
 		CINAMO_EXCEPTION(Exception, "There is no item for key: %s", key.c_str());
+		return 0;
 	}else{
 		std::string v(val->second);
 		char* end;
@@ -83,14 +116,6 @@ std::string FormPayload::optString(const std::string& key, const std::string& de
 {
 	if(this->has(key)){
 		return getString(key);
-	}else{
-		return def;
-	}
-}
-long long FormPayload::optLong(const std::string& key, long long def) const
-{
-	if(this->has(key)){
-		return getLong(key);
 	}else{
 		return def;
 	}
