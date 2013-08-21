@@ -36,6 +36,7 @@ TOSTR_DEF(unsigned long long int);
 std::string toString(const float val);
 std::string toString(const double val);
 std::string toString(const bool val);
+inline std::string toString(std::string const& s) { return s; };
 
 /**
  * 小文字の文字列に変換する
