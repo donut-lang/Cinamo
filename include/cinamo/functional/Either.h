@@ -101,10 +101,16 @@ public:
 	}
 public:
 	E const& error() const{
-		return isLeft ? error_ : throw cinamo::format("Cannot get error from <Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(answer_).c_str());
+		if(isLeft){
+			return error_;
+		}
+		throw lily::format("Cannot get error from <Right[%s][%s]: %s>", lily::demangle<E>().c_str(), lily::demangle<A>().c_str(), lily::toString(answer_).c_str());
 	}
 	A const& answer() const{
-		return isRight ? answer_ : throw cinamo::format("Cannot get answer from <Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
+		if(isRight){
+			return answer_;
+		}
+		throw lily::format("Cannot get answer from <Left[%s][%s]: %s>", lily::demangle<E>().c_str(), lily::demangle<A>().c_str(), lily::toString(error_).c_str());
 	}
 	E const& left() const {
 		return this->error();
