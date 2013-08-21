@@ -10,13 +10,11 @@
 namespace cinamo {
 
 struct Unit final{
-	constexpr Unit(){
-
-	}
 	operator void(){
+		return void();
 	}
-	bool operator==(Unit const&) { return true; }
-	bool operator!=(Unit const&) { return false; }
+	constexpr bool operator==(Unit const&) { return true; }
+	constexpr bool operator!=(Unit const&) { return false; }
 };
 
 }
