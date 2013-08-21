@@ -110,7 +110,7 @@ public:
 		return this->error();
 	}
 	E const& right() const {
-		return this->error();
+		return this->answer();
 	}
 public:
 	template <typename F>
