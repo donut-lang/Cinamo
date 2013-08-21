@@ -54,7 +54,11 @@
 #if CINAMO_WINDOWS
 #define IS_BIG_ENDIAN 0
 #else
+
+namespace {
 #include <endian.h>
 #define IS_BIG_ENDIAN (BYTE_ORDER == BIG_ENDIAN)
+}
+
 #endif
 

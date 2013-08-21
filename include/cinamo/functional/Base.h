@@ -9,10 +9,14 @@
 
 namespace cinamo {
 
-class final{
+struct Unit final{
+	constexpr Unit(){
+
+	}
 	operator void(){
 	}
-} constexpr Unit;
-typedef decltype(Unit) UniT;
+	bool operator==(Unit const&) { return true; }
+	bool operator!=(Unit const&) { return false; }
+};
 
 }

@@ -16,7 +16,7 @@ namespace cinamo {
 
 TEST(UnitTest, StaticTest)
 {
-	static_assert( std::is_trivial<decltype(Unit)>::value, "Unit must be trivial" );
+	static_assert( std::is_trivial<Unit>::value, "Unit must be trivial" );
 }
 
 }
