@@ -19,6 +19,22 @@ class LeftEnumT;
 class RightEnumT;
 class ConstexprLeftEnumT;
 class ConstexprRightEnumT;
+
+template <typename E, typename U=void>
+struct ToString {
+	static std::string print(E const& e){
+		return "???";
+	}
+};
+
+template <typename E>
+struct ToString<E, decltype(cinamo::toString(std::declval<E>()), void())>
+{
+	static std::string print(E const& e){
+		return cinamo::toString(e);
+	}
+};
+
 }
 
 #define IS_NONTRIVIAL(E__,A__) typename std::enable_if<!(std::is_trivial<E__>::value && std::is_trivial<A__>::value)>::type
@@ -95,22 +111,23 @@ public:
 	typedef A answer_type;
 public:
 	std::string toString() const{
+		using either_innenr::ToString;
 		return isRight ?
-				cinamo::format("<Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(answer_).c_str()) :
-				cinamo::format("<Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
+				cinamo::format("<Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<A>::print(answer_).c_str()) :
+				cinamo::format("<Left[%s][%s]: %s>",  cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<E>::print(error_).c_str());
 	}
 public:
 	E const& error() const{
 		if(isLeft){
 			return error_;
 		}
-		throw cinamo::format("Cannot get error from <Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(answer_).c_str());
+		throw cinamo::format("Cannot get error from %s", toString().c_str());
 	}
 	A const& answer() const{
 		if(isRight){
 			return answer_;
 		}
-		throw cinamo::format("Cannot get answer from <Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
+		throw cinamo::format("Cannot get answer from %s", toString().c_str());
 	}
 	E const& left() const {
 		return this->error();
