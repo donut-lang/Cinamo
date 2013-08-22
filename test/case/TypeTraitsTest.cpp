@@ -10,17 +10,24 @@
 
 namespace cinamo {
 
-TEST(TypeTraitsTest, BasicTest){
+TEST(TypeTraitsTest, BasicTest)
+{
 	static_assert(
 			std::is_same<
-				decltype(::cinamo::unary_function_return_type(&::isalnum)),
-				decltype(::isalnum(1))
-				>::value, "Could not return type.");
+			typename ::cinamo::FuncTypeHelper<decltype(&::isalnum)>::Result,
+			decltype(::isalnum(1))
+			>::value, "Could not return type.");
 	static_assert(
 			std::is_same<
-				decltype(::cinamo::unary_function_argument_type(&::isalnum)),
-				int
-				>::value, "Could not argument type.");
+			typename ::cinamo::FuncTypeHelper<decltype(&::isalnum)>::Arg<0>::Type,
+			int
+			>::value, "Could not return type.");
+	auto f = [](int x, double y, std::string z, float w){};
+	static_assert(
+			std::is_same<
+			typename ::cinamo::FuncTypeHelper<decltype(f)>::Arg<3>::Type,
+			float
+			>::value, "Could not return type.");
 }
 
 }

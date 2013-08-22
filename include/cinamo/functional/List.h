@@ -14,7 +14,7 @@
 #pragma once
 #include <array>
 #include <initializer_list>
-#include "../TypeTrans.h"
+#include "Base.h"
 
 namespace cinamo {
 

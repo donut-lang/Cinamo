@@ -7,31 +7,37 @@
 
 #pragma once
 #include "Common.h"
+#include "functional/Base.h"
 #include <functional>
 #include <utility>
 
 namespace cinamo {
 
-namespace internal {
-	template <typename Func>
-	struct UnaryFunctionType {
-		template <typename R, typename A>
-		static auto f(std::function<R(A)>) -> A;
-		template <typename R, typename A>
-		static auto f(R(*)(A)) -> A;
-		template <typename R, typename A>
-		static auto g(std::function<R(A)>) -> R;
-		template <typename R, typename A>
-		static auto g(R(*)(A)) -> R;
-		typedef decltype( f( std::declval<Func>()) ) argument_type;
-		typedef decltype( g( std::declval<Func>()) ) return_type;
+template <int N, typename R_, typename... Args>
+struct GetArgsOf{
+	typedef typename GetArgsOf<N-1, Args...>::type type;
+};
+
+template <typename R, typename... Args>
+struct GetArgsOf<0, R, Args...>{
+	typedef R type;
+};
+
+template <typename Fun>
+struct FuncTypeHelper {
+	template <typename R, typename... Args>
+	static auto resultType(std::function<R (Args ...) > const& f) -> R;
+	template <int N, typename R, typename... Args>
+	static auto argType(std::function<R (Args ...) > const& f) -> typename GetArgsOf<N, Args...>::type;
+
+//	template <int N, typename F>
+//	auto argType(F f) -> decltype(argType_<N>(makeFunctor(f)));
+
+	typedef decltype( resultType( makeFunctor(std::declval<Fun>())) ) Result;
+	template <int N>
+	struct Arg{
+		typedef decltype( argType<N>( makeFunctor(std::declval<Fun>())) ) Type;
 	};
-}
-
-template <typename R>
-typename internal::UnaryFunctionType<R>::return_type unary_function_return_type(R);
-
-template <typename R>
-typename internal::UnaryFunctionType<R>::argument_type unary_function_argument_type(R);
+};
 
 }

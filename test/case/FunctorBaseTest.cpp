@@ -6,7 +6,7 @@
  */
 
 #include "../TestCommon.h"
-#include <cinamo/TypeTrans.h>
+#include <cinamo/functional/Base.h>
 
 namespace cinamo {
 
