@@ -173,6 +173,10 @@ public:
 	{
 		return !(this-> operator ==(o));
 	}
+	template <typename F>
+	Either<E,A> tryOr(F f){
+		return isRight ? *this : f(error());
+	}
 };
 
 template <typename E, typename A>
@@ -260,6 +264,10 @@ public:
 	constexpr bool operator !=(Either<E_, A_> const& o) const
 	{
 		return !(this-> operator ==(o));
+	}
+	template <typename F>
+	constexpr Either<E,A> tryOr(F f){
+		return isRight ? *this : f(error());
 	}
 };
 
