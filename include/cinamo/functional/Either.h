@@ -203,17 +203,19 @@ public:
 	typedef E error_type;
 	typedef A answer_type;
 public:
+public:
 	std::string toString() const{
+		using either_innenr::ToString;
 		return isRight ?
-				cinamo::format("<Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(answer_).c_str()) :
-				cinamo::format("<Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
+				cinamo::format("<Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<A>::print(answer_).c_str()) :
+				cinamo::format("<Left[%s][%s]: %s>",  cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<E>::print(error_).c_str());
 	}
 public:
 	constexpr E const& error() const{
-		return isLeft ? error_ : throw cinamo::format("Cannot get error from <Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(answer_).c_str());
+		return isLeft ? error_ :  throw cinamo::format("Cannot get error from %s", toString().c_str());
 	}
-	constexpr A const answer() const{
-		return isRight ? answer_ : throw cinamo::format("Cannot get answer from <Left[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), cinamo::toString(error_).c_str());
+	constexpr A const& answer() const{
+		return isRight ? answer_ : throw cinamo::format("Cannot get answer from %s", toString().c_str());
 	}
 	constexpr E const& left() const {
 		return this->error();
