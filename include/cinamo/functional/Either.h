@@ -132,7 +132,7 @@ public:
 	E const& left() const {
 		return this->error();
 	}
-	E const& right() const {
+	A const& right() const {
 		return this->answer();
 	}
 public:
@@ -224,7 +224,7 @@ public:
 	constexpr E const& left() const {
 		return this->error();
 	}
-	constexpr E const& right() const {
+	constexpr A const& right() const {
 		return this->error();
 	}
 public:
