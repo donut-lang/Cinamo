@@ -24,16 +24,17 @@ struct GetArgsOf<0, R, Args...>{
 };
 
 template <typename Fun>
-struct FuncTypeHelper {
+struct FuncTypeOf {
 	template <typename R, typename... Args>
 	static auto resultType(std::function<R (Args ...) > const& f) -> R;
 	template <int N, typename R, typename... Args>
 	static auto argType(std::function<R (Args ...) > const& f) -> typename GetArgsOf<N, Args...>::type;
 
-//	template <int N, typename F>
-//	auto argType(F f) -> decltype(argType_<N>(makeFunctor(f)));
+	template <typename R, typename... Args>
+	static auto argTypeToTuple(std::function<R (Args ...) > const& f) -> typename std::tuple<Args...>;
 
 	typedef decltype( resultType( makeFunctor(std::declval<Fun>())) ) Result;
+	typedef decltype( argTypeToTuple( makeFunctor(std::declval<Fun>())) ) ArgTuple;
 	template <int N>
 	struct Arg{
 		typedef decltype( argType<N>( makeFunctor(std::declval<Fun>())) ) Type;
