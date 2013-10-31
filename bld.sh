@@ -1,9 +1,4 @@
 #! /bin/bash
-<<<<<<< HEAD
-# externalの共通ファイルをそのままincludeして使う。
-. $(cd $(dirname $0);pwd)/external/WafHelper/bld.sh
-
-=======
 # -*- coding: utf-8 -*-
 # Donut-lang
 #
@@ -185,4 +180,3 @@ elif [ $LAUNCH = "custom" ] ;then
 	echo "%" $WAF_CMD
 	$WAF_CMD
 fi
->>>>>>> __template__/master
