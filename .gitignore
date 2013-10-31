@@ -19,9 +19,13 @@
 # waf temp files
 .lock*
 .waf*/
+waf*/
+!external/
+
+#python cache
+__pycache__
 
 #build dir
-/build/
-/waf*/
-/cov/
+build/
+cov/
 
