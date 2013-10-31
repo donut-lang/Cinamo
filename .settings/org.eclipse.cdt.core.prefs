@@ -1,6 +1,0 @@
-eclipse.preferences.version=1
-environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.557373588/CONF_OPT/delimiter=;
-environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.557373588/CONF_OPT/operation=append
-environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.557373588/CONF_OPT/value=--boost-includes\=d\:/software/dev/applib/boost/include --boost-libs\=d\:/software/dev/applib/boost/lib
-environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.557373588/append=true
-environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.557373588/appendContributed=true
