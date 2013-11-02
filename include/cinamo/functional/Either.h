@@ -28,10 +28,10 @@ struct ToString {
 };
 
 template <typename E>
-struct ToString<E, decltype(cinamo::toString(std::declval<E>()), void())>
+struct ToString<E, decltype(lily::toString(std::declval<E>()), void())>
 {
 	static std::string print(E const& e){
-		return cinamo::toString(e);
+		return lily::toString(e);
 	}
 };
 
@@ -113,21 +113,21 @@ public:
 	std::string toString() const{
 		using either_innenr::ToString;
 		return isRight ?
-				cinamo::format("<Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<A>::print(answer_).c_str()) :
-				cinamo::format("<Left[%s][%s]: %s>",  cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<E>::print(error_).c_str());
+				lily::format("<Right[%s][%s]: %s>", lily::demangle<E>().c_str(), lily::demangle<A>().c_str(), ToString<A>::print(answer_).c_str()) :
+				lily::format("<Left[%s][%s]: %s>",  lily::demangle<E>().c_str(), lily::demangle<A>().c_str(), ToString<E>::print(error_).c_str());
 	}
 public:
 	E const& error() const{
 		if(isLeft){
 			return error_;
 		}
-		throw cinamo::format("Cannot get error from %s", toString().c_str());
+		throw lily::format("Cannot get error from %s", toString().c_str());
 	}
 	A const& answer() const{
 		if(isRight){
 			return answer_;
 		}
-		throw cinamo::format("Cannot get answer from %s", toString().c_str());
+		throw lily::format("Cannot get answer from %s", toString().c_str());
 	}
 	E const& left() const {
 		return this->error();
@@ -207,19 +207,18 @@ public:
 	typedef E error_type;
 	typedef A answer_type;
 public:
-public:
 	std::string toString() const{
 		using either_innenr::ToString;
 		return isRight ?
-				cinamo::format("<Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<A>::print(answer_).c_str()) :
-				cinamo::format("<Left[%s][%s]: %s>",  cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<E>::print(error_).c_str());
+				lily::format("<Right[%s][%s]: %s>", lily::demangle<E>().c_str(), lily::demangle<A>().c_str(), ToString<A>::print(answer_).c_str()) :
+				lily::format("<Left[%s][%s]: %s>",  lily::demangle<E>().c_str(), lily::demangle<A>().c_str(), ToString<E>::print(error_).c_str());
 	}
 public:
 	constexpr E const& error() const{
-		return isLeft ? error_ :  throw cinamo::format("Cannot get error from %s", toString().c_str());
+		return isLeft ? error_ : throw lily::format("Cannot get error from %s", toString().c_str());
 	}
 	constexpr A const& answer() const{
-		return isRight ? answer_ : throw cinamo::format("Cannot get answer from %s", toString().c_str());
+		return isRight ? answer_ : throw lily::format("Cannot get answer from %s", toString().c_str());
 	}
 	constexpr E const& left() const {
 		return this->error();
@@ -229,21 +228,21 @@ public:
 	}
 public:
 	template <typename F>
-	constexpr auto operator >>=(F f)
+	constexpr auto operator >>=(F f) const
 		-> Either<E, typename Ident<decltype(f(std::declval<A>()))>::type::answer_type> {
 		return isLeft ?
 			Left<E, typename  Ident<decltype(f(std::declval<A>()))>::type::answer_type>(error_) :
 			f(answer_);
 	}
-	constexpr Either<E,A> operator ||(Either<E,A> const& e) {
+	constexpr Either<E,A> operator ||(Either<E,A> const& e) const {
 		return isRight ? *this : e;
 	}
 	template <typename A2>
-	constexpr auto operator >>(Either<E,A2> a) -> Either<E,A2> {
+	constexpr auto operator >>(Either<E,A2> a) const -> Either<E,A2> {
 		return isRight ? a : Left<E,A2>(error_);
 	}
 	template <typename F>
-	constexpr auto fmap(F f) -> Either<E,decltype(f(answer_))>{
+	constexpr auto fmap(F f) const -> Either<E,decltype(f(answer_))>{
 		return isLeft ? Left<E,decltype(f(answer_))>(error_) : Right<E,decltype(f(answer_))>(f(answer_));
 	}
 	template <typename F> Either<E,A>& ifRight(F f) { if(isRight) f(answer_); return *this; }
@@ -266,7 +265,7 @@ public:
 		return !(this-> operator ==(o));
 	}
 	template <typename F>
-	constexpr Either<E,A> tryOr(F f){
+	constexpr Either<E,A> tryOr(F f) const{
 		return isRight ? *this : f(error());
 	}
 };
