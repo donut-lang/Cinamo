@@ -28,10 +28,10 @@ struct ToString {
 };
 
 template <typename E>
-struct ToString<E, decltype(lily::toString(std::declval<E>()), void())>
+struct ToString<E, decltype(cinamo::toString(std::declval<E>()), void())>
 {
 	static std::string print(E const& e){
-		return lily::toString(e);
+		return cinamo::toString(e);
 	}
 };
 
@@ -113,21 +113,21 @@ public:
 	std::string toString() const{
 		using either_innenr::ToString;
 		return isRight ?
-				lily::format("<Right[%s][%s]: %s>", lily::demangle<E>().c_str(), lily::demangle<A>().c_str(), ToString<A>::print(answer_).c_str()) :
-				lily::format("<Left[%s][%s]: %s>",  lily::demangle<E>().c_str(), lily::demangle<A>().c_str(), ToString<E>::print(error_).c_str());
+				cinamo::format("<Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<A>::print(answer_).c_str()) :
+				cinamo::format("<Left[%s][%s]: %s>",  cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<E>::print(error_).c_str());
 	}
 public:
 	E const& error() const{
 		if(isLeft){
 			return error_;
 		}
-		throw lily::format("Cannot get error from %s", toString().c_str());
+		throw cinamo::format("Cannot get error from %s", toString().c_str());
 	}
 	A const& answer() const{
 		if(isRight){
 			return answer_;
 		}
-		throw lily::format("Cannot get answer from %s", toString().c_str());
+		throw cinamo::format("Cannot get answer from %s", toString().c_str());
 	}
 	E const& left() const {
 		return this->error();
@@ -210,15 +210,15 @@ public:
 	std::string toString() const{
 		using either_innenr::ToString;
 		return isRight ?
-				lily::format("<Right[%s][%s]: %s>", lily::demangle<E>().c_str(), lily::demangle<A>().c_str(), ToString<A>::print(answer_).c_str()) :
-				lily::format("<Left[%s][%s]: %s>",  lily::demangle<E>().c_str(), lily::demangle<A>().c_str(), ToString<E>::print(error_).c_str());
+				cinamo::format("<Right[%s][%s]: %s>", cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<A>::print(answer_).c_str()) :
+				cinamo::format("<Left[%s][%s]: %s>",  cinamo::demangle<E>().c_str(), cinamo::demangle<A>().c_str(), ToString<E>::print(error_).c_str());
 	}
 public:
 	constexpr E const& error() const{
-		return isLeft ? error_ : throw lily::format("Cannot get error from %s", toString().c_str());
+		return isLeft ? error_ : throw cinamo::format("Cannot get error from %s", toString().c_str());
 	}
 	constexpr A const& answer() const{
-		return isRight ? answer_ : throw lily::format("Cannot get answer from %s", toString().c_str());
+		return isRight ? answer_ : throw cinamo::format("Cannot get answer from %s", toString().c_str());
 	}
 	constexpr E const& left() const {
 		return this->error();
