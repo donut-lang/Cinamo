@@ -207,7 +207,6 @@ public:
 	typedef E error_type;
 	typedef A answer_type;
 public:
-public:
 	std::string toString() const{
 		using either_innenr::ToString;
 		return isRight ?
@@ -216,7 +215,7 @@ public:
 	}
 public:
 	constexpr E const& error() const{
-		return isLeft ? error_ :  throw cinamo::format("Cannot get error from %s", toString().c_str());
+		return isLeft ? error_ : throw cinamo::format("Cannot get error from %s", toString().c_str());
 	}
 	constexpr A const& answer() const{
 		return isRight ? answer_ : throw cinamo::format("Cannot get answer from %s", toString().c_str());
@@ -229,21 +228,21 @@ public:
 	}
 public:
 	template <typename F>
-	constexpr auto operator >>=(F f)
+	constexpr auto operator >>=(F f) const
 		-> Either<E, typename Ident<decltype(f(std::declval<A>()))>::type::answer_type> {
 		return isLeft ?
 			Left<E, typename  Ident<decltype(f(std::declval<A>()))>::type::answer_type>(error_) :
 			f(answer_);
 	}
-	constexpr Either<E,A> operator ||(Either<E,A> const& e) {
+	constexpr Either<E,A> operator ||(Either<E,A> const& e) const {
 		return isRight ? *this : e;
 	}
 	template <typename A2>
-	constexpr auto operator >>(Either<E,A2> a) -> Either<E,A2> {
+	constexpr auto operator >>(Either<E,A2> a) const -> Either<E,A2> {
 		return isRight ? a : Left<E,A2>(error_);
 	}
 	template <typename F>
-	constexpr auto fmap(F f) -> Either<E,decltype(f(answer_))>{
+	constexpr auto fmap(F f) const -> Either<E,decltype(f(answer_))>{
 		return isLeft ? Left<E,decltype(f(answer_))>(error_) : Right<E,decltype(f(answer_))>(f(answer_));
 	}
 	template <typename F> Either<E,A>& ifRight(F f) { if(isRight) f(answer_); return *this; }
@@ -266,7 +265,7 @@ public:
 		return !(this-> operator ==(o));
 	}
 	template <typename F>
-	constexpr Either<E,A> tryOr(F f){
+	constexpr Either<E,A> tryOr(F f) const{
 		return isRight ? *this : f(error());
 	}
 };
