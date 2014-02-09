@@ -9,6 +9,7 @@
 #include "Common.h"
 #include <cfloat>
 #include <climits>
+
 #ifdef CINAMO_EMBEDDED
 
 #ifndef HAVE_ICU

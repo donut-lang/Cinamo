@@ -10,7 +10,6 @@
 
 #include <cfloat>
 #include <cmath>
-
 namespace cinamo {
 
 TEST(StringUtilTest, FormatTest)
