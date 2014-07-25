@@ -35,7 +35,7 @@ def options(opt):
 def configure(conf):
 	# release
 	conf.setenv('release')
-	if sys.platform != 'win32':
+	if sys.platform != 'win32' and sys.platform != 'win64':
 		conf.env.append_value('CXXFLAGS', ['-fPIC'])
 	conf.env.append_value('CXXFLAGS', ['-O3', '-Wall', '-std=gnu++11', '-D__GXX_EXPERIMENTAL_CXX0X__=1'])
 	conf.env.append_value('LINKFLAGS', ['-fvisibility=hidden'])
@@ -43,7 +43,7 @@ def configure(conf):
 	# debug
 	conf.setenv('debug')
 	denv = conf.env;
-	if sys.platform != 'win32':
+	if sys.platform != 'win32' and sys.platform != 'win64':
 		conf.env.append_value('CXXFLAGS', ['-fPIC'])
 	conf.env.append_value('CXXFLAGS', ['-ggdb','-O0', '-Wall', '-std=gnu++11', '-D__GXX_EXPERIMENTAL_CXX0X__=1','-DDEBUG'])
 	conf.env.append_value('LINKFLAGS', ['-fvisibility=hidden'])
@@ -56,7 +56,7 @@ def configure(conf):
 def configureLibrary(conf):
 	conf.load('compiler_c compiler_cxx')
 	conf.check_cfg(package='icu-uc icu-i18n', uselib_store='ICU', mandatory=True, args='--cflags --libs')
-	conf.check(features='cxx cxxprogram', lib=['gtest', 'gtest_main', 'pthread'], cflags=['-Wall'], uselib_store='GTEST', mandatory=True)
+	conf.check(features='cxx cxxprogram', lib=['gtest', 'gtest_main'], cflags=['-Wall'], uselib_store='GTEST', mandatory=True)
 	if not conf.check(features='cxx cxxprogram', lib=['tcmalloc','profiler'], cflags=['-Wall'], uselib_store='PPROF', mandatory=False):
 		conf.to_log("Google perftools not found, so performance will not measureable.")
 
