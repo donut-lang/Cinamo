@@ -215,16 +215,16 @@ public:
 	}
 public:
 	constexpr E const& error() const{
-		return isLeft ? error_ : throw cinamo::format("Cannot get error from %s", toString().c_str());
+		return isLeft ? error_ : (throw cinamo::format("Cannot get error from %s", toString().c_str()), error_);
 	}
 	constexpr A const& answer() const{
-		return isRight ? answer_ : throw cinamo::format("Cannot get answer from %s", toString().c_str());
+		return isRight ? answer_ : (throw cinamo::format("Cannot get answer from %s", toString().c_str()),answer_);
 	}
 	constexpr E const& left() const {
 		return this->error();
 	}
 	constexpr A const& right() const {
-		return this->error();
+		return this->answer();
 	}
 public:
 	template <typename F>

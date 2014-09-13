@@ -72,6 +72,7 @@ TEST(EitherTets, IfRightTest)
 
 TEST(EitherTest, Compare)
 {
+	ASSERT_TRUE((Right<int, int>(10).isRight));
 	ASSERT_GT((Right<int,int>(10)).answer(), (Right<int,int>(9)).answer());
 
 	ASSERT_EQ((Right<int,int>(10)), (Right<int,int>(10)));

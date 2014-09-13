@@ -23,7 +23,7 @@
 #endif
 
 #ifndef CINAMO_EMBEDDED
-#include "config.h"
+#include <config.h>
 #endif
 
 #define CINAMO_IOS (defined(__IPHONE_OS_VERSION_MIN_REQUIRED))
