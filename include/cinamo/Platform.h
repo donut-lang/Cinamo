@@ -9,7 +9,7 @@
 #include "Common.h"
 #include <cfloat>
 #include <climits>
- #include "./Config.h"
+ #include <cinamo/Config.h>
 
 #define CINAMO_IOS (defined(__IPHONE_OS_VERSION_MIN_REQUIRED))
 

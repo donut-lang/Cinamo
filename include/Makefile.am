@@ -38,5 +38,6 @@ nobase_include_HEADERS = \
 	cinamo/functional/List.h\
 	cinamo/functional/Either.h\
 	cinamo/functional/Box.h\
-	cinamo/Platform.h
+	cinamo/Platform.h\
+	cinamo/Config.h
 noinst_HEADERS=

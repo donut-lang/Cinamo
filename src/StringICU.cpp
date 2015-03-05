@@ -7,7 +7,7 @@
 
 #include <cinamo/Platform.h>
 
-#if defined(HAVE_ICU) && HAVE_ICU
+#ifdef HAVE_ICU
 
 #include <unicode/unistr.h>
 #include <unicode/regex.h>

@@ -17,4 +17,4 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 # library file
 LIB_PATH=$(top_srcdir)/src
-LIBDOLLY=$(LIB_PATH)/libcinamo.a $(ICU_LIBS) $(AM_LIBS)
+LIB_CINAMO=$(LIB_PATH)/libcinamo.a $(ICU_LIBS) $(AM_LIBS)

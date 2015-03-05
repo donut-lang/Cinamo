@@ -10,6 +10,7 @@ libcinamo_a_SOURCES=\
 	String.cpp\
 	StringICU.cpp\
 	StringParse.cpp\
+	StringSplit.cpp\
 	Time.cpp\
 	Url.cpp\
 	Win32.cpp\

@@ -1,6 +1,22 @@
 include $(top_srcdir)/Makefile.am.common
-noinst_PROGRAMS = cinamoTest
+cinamoTest_CPPFLAGS =\
+	-isystem\
+	$(top_srcdir)/external/gtest/include\
+	$(GTEST_CPPFLAGS)\
+	$(ICU_CPPFLAGS)\
+	-I$(top_srcdir)/include\
+	-I$(top_srcdir)/external/tinyxml2
+cinamoTest_CXXFLAGS = $(GTEST_CXXFLAGS) $(GTEST_CXXFLAGS) $(ICU_CXXFLAGS)
+cinamoTest_LDFLAGS = $(GTEST_LDFLAGS) $(ICU_LDFLAGS) \
+	     $(top_srcdir)/external/gtest/lib/libgtest_main.la \
+	     $(top_srcdir)/external/gtest/lib/libgtest.la
+cinamoTest_LDADD = ../src/libcinamo.a $(ICU_LIBS) $(GTEST_LIBS)
 
+TESTS = 
+check_PROGRAMS = 
+
+TESTS += cinamoTest
+check_PROGRAMS += cinamoTest
 cinamoTest_SOURCES =\
 	TestUtil.cpp\
 	TestCommon.h\
@@ -31,5 +47,3 @@ cinamoTest_SOURCES =\
 	case/XValueTestBinaryTypes.inc.h\
 	main.cpp
 
-cinamoTest_CPPFLAGS = $(ICU_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/external/tinyxml2
-cinamoTest_LDADD = $(LIBCINAMO) $(LIB_GTEST)
