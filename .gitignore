@@ -67,3 +67,12 @@ src/stamp-h1
 
 *.mp4
 /Windows/
+
+# autotools
+include/cinamo/Config.h*
+test/cinamoTest
+test/cinamoTest*
+test/core
+test/test-suite.log
+test-driver
+stamp-h1
