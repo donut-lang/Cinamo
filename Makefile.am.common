@@ -1,0 +1,20 @@
+# common automake
+INCLUDES_PATH=$(top_srcdir)/include
+
+if DEBUG
+AM_INCLUDES=-I$(top_srcdir)/include -g3 -O0
+AM_CXXFLAGS=-I$(top_srcdir)/include -g3 -O0
+AM_CFLAGS=-I$(top_srcdir)/include -g3 -O0
+AM_CPPFLAGS=
+else
+AM_INCLUDES=-I$(top_srcdir)/include -O3
+AM_CXXFLAGS=-I$(top_srcdir)/include -O3
+AM_CFLAGS=-I$(top_srcdir)/include -O3
+AM_CPPFLAGS=
+endif
+
+AUTOMAKE_OPTIONS = subdir-objects
+
+# library file
+LIB_PATH=$(top_srcdir)/src
+LIBDOLLY=$(LIB_PATH)/libcinamo.a $(ICU_LIBS) $(AM_LIBS)

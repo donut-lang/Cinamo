@@ -216,7 +216,7 @@ TEST(StringUtilTest, TrimTest)
 
 	ASSERT_EQ("abcdef", trim(" abcdef "));
 
-	ASSERT_EQ("abcdef", trim("      abcdef          "));
+	ASSERT_EQ("abcdef", trim("	  abcdef		  "));
 
 	ASSERT_EQ("abcdef", trim(" 　abcdef 　"));
 }

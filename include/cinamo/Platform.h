@@ -9,22 +9,7 @@
 #include "Common.h"
 #include <cfloat>
 #include <climits>
-
-#ifdef CINAMO_EMBEDDED
-
-#ifndef HAVE_ICU
-#define HAVE_ICU 0
-#endif
-
-#ifndef HAVE_BOOST
-#define HAVE_BOOST 0
-#endif
-
-#endif
-
-#ifndef CINAMO_EMBEDDED
-#include <config.h>
-#endif
+ #include "./Config.h"
 
 #define CINAMO_IOS (defined(__IPHONE_OS_VERSION_MIN_REQUIRED))
 

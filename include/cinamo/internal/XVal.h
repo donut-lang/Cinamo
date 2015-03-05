@@ -64,7 +64,7 @@ template <typename T> struct _TypeAdapter<T const> { PROXY_ADAPTER(T) };
 template <typename T> struct _TypeAdapter<T, typename std::enable_if<std::is_enum<T>::value>::type> {
 	typedef typename _TypeAdapter<XSInt>::spirit_type spirit_type;
 	typedef typename _TypeAdapter<XSInt>::init_type init_type;
-	typedef      EnumProxy<T>      return_type;
+	typedef	  EnumProxy<T>	  return_type;
 	typedef ConstEnumProxy<T> return_const_type;
 };
 
@@ -82,7 +82,7 @@ template <std::size_t N> struct _TypeAdapter<char[N]> { PROXY_ADAPTER(XString) }
 template <> struct _TypeAdapter<TARGET> {\
 	typedef typename _TypeAdapter<REAL>::spirit_type spirit_type;\
 	typedef typename _TypeAdapter<REAL>::init_type init_type;\
-	typedef       PROXY<TARGET>      return_type;\
+	typedef	   PROXY<TARGET>	  return_type;\
 	typedef CONST_PROXY<TARGET> return_const_type;\
 }
 INT_PROXY(unsigned char, XUInt, UnsignedIntProxy, ConstUnsignedIntProxy);
@@ -98,13 +98,13 @@ INT_PROXY(signed short, XSInt, IntProxy, ConstIntProxy);
 template <> struct _TypeAdapter< std::vector<unsigned char> > {
 	typedef typename _TypeAdapter<XBinary>::spirit_type spirit_type;
 	typedef typename _TypeAdapter<XBinary>::init_type init_type;
-	typedef      VectorProxy<unsigned char>      return_type;
+	typedef	  VectorProxy<unsigned char>	  return_type;
 	typedef ConstVectorProxy<unsigned char> return_const_type;
 };
 template <> struct _TypeAdapter< std::vector<signed char> > {
 	typedef typename _TypeAdapter<XBinary>::spirit_type spirit_type;
 	typedef typename _TypeAdapter<XBinary>::init_type init_type;
-	typedef      VectorProxy<signed char>      return_type;
+	typedef	  VectorProxy<signed char>	  return_type;
 	typedef ConstVectorProxy<signed char> return_const_type;
 };
 
