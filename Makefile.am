@@ -1,5 +1,5 @@
 include $(top_srcdir)/Makefile.am.common
-SUBDIRS = include src test external/gtest
+SUBDIRS = include src external/gtest test
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
 # pkg-config stuff, note that libdolly.pc is always required in order
