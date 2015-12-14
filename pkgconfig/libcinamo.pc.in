@@ -1,10 +1,10 @@
-prefix=@PREFIX@
+prefix=@prefix@
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
-Name: @NAME@
-Version: @VER@
+Name: @PACKAGE@
+Version: @VERSION@
 Description: the C++ Library
 URL: http://donut-lang.org/
 Libs: -L${libdir} -lcinamo

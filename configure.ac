@@ -73,12 +73,13 @@ AC_SUBST([GTEST_LIBS])
 AC_SUBST(EXT_PKGS)
 AC_SUBST(LIBS)
 AC_CONFIG_FILES([Makefile
-				 pkgconfig/libcinamo.pc
-				 include/Makefile
-				 src/Makefile
-				 external/gtest/Makefile
-				 test/Makefile])
+					pkgconfig/libcinamo.pc:pkgconfig/libcinamo.pc.in
+					include/Makefile
+					src/Makefile
+					external/gtest/Makefile
+					test/Makefile])
 AC_OUTPUT
+
 
 AC_MSG_RESULT([
 $PACKAGE $VERSION is now configured
@@ -97,7 +98,7 @@ Configure Information:
     LDFLAGS         :   $LDFLAGS
     LIBS            :   $LIBS
 
-  Google Test 
+  Google Test
     GTEST_CPPFLAGS  : $GTEST_CPPFLAGS
     GTEST_CXXFLAGS  : $GTEST_CXXFLAGS
     GTEST_LDFLAGS   : $GTEST_LDFLAGS
